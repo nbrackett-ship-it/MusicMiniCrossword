@@ -1,16 +1,42 @@
-<!DOCTYPE html>
-<html>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width">
+          <title>Music Mini Crossword</title>
+          <link href="style.css" rel="stylesheet" type="text/css" />
+        </head>
+        <body>
+          <h1>Music Mini Crossword</h1>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-</head>
+          <div class="crossword-container">
+            <div class="crossword-grid">
+              <!-- Row 1: B P M -->
+              <input type="text" class="grid-cell" maxlength="1" id="cell-0-0">
+              <input type="text" class="grid-cell" maxlength="1" id="cell-0-1">
+              <input type="text" class="grid-cell" maxlength="1" id="cell-0-2">
 
-<body>
-  Hello world
-  <script src="script.js"></script>
-</body>
+              <!-- Row 2: A _ U -->
+              <input type="text" class="grid-cell" maxlength="1" id="cell-1-0">
+              <div class="black-cell"></div>
+              <input type="text" class="grid-cell" maxlength="1" id="cell-1-2">
 
-</html>
+              <!-- Row 3: T _ S -->
+              <input type="text" class="grid-cell" maxlength="1" id="cell-2-0">
+              <div class="black-cell"></div>
+              <input type="text" class="grid-cell" maxlength="1" id="cell-2-2">
+            </div>
+
+            <div class="clues">
+              <h3>Across</h3>
+              <p>1. Music speed (3 letters)</p>
+
+              <h3>Down</h3>
+              <p>1. Baseball stick (3 letters)</p>
+              <p>2. Short for "music" (3 letters)</p>
+            </div>
+          </div>
+
+          <script src="script.js"></script>
+        </body>
+        </html>

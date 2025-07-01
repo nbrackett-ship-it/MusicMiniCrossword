@@ -1,4 +1,73 @@
-html {
-  height: 100%;
-  width: 100%;
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.grid {
+  display: inline-grid;
+  grid-template-columns: repeat(5, 50px);
+  grid-template-rows: repeat(5, 50px);
+  border: 2px solid black;
+  background: black;
+  gap: 1px;
+  padding: 0;
+  margin: 0 auto 2rem;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  background: white;
+  border: none;
+}
+
+.cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: transparent;
+    outline: none;
+}
+
+.cell input:focus {
+    background-color: #e6f3ff;
+}
+
+.black {
+    background-color: black;
+}
+
+.number {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 1;
 }
