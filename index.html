@@ -1,42 +1,98 @@
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width">
-          <title>Music Mini Crossword</title>
-          <link href="style.css" rel="stylesheet" type="text/css" />
-        </head>
-        <body>
-          <h1>Music Mini Crossword</h1>
-
-          <div class="crossword-container">
-            <div class="crossword-grid">
-              <!-- Row 1: B P M -->
-              <input type="text" class="grid-cell" maxlength="1" id="cell-0-0">
-              <input type="text" class="grid-cell" maxlength="1" id="cell-0-1">
-              <input type="text" class="grid-cell" maxlength="1" id="cell-0-2">
-
-              <!-- Row 2: A _ U -->
-              <input type="text" class="grid-cell" maxlength="1" id="cell-1-0">
-              <div class="black-cell"></div>
-              <input type="text" class="grid-cell" maxlength="1" id="cell-1-2">
-
-              <!-- Row 3: T _ S -->
-              <input type="text" class="grid-cell" maxlength="1" id="cell-2-0">
-              <div class="black-cell"></div>
-              <input type="text" class="grid-cell" maxlength="1" id="cell-2-2">
-            </div>
-
-            <div class="clues">
-              <h3>Across</h3>
-              <p>1. Music speed (3 letters)</p>
-
-              <h3>Down</h3>
-              <p>1. Baseball stick (3 letters)</p>
-              <p>2. Short for "music" (3 letters)</p>
-            </div>
-          </div>
-
-          <script src="script.js"></script>
-        </body>
-        </html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Mini Crossword</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Music Mini Crossword</h1>
+  <div class="crossword-container">
+    <div class="crossword-grid">
+      <!-- Row 1: B A N D ■ -->
+      <div class="grid-cell" data-number="1">
+        <span class="cell-number">1</span>
+        <input type="text" maxlength="1" id="cell-0-0" data-row="0" data-col="0" data-across="1" data-down="1">
+      </div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-0-1" data-row="0" data-col="1" data-across="1">
+      </div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-0-2" data-row="0" data-col="2" data-across="1">
+      </div>
+      <div class="grid-cell" data-number="2">
+        <span class="cell-number">2</span>
+        <input type="text" maxlength="1" id="cell-0-3" data-row="0" data-col="3" data-across="1" data-down="2">
+      </div>
+      <div class="black-cell"></div>
+      
+      <!-- Row 2: E ■ ■ R ■ -->
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-1-0" data-row="1" data-col="0" data-down="1">
+      </div>
+      <div class="black-cell"></div>
+      <div class="black-cell"></div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-1-3" data-row="1" data-col="3" data-down="2">
+      </div>
+      <div class="black-cell"></div>
+      
+      <!-- Row 3: A L B U M -->
+      <div class="grid-cell" data-number="3">
+        <span class="cell-number">3</span>
+        <input type="text" maxlength="1" id="cell-2-0" data-row="2" data-col="0" data-across="3" data-down="1">
+      </div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-2-1" data-row="2" data-col="1" data-across="3">
+      </div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-2-2" data-row="2" data-col="2" data-across="3">
+      </div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-2-3" data-row="2" data-col="3" data-across="3" data-down="2">
+      </div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-2-4" data-row="2" data-col="4" data-across="3">
+      </div>
+      
+      <!-- Row 4: T ■ ■ M ■ -->
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-3-0" data-row="3" data-col="0" data-down="1">
+      </div>
+      <div class="black-cell"></div>
+      <div class="black-cell"></div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-3-3" data-row="3" data-col="3" data-down="2">
+      </div>
+      <div class="black-cell"></div>
+      
+      <!-- Row 5: ■ ■ ■ S ■ -->
+      <div class="black-cell"></div>
+      <div class="black-cell"></div>
+      <div class="black-cell"></div>
+      <div class="grid-cell">
+        <input type="text" maxlength="1" id="cell-4-3" data-row="4" data-col="3" data-down="2">
+      </div>
+      <div class="black-cell"></div>
+    </div>
+    
+    <div class="clues">
+      <div class="clues-section">
+        <h3>Across</h3>
+        <div class="clue">1. Musical group (4)</div>
+        <div class="clue">3. Collection of songs (5)</div>
+      </div>
+      
+      <div class="clues-section">
+        <h3>Down</h3>
+        <div class="clue">1. Rhythm (4)</div>
+        <div class="clue">2. Percussion instrument (5)</div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="message"></div>
+  <script src="script.js"></script>
+</body>
+</html>
