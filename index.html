@@ -111,46 +111,44 @@
     <script>
         class SimpleCrossword {
             constructor() {
-                this.currentPuzzle = 0;
+                this.currentPuzzleIndex = 0;
+                this.direction = 'across'; // 'across' or 'down'
                 this.puzzles = [
                     {
                         title: "Music Basics",
                         info: "2025-07-07 • Easy • 5×5",
-                        size: 5,
-                        pattern: [
-                            'BAND.',
-                            'E...A',
-                            'A...L',
-                            'T...B',
-                            '....M'
+                        gridSize: { rows: 5, cols: 5 },
+                        words: [
+                            { word: "BAND", number: 1, direction: "across", row: 0, col: 0 },
+                            { word: "BEAT", number: 1, direction: "down", row: 0, col: 0 },
+                            { word: "ALBUM", number: 2, direction: "down", row: 0, col: 4 },
                         ],
-                        answers: {
-                            '1-across': 'BAND', '1-down': 'BEAT', '2-down': 'ALBUM'
-                        },
                         clues: {
-                            across: {'1': 'Musical group'},
-                            down: {'1': 'Musical rhythm', '2': 'Collection of songs'}
+                            across: [{ number: 1, text: 'Musical group' }],
+                            down: [{ number: 1, text: 'Musical rhythm' }, { number: 2, text: 'Collection of songs' }]
                         }
                     },
                     {
                         title: "Rock Essentials",
                         info: "2025-07-08 • Medium • 7×7",
-                        size: 7,
-                        pattern: [
-                            'GUITAR.',
-                            'R...E..',
-                            'I...V..',
-                            'FFS E..',
-                            '..N....',
-                            '..G....',
-                            '..S....'
+                        gridSize: { rows: 7, cols: 7 },
+                        words: [
+                            { word: "GUITAR", number: 1, direction: "across", row: 0, col: 0 },
+                            { word: "DRUMS", number: 1, direction: "down", row: 0, col: 0 },
+                            { word: "RIFFS", number: 2, direction: "across", row: 3, col: 0 },
+                            { word: "EFFECTS", number: 3, direction: "down", row: 0, col: 4 },
+                            { word: "SONGS", number: 4, direction: "down", row: 3, col: 2 },
                         ],
-                        answers: {
-                            '1-across': 'GUITAR', '2-across':'RIFFS', '1-down':'DRUMS', '3-down':'EVANESCE', '4-down':'SONGS'
-                        },
                         clues: {
-                            across: {'1': 'Six-stringed instrument', '2': 'Repeated musical phrase'},
-                            down: {'1': "The Who's Keith Moon played them", '3': "To fade away, like a sound", '4': 'Musical tracks'}
+                            across: [
+                                { number: 1, text: 'Six-stringed instrument' },
+                                { number: 2, text: 'Repeated musical phrase' }
+                            ],
+                            down: [
+                                { number: 1, text: "The Who's Keith Moon played them" },
+                                { number: 3, text: 'Pedals like reverb or delay' },
+                                { number: 4, text: 'Musical tracks' }
+                            ]
                         }
                     }
                 ];
@@ -163,41 +161,49 @@
             }
 
             loadPuzzle() {
-                const puzzle = this.puzzles[this.currentPuzzle];
+                const puzzle = this.puzzles[this.currentPuzzleIndex];
                 document.getElementById('puzzleTitle').textContent = puzzle.title;
                 document.getElementById('puzzleInfo').textContent = puzzle.info;
                 document.getElementById('statusMessage').innerHTML = '';
                 this.generateGrid(puzzle);
                 this.updateClues(puzzle);
-                document.getElementById('prevPuzzle').disabled = this.currentPuzzle === 0;
-                document.getElementById('nextPuzzle').disabled = this.currentPuzzle === this.puzzles.length - 1;
+                document.getElementById('prevPuzzle').disabled = this.currentPuzzleIndex === 0;
+                document.getElementById('nextPuzzle').disabled = this.currentPuzzleIndex === this.puzzles.length - 1;
             }
 
             generateGrid(puzzle) {
                 const grid = document.getElementById('crosswordGrid');
-                const size = puzzle.size;
-                grid.style.gridTemplateColumns = `repeat(${size}, 40px)`;
-                grid.style.gridTemplateRows = `repeat(${size}, 40px)`;
+                const { rows, cols } = puzzle.gridSize;
+                grid.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
+                grid.style.gridTemplateRows = `repeat(${rows}, 40px)`;
                 grid.innerHTML = '';
 
-                let clueCounter = 1;
-                const numberMap = {}; // To store coordinates of numbered clues
+                const gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
 
-                for (let r = 0; r < size; r++) {
-                    for (let c = 0; c < size; c++) {
-                        if (puzzle.pattern[r][c] === '.') continue;
-                        const isAcrossStart = (c === 0 || puzzle.pattern[r][c - 1] === '.');
-                        const isDownStart = (r === 0 || puzzle.pattern[r - 1][c] === '.');
-                        if (isAcrossStart || isDownStart) {
-                            numberMap[`${r}-${c}`] = clueCounter++;
+                puzzle.words.forEach(wordInfo => {
+                    let r = wordInfo.row;
+                    let c = wordInfo.col;
+                    for (let i = 0; i < wordInfo.word.length; i++) {
+                        if (r >= rows || c >= cols) continue; // Safety check
+                        if (!gridData[r][c]) {
+                            gridData[r][c] = { answer: '', across: null, down: null };
                         }
-                    }
-                }
+                        gridData[r][c].answer = wordInfo.word[i];
+                        gridData[r][c][wordInfo.direction] = wordInfo.number;
 
-                for (let r = 0; r < size; r++) {
-                    for (let c = 0; c < size; c++) {
-                        const char = puzzle.pattern[r][c];
-                        if (char === '.') {
+                        if (i === 0) {
+                            gridData[r][c].number = wordInfo.number;
+                        }
+
+                        if (wordInfo.direction === 'across') c++;
+                        else r++;
+                    }
+                });
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const cellData = gridData[r][c];
+                        if (!cellData) {
                             const blackCell = document.createElement('div');
                             blackCell.className = 'black-cell';
                             grid.appendChild(blackCell);
@@ -210,13 +216,16 @@
                             input.maxLength = 1;
                             input.dataset.row = r;
                             input.dataset.col = c;
-                            input.dataset.answer = char;
+                            input.dataset.answer = cellData.answer;
+                            if (cellData.across) input.dataset.across = cellData.across;
+                            if (cellData.down) input.dataset.down = cellData.down;
+                            
                             cellWrapper.appendChild(input);
 
-                            if (numberMap[`${r}-${c}`]) {
+                            if (cellData.number) {
                                 const numberSpan = document.createElement('span');
                                 numberSpan.className = 'cell-number';
-                                numberSpan.textContent = numberMap[`${r}-${c}`];
+                                numberSpan.textContent = cellData.number;
                                 cellWrapper.appendChild(numberSpan);
                             }
                             grid.appendChild(cellWrapper);
@@ -224,22 +233,23 @@
                     }
                 }
             }
-
+            
             updateClues(puzzle) {
                 const acrossDiv = document.getElementById('cluesAcross');
                 const downDiv = document.getElementById('cluesDown');
                 acrossDiv.innerHTML = '';
                 downDiv.innerHTML = '';
-                Object.entries(puzzle.clues.across).forEach(([num, clue]) => {
+
+                puzzle.clues.across.forEach(clue => {
                     const div = document.createElement('div');
                     div.className = 'clue-item';
-                    div.innerHTML = `<b>${num}.</b> ${clue}`;
+                    div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
                     acrossDiv.appendChild(div);
                 });
-                Object.entries(puzzle.clues.down).forEach(([num, clue]) => {
+                puzzle.clues.down.forEach(clue => {
                     const div = document.createElement('div');
                     div.className = 'clue-item';
-                    div.innerHTML = `<b>${num}.</b> ${clue}`;
+                    div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
                     downDiv.appendChild(div);
                 });
             }
@@ -250,18 +260,35 @@
                 const grid = document.getElementById('crosswordGrid');
                 grid.addEventListener('input', (e) => this.handleInput(e));
                 grid.addEventListener('keydown', (e) => this.handleKeydown(e));
+                grid.addEventListener('focusin', (e) => this.handleFocus(e));
+            }
+
+            navigate(direction) {
+                this.currentPuzzleIndex += direction;
+                this.loadPuzzle();
             }
             
-            navigate(direction) {
-                this.currentPuzzle += direction;
-                this.loadPuzzle();
+            handleFocus(e) {
+                if (e.target.tagName !== 'INPUT') return;
+                const input = e.target;
+                if (input.dataset.across && input.dataset.down) {
+                    // Keep current direction
+                } else if (input.dataset.across) {
+                    this.direction = 'across';
+                } else if (input.dataset.down) {
+                    this.direction = 'down';
+                }
+                this.highlightWord(input);
             }
 
             handleInput(e) {
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
                 input.value = input.value.toUpperCase();
-                if (input.value) this.move(input, 1);
+                if (input.value) {
+                    if (this.direction === 'across') this.moveArrow(input, 0, 1);
+                    else this.moveArrow(input, 1, 0);
+                }
                 this.checkCompletion();
             }
             
@@ -270,25 +297,23 @@
                 const input = e.target;
                 if (e.key === 'Backspace' && !input.value) {
                      e.preventDefault();
-                     this.move(input, -1);
+                     if (this.direction === 'across') this.moveArrow(input, 0, -1);
+                     else this.moveArrow(input, -1, 0);
                 } else if (e.key.startsWith('Arrow')) {
                     e.preventDefault();
                     let dr = 0, dc = 0;
-                    if (e.key === 'ArrowUp') dr = -1;
-                    if (e.key === 'ArrowDown') dr = 1;
-                    if (e.key === 'ArrowLeft') dc = -1;
-                    if (e.key === 'ArrowRight') dc = 1;
+                    if (e.key === 'ArrowUp') { dr = -1; this.direction = 'down'; }
+                    if (e.key === 'ArrowDown') { dr = 1; this.direction = 'down'; }
+                    if (e.key === 'ArrowLeft') { dc = -1; this.direction = 'across'; }
+                    if (e.key === 'ArrowRight') { dc = 1; this.direction = 'across'; }
                     this.moveArrow(input, dr, dc);
+                } else if (e.key === 'Tab' || e.key === 'Enter') {
+                    e.preventDefault();
+                    if (input.dataset.across && input.dataset.down) {
+                        this.direction = this.direction === 'across' ? 'down' : 'across';
+                        this.highlightWord(input);
+                    }
                 }
-            }
-            
-            move(cell, delta) {
-                 const cells = Array.from(document.querySelectorAll('.grid-cell input'));
-                 const currentIndex = cells.indexOf(cell);
-                 const nextIndex = currentIndex + delta;
-                 if (nextIndex >= 0 && nextIndex < cells.length) {
-                     cells[nextIndex].focus();
-                 }
             }
             
             moveArrow(cell, dr, dc) {
@@ -297,11 +322,26 @@
                 const nextCell = document.querySelector(`input[data-row='${r}'][data-col='${c}']`);
                 if (nextCell) nextCell.focus();
             }
+            
+            highlightWord(currentInput) {
+                document.querySelectorAll('.grid-cell').forEach(c => {
+                    const bg = c.querySelector('input') ? 'white' : 'black';
+                    c.style.backgroundColor = bg;
+                });
+                
+                const clueNum = currentInput.dataset[this.direction];
+                if (!clueNum) return;
+                
+                document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
+                    cell.parentElement.style.backgroundColor = '#dbeafe'; // Light blue for word
+                });
+                currentInput.parentElement.style.backgroundColor = '#bfdbfe'; // Darker blue for current cell
+            }
 
             checkCompletion() {
                 const inputs = document.querySelectorAll('.grid-cell input');
                 for (const input of inputs) {
-                    if (input.value !== input.dataset.answer) return;
+                    if (input.value.toUpperCase() !== input.dataset.answer) return;
                 }
                 document.getElementById('statusMessage').innerHTML = 
                     '<div class="status-message success">🎉 Puzzle completed!</div>';
