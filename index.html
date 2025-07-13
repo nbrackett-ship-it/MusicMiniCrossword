@@ -1,98 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Mini Crossword</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Mini Crossword</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .puzzle-title { font-size: 24px; font-weight: 600; }
+        .puzzle-info { color: #606770; font-size: 14px; }
+        .puzzle-controls { text-align: center; margin-bottom: 20px; }
+        .puzzle-controls button {
+            margin: 0 5px;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: 1px solid #ccd0d5;
+            border-radius: 6px;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .puzzle-controls button:hover { background-color: #f0f2f5; }
+        .puzzle-controls button:disabled { background-color: #e4e6eb; cursor: not-allowed; color: #bcc0c4;}
+        .crossword-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .crossword-grid {
+            display: grid;
+            gap: 1px;
+            background-color: #000;
+            margin: 0 auto 20px auto;
+            border: 1px solid #000;
+            width: fit-content;
+        }
+        .grid-cell {
+            background-color: white;
+            width: 40px;
+            height: 40px;
+            position: relative;
+        }
+        .grid-cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            text-transform: uppercase;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .grid-cell input:focus { outline: 2px solid #1877f2; z-index: 1; }
+        .black-cell { background-color: black; }
+        .cell-number {
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #606770;
+            pointer-events: none;
+        }
+        .clues-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .clues-section h3 { margin-top: 0; margin-bottom: 10px; font-size: 16px; }
+        .clue-item { margin-bottom: 5px; line-height: 1.4; font-size: 14px; }
+        #statusMessage { text-align: center; padding: 10px; margin-top: 20px; border-radius: 6px; font-weight: 500; }
+        .success { background-color: #d4edda; color: #155724; }
+    </style>
 </head>
 <body>
-  <h1>Music Mini Crossword</h1>
-  <div class="crossword-container">
-    <div class="crossword-grid">
-      <!-- Row 1: B A N D ■ -->
-      <div class="grid-cell" data-number="1">
-        <span class="cell-number">1</span>
-        <input type="text" maxlength="1" id="cell-0-0" data-row="0" data-col="0" data-across="1" data-down="1">
-      </div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-0-1" data-row="0" data-col="1" data-across="1">
-      </div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-0-2" data-row="0" data-col="2" data-across="1">
-      </div>
-      <div class="grid-cell" data-number="2">
-        <span class="cell-number">2</span>
-        <input type="text" maxlength="1" id="cell-0-3" data-row="0" data-col="3" data-across="1" data-down="2">
-      </div>
-      <div class="black-cell"></div>
-      
-      <!-- Row 2: E ■ ■ R ■ -->
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-1-0" data-row="1" data-col="0" data-down="1">
-      </div>
-      <div class="black-cell"></div>
-      <div class="black-cell"></div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-1-3" data-row="1" data-col="3" data-down="2">
-      </div>
-      <div class="black-cell"></div>
-      
-      <!-- Row 3: A L B U M -->
-      <div class="grid-cell" data-number="3">
-        <span class="cell-number">3</span>
-        <input type="text" maxlength="1" id="cell-2-0" data-row="2" data-col="0" data-across="3" data-down="1">
-      </div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-2-1" data-row="2" data-col="1" data-across="3">
-      </div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-2-2" data-row="2" data-col="2" data-across="3">
-      </div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-2-3" data-row="2" data-col="3" data-across="3" data-down="2">
-      </div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-2-4" data-row="2" data-col="4" data-across="3">
-      </div>
-      
-      <!-- Row 4: T ■ ■ M ■ -->
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-3-0" data-row="3" data-col="0" data-down="1">
-      </div>
-      <div class="black-cell"></div>
-      <div class="black-cell"></div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-3-3" data-row="3" data-col="3" data-down="2">
-      </div>
-      <div class="black-cell"></div>
-      
-      <!-- Row 5: ■ ■ ■ S ■ -->
-      <div class="black-cell"></div>
-      <div class="black-cell"></div>
-      <div class="black-cell"></div>
-      <div class="grid-cell">
-        <input type="text" maxlength="1" id="cell-4-3" data-row="4" data-col="3" data-down="2">
-      </div>
-      <div class="black-cell"></div>
+    <div class="header">
+        <div class="puzzle-title" id="puzzleTitle"></div>
+        <div class="puzzle-info" id="puzzleInfo"></div>
     </div>
-    
-    <div class="clues">
-      <div class="clues-section">
-        <h3>Across</h3>
-        <div class="clue">1. Musical group (4)</div>
-        <div class="clue">3. Collection of songs (5)</div>
-      </div>
-      
-      <div class="clues-section">
-        <h3>Down</h3>
-        <div class="clue">1. Rhythm (4)</div>
-        <div class="clue">2. Percussion instrument (5)</div>
-      </div>
+
+    <div class="puzzle-controls">
+        <button id="prevPuzzle">← Previous</button>
+        <button id="nextPuzzle">Next →</button>
     </div>
-  </div>
-  
-  <div id="message"></div>
-  <script src="script.js"></script>
+
+    <div class="crossword-container">
+        <div class="crossword-grid" id="crosswordGrid"></div>
+        <div class="clues-container">
+            <div class="clues-section">
+                <h3>Across</h3>
+                <div id="cluesAcross"></div>
+            </div>
+            <div class="clues-section">
+                <h3>Down</h3>
+                <div id="cluesDown"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="statusMessage"></div>
+
+    <script>
+        class SimpleCrossword {
+            constructor() {
+                this.currentPuzzle = 0;
+                this.puzzles = [
+                    {
+                        title: "Music Basics",
+                        info: "2025-07-07 • Easy • 5×5",
+                        size: 5,
+                        pattern: [
+                            'BAND.',
+                            'E...A',
+                            'A...L',
+                            'T...B',
+                            '....M'
+                        ],
+                        answers: {
+                            '1-across': 'BAND', '1-down': 'BEAT', '2-down': 'ALBUM'
+                        },
+                        clues: {
+                            across: {'1': 'Musical group'},
+                            down: {'1': 'Musical rhythm', '2': 'Collection of songs'}
+                        }
+                    },
+                    {
+                        title: "Rock Essentials",
+                        info: "2025-07-08 • Medium • 7×7",
+                        size: 7,
+                        pattern: [
+                            'GUITAR.',
+                            'R...E..',
+                            'I...V..',
+                            'FFS E..',
+                            '..N....',
+                            '..G....',
+                            '..S....'
+                        ],
+                        answers: {
+                            '1-across': 'GUITAR', '2-across':'RIFFS', '1-down':'DRUMS', '3-down':'EVANESCE', '4-down':'SONGS'
+                        },
+                        clues: {
+                            across: {'1': 'Six-stringed instrument', '2': 'Repeated musical phrase'},
+                            down: {'1': "The Who's Keith Moon played them", '3': "To fade away, like a sound", '4': 'Musical tracks'}
+                        }
+                    }
+                ];
+                this.init();
+            }
+
+            init() {
+                this.loadPuzzle();
+                this.setupEvents();
+            }
+
+            loadPuzzle() {
+                const puzzle = this.puzzles[this.currentPuzzle];
+                document.getElementById('puzzleTitle').textContent = puzzle.title;
+                document.getElementById('puzzleInfo').textContent = puzzle.info;
+                document.getElementById('statusMessage').innerHTML = '';
+                this.generateGrid(puzzle);
+                this.updateClues(puzzle);
+                document.getElementById('prevPuzzle').disabled = this.currentPuzzle === 0;
+                document.getElementById('nextPuzzle').disabled = this.currentPuzzle === this.puzzles.length - 1;
+            }
+
+            generateGrid(puzzle) {
+                const grid = document.getElementById('crosswordGrid');
+                const size = puzzle.size;
+                grid.style.gridTemplateColumns = `repeat(${size}, 40px)`;
+                grid.style.gridTemplateRows = `repeat(${size}, 40px)`;
+                grid.innerHTML = '';
+
+                let clueCounter = 1;
+                const numberMap = {}; // To store coordinates of numbered clues
+
+                for (let r = 0; r < size; r++) {
+                    for (let c = 0; c < size; c++) {
+                        if (puzzle.pattern[r][c] === '.') continue;
+                        const isAcrossStart = (c === 0 || puzzle.pattern[r][c - 1] === '.');
+                        const isDownStart = (r === 0 || puzzle.pattern[r - 1][c] === '.');
+                        if (isAcrossStart || isDownStart) {
+                            numberMap[`${r}-${c}`] = clueCounter++;
+                        }
+                    }
+                }
+
+                for (let r = 0; r < size; r++) {
+                    for (let c = 0; c < size; c++) {
+                        const char = puzzle.pattern[r][c];
+                        if (char === '.') {
+                            const blackCell = document.createElement('div');
+                            blackCell.className = 'black-cell';
+                            grid.appendChild(blackCell);
+                        } else {
+                            const cellWrapper = document.createElement('div');
+                            cellWrapper.className = 'grid-cell';
+                            
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.maxLength = 1;
+                            input.dataset.row = r;
+                            input.dataset.col = c;
+                            input.dataset.answer = char;
+                            cellWrapper.appendChild(input);
+
+                            if (numberMap[`${r}-${c}`]) {
+                                const numberSpan = document.createElement('span');
+                                numberSpan.className = 'cell-number';
+                                numberSpan.textContent = numberMap[`${r}-${c}`];
+                                cellWrapper.appendChild(numberSpan);
+                            }
+                            grid.appendChild(cellWrapper);
+                        }
+                    }
+                }
+            }
+
+            updateClues(puzzle) {
+                const acrossDiv = document.getElementById('cluesAcross');
+                const downDiv = document.getElementById('cluesDown');
+                acrossDiv.innerHTML = '';
+                downDiv.innerHTML = '';
+                Object.entries(puzzle.clues.across).forEach(([num, clue]) => {
+                    const div = document.createElement('div');
+                    div.className = 'clue-item';
+                    div.innerHTML = `<b>${num}.</b> ${clue}`;
+                    acrossDiv.appendChild(div);
+                });
+                Object.entries(puzzle.clues.down).forEach(([num, clue]) => {
+                    const div = document.createElement('div');
+                    div.className = 'clue-item';
+                    div.innerHTML = `<b>${num}.</b> ${clue}`;
+                    downDiv.appendChild(div);
+                });
+            }
+
+            setupEvents() {
+                document.getElementById('prevPuzzle').addEventListener('click', () => this.navigate(-1));
+                document.getElementById('nextPuzzle').addEventListener('click', () => this.navigate(1));
+                const grid = document.getElementById('crosswordGrid');
+                grid.addEventListener('input', (e) => this.handleInput(e));
+                grid.addEventListener('keydown', (e) => this.handleKeydown(e));
+            }
+            
+            navigate(direction) {
+                this.currentPuzzle += direction;
+                this.loadPuzzle();
+            }
+
+            handleInput(e) {
+                if (e.target.tagName !== 'INPUT') return;
+                const input = e.target;
+                input.value = input.value.toUpperCase();
+                if (input.value) this.move(input, 1);
+                this.checkCompletion();
+            }
+            
+            handleKeydown(e) {
+                if (e.target.tagName !== 'INPUT') return;
+                const input = e.target;
+                if (e.key === 'Backspace' && !input.value) {
+                     e.preventDefault();
+                     this.move(input, -1);
+                } else if (e.key.startsWith('Arrow')) {
+                    e.preventDefault();
+                    let dr = 0, dc = 0;
+                    if (e.key === 'ArrowUp') dr = -1;
+                    if (e.key === 'ArrowDown') dr = 1;
+                    if (e.key === 'ArrowLeft') dc = -1;
+                    if (e.key === 'ArrowRight') dc = 1;
+                    this.moveArrow(input, dr, dc);
+                }
+            }
+            
+            move(cell, delta) {
+                 const cells = Array.from(document.querySelectorAll('.grid-cell input'));
+                 const currentIndex = cells.indexOf(cell);
+                 const nextIndex = currentIndex + delta;
+                 if (nextIndex >= 0 && nextIndex < cells.length) {
+                     cells[nextIndex].focus();
+                 }
+            }
+            
+            moveArrow(cell, dr, dc) {
+                const r = parseInt(cell.dataset.row) + dr;
+                const c = parseInt(cell.dataset.col) + dc;
+                const nextCell = document.querySelector(`input[data-row='${r}'][data-col='${c}']`);
+                if (nextCell) nextCell.focus();
+            }
+
+            checkCompletion() {
+                const inputs = document.querySelectorAll('.grid-cell input');
+                for (const input of inputs) {
+                    if (input.value !== input.dataset.answer) return;
+                }
+                document.getElementById('statusMessage').innerHTML = 
+                    '<div class="status-message success">🎉 Puzzle completed!</div>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new SimpleCrossword();
+        });
+    </script>
 </body>
 </html>

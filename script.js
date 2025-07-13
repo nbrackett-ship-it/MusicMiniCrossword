@@ -1,32 +1,106 @@
-// Crossword solution
-const solution = {
-    '0-0': 'B', '0-1': 'A', '0-2': 'N', '0-3': 'D',
-    '1-0': 'E', '1-3': 'R',
-    '2-0': 'A', '2-1': 'L', '2-2': 'B', '2-3': 'U', '2-4': 'M',
-    '3-0': 'T', '3-3': 'M',
-    '4-3': 'S'
-};
-
-// Track current direction (across or down)
-let currentDirection = 'across';
-let currentClue = null;
-
-// Get all input cells
-const cells = document.querySelectorAll('.grid-cell input');
-
-// Add event listeners to each cell
-cells.forEach(cell => {
-    cell.addEventListener('input', handleInput);
-    cell.addEventListener('keydown', handleKeydown);
-    cell.addEventListener('focus', handleFocus);
+document.addEventListener('DOMContentLoaded', () => {
+    // This will be the entry point of our application
+    init('puzzle-001.json');
 });
+
+let solution = {};
+let cells = [];
+let currentDirection = 'across';
+
+function init(puzzleFile) {
+    fetch(puzzleFile)
+        .then(response => response.json())
+        .then(puzzleData => {
+            loadPuzzle(puzzleData);
+        });
+}
+
+function loadPuzzle(puzzleData) {
+    console.log("Loading puzzle:", puzzleData.title);
+    const gridContainer = document.getElementById('grid-container');
+    const acrossClues = document.getElementById('across-clues');
+    const downClues = document.getElementById('down-clues');
+
+    // Clear previous grid and clues
+    gridContainer.innerHTML = '';
+    if (acrossClues) acrossClues.innerHTML = '';
+    if (downClues) downClues.innerHTML = '';
+
+    // Dynamically set the grid size
+    const { rows, cols } = puzzleData.gridSize;
+    gridContainer.style.setProperty('--grid-rows', rows);
+    gridContainer.style.setProperty('--grid-cols', cols);
+
+    // Build the grid cells
+    puzzleData.grid.forEach((row, rowIndex) => {
+        row.forEach((cellData, colIndex) => {
+            if (cellData === "") {
+                const blackCell = document.createElement('div');
+                blackCell.className = 'black-cell';
+                gridContainer.appendChild(blackCell);
+            } else {
+                const cellWrapper = document.createElement('div');
+                cellWrapper.className = 'grid-cell';
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.dataset.row = rowIndex;
+                input.dataset.col = colIndex;
+
+                // Add data attributes for clues
+                if (cellData.across) input.dataset.across = cellData.across;
+                if (cellData.down) input.dataset.down = cellData.down;
+
+                const clueNumber = puzzleData.numbers.find(n => n.row === rowIndex && n.col === colIndex);
+                if (clueNumber) {
+                    const numberElement = document.createElement('div');
+                    numberElement.className = 'clue-number';
+                    numberElement.textContent = clueNumber.number;
+                    cellWrapper.appendChild(numberElement);
+                }
+
+                cellWrapper.appendChild(input);
+                gridContainer.appendChild(cellWrapper);
+            }
+        });
+    });
+
+    // Populate the clue lists
+    if (acrossClues && puzzleData.clues.across) {
+        puzzleData.clues.across.forEach(clue => {
+            const li = document.createElement('li');
+            li.textContent = `${clue.number}. ${clue.text}`;
+            acrossClues.appendChild(li);
+        });
+    }
+
+    if (downClues && puzzleData.clues.down) {
+        puzzleData.clues.down.forEach(clue => {
+            const li = document.createElement('li');
+            li.textContent = `${clue.number}. ${clue.text}`;
+            downClues.appendChild(li);
+        });
+    }
+
+    // Update solution and attach listeners
+    solution = puzzleData.answers;
+    cells = document.querySelectorAll('.grid-cell input');
+    cells.forEach(cell => {
+        cell.addEventListener('input', handleInput);
+        cell.addEventListener('keydown', handleKeydown);
+        cell.addEventListener('focus', handleFocus);
+    });
+}
+
+
+// --- All of your existing helper functions ---
 
 function handleInput(e) {
     const input = e.target;
     input.value = input.value.toUpperCase();
 
     if (input.value) {
-        // Move to next cell in current direction
         moveToNextCell(input);
     }
 
@@ -60,7 +134,6 @@ function handleKeydown(e) {
             moveInDirection(input, 1, 0);
             break;
         case 'Tab':
-            // Tab changes direction between across and down
             e.preventDefault();
             currentDirection = currentDirection === 'across' ? 'down' : 'across';
             highlightCurrentWord(input);
@@ -71,27 +144,22 @@ function handleKeydown(e) {
 function handleFocus(e) {
     const input = e.target;
 
-    // Determine the best direction based on available cells
     if (input.dataset.across && input.dataset.down) {
-        // Cell is part of both across and down
-        // Keep current direction
+        // Keep current direction if the cell is part of both
     } else if (input.dataset.across) {
         currentDirection = 'across';
     } else if (input.dataset.down) {
         currentDirection = 'down';
     }
-
-    currentClue = currentDirection === 'across' ? input.dataset.across : input.dataset.down;
     highlightCurrentWord(input);
 }
 
 function highlightCurrentWord(currentInput) {
-    // Remove all previous highlights
     cells.forEach(cell => {
         cell.style.backgroundColor = '';
+        cell.parentElement.style.backgroundColor = 'white';
     });
 
-    // Highlight cells in current word
     const clueNumber = currentDirection === 'across' 
         ? currentInput.dataset.across 
         : currentInput.dataset.down;
@@ -99,17 +167,14 @@ function highlightCurrentWord(currentInput) {
     if (clueNumber) {
         cells.forEach(cell => {
             if (cell.dataset[currentDirection] === clueNumber) {
-                cell.style.backgroundColor = '#ffd700';
+                cell.parentElement.style.backgroundColor = '#ffd700'; // Highlight the wrapper div
             }
         });
-        currentInput.style.backgroundColor = '#ffeb3b';
+        currentInput.parentElement.style.backgroundColor = '#ffeb3b'; // Brighter highlight for current cell
     }
 }
 
 function moveToNextCell(currentInput) {
-    const row = parseInt(currentInput.dataset.row);
-    const col = parseInt(currentInput.dataset.col);
-
     if (currentDirection === 'across') {
         moveInDirection(currentInput, 0, 1);
     } else {
@@ -118,9 +183,6 @@ function moveToNextCell(currentInput) {
 }
 
 function moveToPreviousCell(currentInput) {
-    const row = parseInt(currentInput.dataset.row);
-    const col = parseInt(currentInput.dataset.col);
-
     if (currentDirection === 'across') {
         moveInDirection(currentInput, 0, -1);
     } else {
@@ -134,7 +196,6 @@ function moveInDirection(currentInput, rowDelta, colDelta) {
     const newRow = row + rowDelta;
     const newCol = col + colDelta;
 
-    // Find the target cell
     const targetCell = document.querySelector(`[data-row="${newRow}"][data-col="${newCol}"]`);
     if (targetCell) {
         targetCell.focus();
@@ -147,22 +208,23 @@ function checkPuzzleCompletion() {
     for (const [key, value] of Object.entries(solution)) {
         const [row, col] = key.split('-');
         const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-        if (!cell || cell.value !== value) {
+        if (!cell || cell.value.toUpperCase() !== value) {
             isComplete = false;
             break;
         }
     }
 
-    if (isComplete && !document.querySelector('.success-message')) {
+    if (isComplete && !document.body.querySelector('.success-message')) {
         const message = document.getElementById('message');
-        message.innerHTML = '🎉 Congratulations! You solved the puzzle!';
-        message.classList.add('success-message');
+        if(message) {
+            message.innerHTML = '🎉 Congratulations! You solved the puzzle!';
+            message.classList.add('success-message');
+        }
 
-        // Celebrate with animation
         cells.forEach((cell, index) => {
             setTimeout(() => {
-                cell.style.backgroundColor = '#4CAF50';
-                cell.style.transition = 'background-color 0.3s';
+                cell.parentElement.style.backgroundColor = '#4CAF50';
+                cell.parentElement.style.transition = 'background-color 0.3s';
             }, index * 50);
         });
     }
