@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +14,35 @@
             background-color: #f0f2f5;
             color: #1c1e21;
         }
-        .header { text-align: center; margin-bottom: 20px; }
-        .main-title { font-size: 28px; font-weight: 700; margin-bottom: 5px; }
-        .puzzle-title { font-size: 20px; font-weight: 600; }
-        .puzzle-info { color: #606770; font-size: 14px; }
-        .puzzle-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .puzzle-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .puzzle-info {
+            color: #606770;
+            font-size: 14px;
+        }
+
+        .puzzle-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
         .puzzle-controls button {
             padding: 8px 16px;
             font-size: 14px;
@@ -27,21 +52,32 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .puzzle-controls button:hover { background-color: #f0f2f5; }
-        .puzzle-controls button:disabled { background-color: #e4e6eb; cursor: not-allowed; color: #bcc0c4;}
+
+        .puzzle-controls button:hover {
+            background-color: #f0f2f5;
+        }
+
+        .puzzle-controls button:disabled {
+            background-color: #e4e6eb;
+            cursor: not-allowed;
+            color: #bcc0c4;
+        }
+
         #timer {
             font-size: 14px;
             font-weight: 400;
             color: #606770;
             margin-top: 10px;
         }
+
         .crossword-container {
             background: white;
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
+
         .crossword-grid {
             display: grid;
             gap: 1px;
@@ -50,12 +86,14 @@
             border: 1px solid #000;
             width: fit-content;
         }
+
         .grid-cell {
             background-color: white;
             width: 40px;
             height: 40px;
             position: relative;
         }
+
         .grid-cell input {
             width: 100%;
             height: 100%;
@@ -69,8 +107,16 @@
             margin: 0;
             box-sizing: border-box;
         }
-        .grid-cell input:focus { outline: 2px solid #1877f2; z-index: 1; }
-        .black-cell { background-color: black; }
+
+        .grid-cell input:focus {
+            outline: 2px solid #1877f2;
+            z-index: 1;
+        }
+
+        .black-cell {
+            background-color: black;
+        }
+
         .cell-number {
             position: absolute;
             top: 2px;
@@ -80,13 +126,42 @@
             color: #606770;
             pointer-events: none;
         }
-        .clues-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .clues-section h3 { margin-top: 0; margin-bottom: 10px; font-size: 16px; }
-        .clue-item { margin-bottom: 5px; line-height: 1.4; font-size: 14px; }
-        #statusMessage { text-align: center; padding: 10px; margin-top: 20px; border-radius: 6px; font-weight: 500; }
-        .success { background-color: #d4edda; color: #155724; font-size: 18px; line-height: 1.5; }
+
+        .clues-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .clues-section h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .clue-item {
+            margin-bottom: 5px;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        #statusMessage {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            font-size: 18px;
+            line-height: 1.5;
+        }
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="main-title">The Micro Music Crossword</div>
@@ -130,68 +205,101 @@
                         title: 'Global Rollout',
                         info: '2025-07-16 • 5×5',
                         winMessage: "Sweet!",
-                        gridSize: { rows: 5, cols: 5 },
+                        gridSize: {rows: 5, cols: 5},
                         words: [
-                            { word: 'YORKE', number: 1, direction: 'across', row: 0, col: 0 },
-                            { word: 'ARENA', number: 6, direction: 'across', row: 1, col: 0 },
-                            { word: 'NIGER', number: 7, direction: 'across', row: 2, col: 0 },
-                            { word: 'NOEL', number: 8, direction: 'across', row: 3, col: 0 },
-                            { word: 'INTL', number: 9, direction: 'across', row: 4, col: 0 },
-                            { word: 'YANNI', number: 1, direction: 'down', row: 0, col: 0 },
-                            { word: 'ORION', number: 2, direction: 'down', row: 0, col: 1 },
-                            { word: 'REGET', number: 3, direction: 'down', row: 0, col: 2 },
-                            { word: 'KNELL', number: 4, direction: 'down', row: 0, col: 3 },
-                            { word: 'EAR', number: 5, direction: 'down', row: 0, col: 4 }
+                            {word: 'YORKE', number: 1, direction: 'across', row: 0, col: 0},
+                            {word: 'ARENA', number: 6, direction: 'across', row: 1, col: 0},
+                            {word: 'NIGER', number: 7, direction: 'across', row: 2, col: 0},
+                            {word: 'NOEL', number: 8, direction: 'across', row: 3, col: 0},
+                            {word: 'INTL', number: 9, direction: 'across', row: 4, col: 0},
+                            {word: 'YANNI', number: 1, direction: 'down', row: 0, col: 0},
+                            {word: 'ORION', number: 2, direction: 'down', row: 0, col: 1},
+                            {word: 'REGET', number: 3, direction: 'down', row: 0, col: 2},
+                            {word: 'KNELL', number: 4, direction: 'down', row: 0, col: 3},
+                            {word: 'EAR', number: 5, direction: 'down', row: 0, col: 4}
                         ],
                         clues: {
                             across: [
-                                { number: 1, text: 'Ambition makes you look pretty ugly, to him' },
-                                { number: 6, text: 'A step above a shed' },
-                                { number: 7, text: 'West African nation, not to be confused with the Afrobeats mecca' },
-                                { number: 8, text: 'Tolerating his brother this summer' },
-                                { number: 9, text: 'Abbr. for worldly major label dept' }
+                                {number: 1, text: 'Ambition makes you look pretty ugly, he sang'},
+                                {number: 6, text: 'One step above a shed'},
+                                {number: 7, text: 'West African nation, not to be confused with the Afrobeats mecca'},
+                                {number: 8, text: 'Tolerating his brother this summer'},
+                                {number: 9, text: 'Global (abbr.)'}
                             ],
                             down: [
-                                { number: 1, text: 'A lord of the keytar' },
-                                { number: 2, text: 'Master of Puppets deep cut' },
-                                { number: 3, text: 'Third word in title of Edith Piaf classic, if it were about never obtaining anything again?' },
-                                { number: 4, text: 'A solemn bell sound' },
-                                { number: 5, text: 'Trust this, along with your other one' }
+                                {number: 1, text: 'A lord of the keytar'},
+                                {number: 2, text: 'Master of Puppets deep cut'},
+                                {number: 3, text: 'Obtain again?'},
+                                {number: 4, text: 'Sound of a bell, often funereal'},
+                                {number: 5, text: 'Trust yours'}
                             ]
                         }
                     },
-                    // --- THIS PUZZLE DATA IS NOW FIXED ---
                     {
                         title: 'Classic Hip-Hop and Whatnot',
                         info: '2025-07-17 • 5×5',
                         winMessage: "You know your history!",
-                        gridSize: { rows: 5, cols: 5 },
+                        gridSize: {rows: 5, cols: 5},
                         words: [
-                            { word: 'GRIFF', number: 1, direction: 'across', row: 0, col: 0 },
-                            { word: 'RECUR', number: 5, direction: 'across', row: 1, col: 0 },
-                            { word: 'INIGO', number: 6, direction: 'across', row: 2, col: 0 },
-                            { word: 'TONES', number: 7, direction: 'across', row: 3, col: 0 },
-                            { word: 'GET', number: 8, direction: 'across', row: 4, col: 2 },
-                            { word: 'GRIT', number: 1, direction: 'down', row: 0, col: 0 },
-                            { word: 'RENO', number: 2, direction: 'down', row: 0, col: 1 },
-                            { word: 'ICING', number: 3, direction: 'down', row: 0, col: 2 },
-                            { word: 'FUGEE', number: 4, direction: 'down', row: 0, col: 3 }
-                            // Removed the duplicate "4 Down" word ('FROST')
+                            {word: 'GRIFF', number: 1, direction: 'across', row: 0, col: 0},
+                            {word: 'RECUR', number: 5, direction: 'across', row: 1, col: 0},
+                            {word: 'INIGO', number: 6, direction: 'across', row: 2, col: 0},
+                            {word: 'TONES', number: 7, direction: 'across', row: 3, col: 0},
+                            {word: 'GET', number: 8, direction: 'across', row: 4, col: 2},
+                            {word: 'GRIT', number: 1, direction: 'down', row: 0, col: 0},
+                            {word: 'RENO', number: 2, direction: 'down', row: 0, col: 1},
+                            {word: 'ICING', number: 3, direction: 'down', row: 0, col: 2},
+                            {word: 'FUGEE', number: 4, direction: 'down', row: 0, col: 3},
+                            {word: 'FROST', number: 5, direction: 'down', row: 0, col: 4}
                         ],
                         clues: {
                             across: [
-                                { number: 1, text: 'Problematic PE member' },
-                                { number: 5, text: 'What choruses and hooks do' },
-                                { number: 6, text: 'This movie character said "My name is..." well before Eminem' },
-                                { number: 7, text: 'Adjust these on a mixer' },
-                                { number: 8, text: '_____ money' }
+                                {number: 1, text: 'Problematic PE member'},
+                                {number: 5, text: 'What choruses and hooks do'},
+                                {number: 6, text: 'This movie character said "My name is..." well before Eminem'},
+                                {number: 7, text: 'Adjust these on a mixer'},
+                                {number: 8, text: '_____ money'}
                             ],
                             down: [
-                                { number: 1, text: 'DJ Premier beats had this' },
-                                { number: 2, text: 'Garcia lit out from here, chased by 20 hounds' },
-                                { number: 3, text: 'Period slang for gangland kill' },
-                                // Simplified the clue for the single remaining answer
-                                { number: 4, text: 'Singular form of 90s hip-hop mega-trio' }
+                                {number: 1, text: 'DJ Premier beats had this'},
+                                {number: 2, text: 'Garcia lit out from here, chased by 20 hounds'},
+                                {number: 3, text: 'Period slang for gangland kill'},
+                                {number: 4, text: 'Singular form of 90s hip-hop mega-trio'},
+                                {number: 5, text: 'Kid who broke down doors for Hispanic MC\'s'}
+                            ]
+                        }
+                    },
+                    {
+                        title: 'Pop Life: 2010s & Beyond',
+                        info: '2025-07-17 • 5×5',
+                        winMessage: "You're plugged into the zeitgeist!",
+                        gridSize: {rows: 5, cols: 5},
+                        words: [
+                            {word: 'HULK', number: 1, direction: 'across', row: 0, col: 1},
+                            {word: 'GENIE', number: 6, direction: 'across', row: 1, col: 0},
+                            {word: 'RITZY', number: 7, direction: 'across', row: 2, col: 0},
+                            {word: 'ADAZE', number: 8, direction: 'across', row: 3, col: 0},
+                            {word: 'MIGOS', number: 9, direction: 'across', row: 4, col: 0},
+                            {word: 'GRAM', number: 1, direction: 'down', row: 0, col: 1},
+                            {word: 'HEIDI', number: 2, direction: 'down', row: 0, col: 2},
+                            {word: 'UNTAG', number: 3, direction: 'down', row: 0, col: 3},
+                            {word: 'LIZZO', number: 4, direction: 'down', row: 0, col: 4},
+                            {word: 'KEYES', number: 5, direction: 'down', row: 1, col: 4}
+                        ],
+                        clues: {
+                            across: [
+                                {number: 1, text: 'Superhero + erstwhile metaphor for emotional volatility'},
+                                {number: 6, text: 'Mystical figure in Xtina\'s breakthrough hit'},
+                                {number: 7, text: 'Target vibe in some music videos'},
+                                {number: 8, text: 'Mentally fuzzy (with "in")'},
+                                {number: 9, text: '2010s trio with triplet flow'}
+                            ],
+                            down: [
+                                {number: 1, text: 'Small measurement, or place where people flex (with "the")'},
+                                {number: 2, text: 'First name of reality star with 2010s pop ambitions'},
+                                {number: 3, text: 'A quiet way to take someone out of the picture, sometimes'},
+                                {number: 4, text: 'Female MC/singer with record breaking chart run at end of decade'},
+                                {number: 5, text: 'The Grammys love to go to her'}
                             ]
                         }
                     }
@@ -206,7 +314,7 @@
 
             loadPuzzle() {
                 const puzzle = this.puzzles[this.currentPuzzleIndex];
-                document.getElementById('puzzleTitle').textContent = `This Week: ${puzzle.title}`;
+                document.getElementById('puzzleTitle').textContent = puzzle.title;
                 document.getElementById('puzzleInfo').textContent = puzzle.info;
                 document.getElementById('statusMessage').innerHTML = '';
 
@@ -242,7 +350,7 @@
 
             generateGrid(puzzle) {
                 const grid = document.getElementById('crosswordGrid');
-                const { rows, cols } = puzzle.gridSize;
+                const {rows, cols} = puzzle.gridSize;
                 grid.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
                 grid.style.gridTemplateRows = `repeat(${rows}, 40px)`;
                 grid.innerHTML = '';
@@ -255,7 +363,7 @@
                     for (let i = 0; i < wordInfo.word.length; i++) {
                         if (r >= rows || c >= cols) continue;
                         if (!gridData[r][c]) {
-                            gridData[r][c] = { answer: '', across: null, down: null };
+                            gridData[r][c] = {answer: '', across: null, down: null};
                         }
                         gridData[r][c].answer = wordInfo.word[i];
                         gridData[r][c][wordInfo.direction] = wordInfo.number;
@@ -301,7 +409,7 @@
                         }
                     }
                 }
-                
+
                 this.loadProgress();
             }
 
@@ -370,7 +478,7 @@
             handleFocus(e) {
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
-                
+
                 input.select();
 
                 if (input.dataset.across && input.dataset.down) {
@@ -401,16 +509,16 @@
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
                 if (e.key === 'Backspace' && !input.value) {
-                     e.preventDefault();
-                     if (this.direction === 'across') this.moveArrow(input, 0, -1);
-                     else this.moveArrow(input, -1, 0);
+                    e.preventDefault();
+                    if (this.direction === 'across') this.moveArrow(input, 0, -1);
+                    else this.moveArrow(input, -1, 0);
                 } else if (e.key.startsWith('Arrow')) {
                     e.preventDefault();
                     let dr = 0, dc = 0;
-                    if (e.key === 'ArrowUp') { dr = -1; this.direction = 'down'; }
-                    if (e.key === 'ArrowDown') { dr = 1; this.direction = 'down'; }
-                    if (e.key === 'ArrowLeft') { dc = -1; this.direction = 'across'; }
-                    if (e.key === 'ArrowRight') { dc = 1; this.direction = 'across'; }
+                    if (e.key === 'ArrowUp') {dr = -1; this.direction = 'down';}
+                    if (e.key === 'ArrowDown') {dr = 1; this.direction = 'down';}
+                    if (e.key === 'ArrowLeft') {dc = -1; this.direction = 'across';}
+                    if (e.key === 'ArrowRight') {dc = 1; this.direction = 'across';}
                     this.moveArrow(input, dr, dc);
                 } else if (e.key === 'Tab' || e.key === 'Enter') {
                     e.preventDefault();
@@ -467,4 +575,5 @@
         });
     </script>
 </body>
+
 </html>
