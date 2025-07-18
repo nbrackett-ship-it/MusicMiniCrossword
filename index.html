@@ -4,35 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Mini Crossword</title>
+    <title>Music Mini</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             max-width: 600px;
-            margin: 20px auto;
+            margin: 0 auto;
             padding: 20px;
-            background-color: #f0f2f5;
-            color: #1c1e21;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .main-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .puzzle-title {
             font-size: 20px;
             font-weight: 600;
+            color: #b3b3b3;
+            margin-bottom: 5px;
         }
 
         .puzzle-info {
-            color: #606770;
+            color: #8a8a8a;
             font-size: 14px;
         }
 
@@ -40,57 +45,64 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .puzzle-controls button {
-            padding: 8px 16px;
+            padding: 10px 18px;
             font-size: 14px;
-            border: 1px solid #ccd0d5;
-            border-radius: 6px;
-            background-color: white;
+            border: 1px solid #555;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: #e0e0e0;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .puzzle-controls button:hover {
-            background-color: #f0f2f5;
+            background: rgba(255,255,255,0.2);
+            border-color: #777;
         }
 
         .puzzle-controls button:disabled {
-            background-color: #e4e6eb;
+            background: rgba(255,255,255,0.05);
             cursor: not-allowed;
-            color: #bcc0c4;
+            color: #666;
+            border-color: #444;
         }
 
         #timer {
             font-size: 14px;
-            font-weight: 400;
-            color: #606770;
+            font-weight: 500;
+            color: #b3b3b3;
             margin-top: 10px;
         }
 
         .crossword-container {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .crossword-grid {
             display: grid;
             gap: 1px;
-            background-color: #000;
-            margin: 0 auto 20px auto;
-            border: 1px solid #000;
+            background: #333;
+            margin: 0 auto 25px auto;
+            border: 1px solid #555;
+            border-radius: 8px;
             width: fit-content;
         }
 
         .grid-cell {
-            background-color: white;
-            width: 40px;
-            height: 40px;
+            background: #f8f9fa;
+            width: 42px;
+            height: 42px;
             position: relative;
         }
 
@@ -100,71 +112,116 @@
             border: none;
             text-align: center;
             font-size: 18px;
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
             background: transparent;
             padding: 0;
             margin: 0;
             box-sizing: border-box;
+            color: #1a1a2e;
         }
 
         .grid-cell input:focus {
-            outline: 2px solid #1877f2;
+            outline: 2px solid #4fc3f7;
             z-index: 1;
         }
 
         .black-cell {
-            background-color: black;
+            background: #333;
         }
 
         .cell-number {
             position: absolute;
-            top: 2px;
-            left: 3px;
+            top: 3px;
+            left: 4px;
             font-size: 10px;
-            font-weight: 600;
-            color: #606770;
+            font-weight: 700;
+            color: #6c757d;
             pointer-events: none;
         }
 
         .clues-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
 
         .clues-section h3 {
             margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 16px;
+            margin-bottom: 12px;
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .clue-item {
-            margin-bottom: 5px;
-            line-height: 1.4;
+            margin-bottom: 8px;
+            line-height: 1.5;
             font-size: 14px;
+            color: #d0d0d0;
+        }
+
+        .clue-item b {
+            color: rgba(255,255,255,0.7);
         }
 
         #statusMessage {
             text-align: center;
-            padding: 10px;
-            margin-top: 20px;
-            border-radius: 6px;
-            font-weight: 500;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 12px;
+            font-weight: 600;
         }
 
         .success {
-            background-color: #d4edda;
-            color: #155724;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+            color: white;
             font-size: 18px;
-            line-height: 1.5;
+            line-height: 1.6;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            animation: celebrate 0.6s ease-out;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(0.95); opacity: 0; }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .main-title {
+                font-size: 28px;
+            }
+            
+            .crossword-container {
+                padding: 20px;
+            }
+            
+            .clues-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .grid-cell {
+                width: 38px;
+                height: 38px;
+            }
+            
+            .grid-cell input {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <div class="main-title">The Micro Music Crossword</div>
+        <div class="main-title">Music Mini</div>
         <div class="puzzle-title" id="puzzleTitle"></div>
         <div class="puzzle-info" id="puzzleInfo"></div>
         <div id="timer">00:00</div>
@@ -351,8 +408,8 @@
             generateGrid(puzzle) {
                 const grid = document.getElementById('crosswordGrid');
                 const {rows, cols} = puzzle.gridSize;
-                grid.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
-                grid.style.gridTemplateRows = `repeat(${rows}, 40px)`;
+                grid.style.gridTemplateColumns = `repeat(${cols}, 42px)`;
+                grid.style.gridTemplateRows = `repeat(${rows}, 42px)`;
                 grid.innerHTML = '';
 
                 const gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
@@ -481,8 +538,12 @@
 
                 input.select();
 
-                if (input.dataset.across && input.dataset.down) {
-                    // Keep current direction
+                // Only change direction if this cell doesn't support current direction
+                if (input.dataset[this.direction]) {
+                    // Keep current direction if cell supports it
+                } else if (input.dataset.across && input.dataset.down) {
+                    // If cell supports both, keep current direction or default to across
+                    this.direction = this.direction || 'across';
                 } else if (input.dataset.across) {
                     this.direction = 'across';
                 } else if (input.dataset.down) {
@@ -538,7 +599,7 @@
 
             highlightWord(currentInput) {
                 document.querySelectorAll('.grid-cell').forEach(c => {
-                    const bg = c.querySelector('input') ? 'white' : 'black';
+                    const bg = c.querySelector('input') ? '#f8f9fa' : '#333';
                     c.style.backgroundColor = bg;
                 });
 
@@ -546,9 +607,9 @@
                 if (!clueNum) return;
 
                 document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
-                    cell.parentElement.style.backgroundColor = '#dbeafe'; // Light blue for word
+                    cell.parentElement.style.backgroundColor = 'rgba(79, 195, 247, 0.08)';
                 });
-                currentInput.parentElement.style.backgroundColor = '#bfdbfe'; // Darker blue for current cell
+                currentInput.parentElement.style.backgroundColor = 'rgba(79, 195, 247, 0.12)';
             }
 
             checkCompletion() {
