@@ -258,6 +258,41 @@
                 this.elapsedTime = 0;
 
                 this.puzzles = [
+                    // "Cycling Playlist" - Full 5x5 Word Grid
+                    {
+                        title: 'Cycling Playlist',
+                        info: '2025-07-19 • Medium • 5×5',
+                        winMessage: "You're spinning fast!",
+                        gridSize: { rows: 5, cols: 5 },
+                        words: [
+                            { word: 'RACKS', number: 1, direction: 'across', row: 0, col: 0 },
+                            { word: 'IMHIT', number: 6, direction: 'across', row: 1, col: 0 },
+                            { word: 'DIALA', number: 7, direction: 'across', row: 2, col: 0 },
+                            { word: 'ERING', number: 8, direction: 'across', row: 3, col: 0 },
+                            { word: 'RINSE', number: 9, direction: 'across', row: 4, col: 0 },
+                            { word: 'RIDER', number: 1, direction: 'down', row: 0, col: 0 },
+                            { word: 'AMIRI', number: 2, direction: 'down', row: 0, col: 1 },
+                            { word: 'CHAIN', number: 3, direction: 'down', row: 0, col: 2 },
+                            { word: 'KILNS', number: 4, direction: 'down', row: 0, col: 3 },
+                            { word: 'STAGE', number: 5, direction: 'down', row: 0, col: 4 }
+                        ],
+                        clues: {
+                            across: [
+                                { number: 1, text: 'Places to park bikes or vinyl' },
+                                { number: 6, text: 'Common war movie line' },
+                                { number: 7, text: '"In my day, you\'d need to _____ number to request a song."' },
+                                { number: 8, text: 'Oura project category?' },
+                                { number: 9, text: 'Before you repeat, sometimes' }
+                            ],
+                            down: [
+                                { number: 1, text: 'Competitor, or list of requirements' },
+                                { number: 2, text: 'Luxe menswear label in hip-hop/celeb niche' },
+                                { number: 3, text: 'Drive component or fashion accessory' },
+                                { number: 4, text: 'Hot spots' },
+                                { number: 5, text: 'Part of a Tour, or a show' }
+                            ]
+                        }
+                    },
                     {
                         title: 'Global Rollout',
                         info: '2025-07-16 • 5×5',
@@ -299,10 +334,10 @@
                         gridSize: {rows: 5, cols: 5},
                         words: [
                             {word: 'GRIFF', number: 1, direction: 'across', row: 0, col: 0},
-                            {word: 'RECUR', number: 5, direction: 'across', row: 1, col: 0},
-                            {word: 'INIGO', number: 6, direction: 'across', row: 2, col: 0},
-                            {word: 'TONES', number: 7, direction: 'across', row: 3, col: 0},
-                            {word: 'GET', number: 8, direction: 'across', row: 4, col: 2},
+                            {word: 'RECUR', number: 6, direction: 'across', row: 1, col: 0},
+                            {word: 'INIGO', number: 7, direction: 'across', row: 2, col: 0},
+                            {word: 'TONES', number: 8, direction: 'across', row: 3, col: 0},
+                            {word: 'GET', number: 9, direction: 'across', row: 4, col: 2},
                             {word: 'GRIT', number: 1, direction: 'down', row: 0, col: 0},
                             {word: 'RENO', number: 2, direction: 'down', row: 0, col: 1},
                             {word: 'ICING', number: 3, direction: 'down', row: 0, col: 2},
@@ -312,10 +347,10 @@
                         clues: {
                             across: [
                                 {number: 1, text: 'Problematic PE member'},
-                                {number: 5, text: 'What choruses and hooks do'},
-                                {number: 6, text: 'This movie character said "My name is..." well before Eminem'},
-                                {number: 7, text: 'Adjust these on a mixer'},
-                                {number: 8, text: '_____ money'}
+                                {number: 6, text: 'What choruses and hooks do'},
+                                {number: 7, text: 'This movie character said "My name is..." well before Eminem'},
+                                {number: 8, text: 'Adjust these on a mixer'},
+                                {number: 9, text: '_____ money'}
                             ],
                             down: [
                                 {number: 1, text: 'DJ Premier beats had this'},
@@ -333,30 +368,30 @@
                         gridSize: {rows: 5, cols: 5},
                         words: [
                             {word: 'HULK', number: 1, direction: 'across', row: 0, col: 1},
-                            {word: 'GENIE', number: 6, direction: 'across', row: 1, col: 0},
-                            {word: 'RITZY', number: 7, direction: 'across', row: 2, col: 0},
-                            {word: 'ADAZE', number: 8, direction: 'across', row: 3, col: 0},
-                            {word: 'MIGOS', number: 9, direction: 'across', row: 4, col: 0},
-                            {word: 'GRAM', number: 1, direction: 'down', row: 0, col: 1},
-                            {word: 'HEIDI', number: 2, direction: 'down', row: 0, col: 2},
-                            {word: 'UNTAG', number: 3, direction: 'down', row: 0, col: 3},
-                            {word: 'LIZZO', number: 4, direction: 'down', row: 0, col: 4},
-                            {word: 'KEYES', number: 5, direction: 'down', row: 1, col: 4}
+                            {word: 'GENIE', number: 5, direction: 'across', row: 1, col: 0},
+                            {word: 'RITZY', number: 6, direction: 'across', row: 2, col: 0},
+                            {word: 'ADAZE', number: 7, direction: 'across', row: 3, col: 0},
+                            {word: 'MIGOS', number: 8, direction: 'across', row: 4, col: 0},
+                            {word: 'HEIDI', number: 1, direction: 'down', row: 0, col: 2},
+                            {word: 'UNTAG', number: 2, direction: 'down', row: 0, col: 3},
+                            {word: 'LIZZO', number: 3, direction: 'down', row: 0, col: 4},
+                            {word: 'KEYES', number: 4, direction: 'down', row: 1, col: 4},
+                            {word: 'GRAM', number: 5, direction: 'down', row: 0, col: 1}
                         ],
                         clues: {
                             across: [
                                 {number: 1, text: 'Superhero + erstwhile metaphor for emotional volatility'},
-                                {number: 6, text: 'Mystical figure in Xtina\'s breakthrough hit'},
-                                {number: 7, text: 'Target vibe in some music videos'},
-                                {number: 8, text: 'Mentally fuzzy (with "in")'},
-                                {number: 9, text: '2010s trio with triplet flow'}
+                                {number: 5, text: 'Mystical figure in Xtina\'s breakthrough hit'},
+                                {number: 6, text: 'Target vibe in some music videos'},
+                                {number: 7, text: 'Mentally fuzzy (with "in")'},
+                                {number: 8, text: '2010s trio with triplet flow'}
                             ],
                             down: [
-                                {number: 1, text: 'Small measurement, or place where people flex (with "the")'},
-                                {number: 2, text: 'First name of reality star with 2010s pop ambitions'},
-                                {number: 3, text: 'A quiet way to take someone out of the picture, sometimes'},
-                                {number: 4, text: 'Female MC/singer with record breaking chart run at end of decade'},
-                                {number: 5, text: 'The Grammys love to go to her'}
+                                {number: 1, text: 'First name of reality star with 2010s pop ambitions'},
+                                {number: 2, text: 'A quiet way to take someone out of the picture, sometimes'},
+                                {number: 3, text: 'Female MC/singer with record breaking chart run at end of decade'},
+                                {number: 4, text: 'The Grammys love to go to her'},
+                                {number: 5, text: 'Small measurement, or place where people flex (with "the")'}
                             ]
                         }
                     }
@@ -607,9 +642,9 @@
                 if (!clueNum) return;
 
                 document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
-                    cell.parentElement.style.backgroundColor = 'rgba(79, 195, 247, 0.08)';
+                    cell.parentElement.style.backgroundColor = '#e3f2fd'; // Light blue for word
                 });
-                currentInput.parentElement.style.backgroundColor = 'rgba(79, 195, 247, 0.12)';
+                currentInput.parentElement.style.backgroundColor = '#bbdefb'; // Slightly darker blue for current cell
             }
 
             checkCompletion() {
