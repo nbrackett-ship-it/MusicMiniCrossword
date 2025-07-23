@@ -7,9 +7,11 @@
     <title>Music Mini</title>
     <style>
         :root {
-            --grid-size: 5; /* Default grid size */
-            --cell-size: min(18vw, 70px); /* Responsive cell size */
-            --grid-width: calc(var(--grid-size) * var(--cell-size) + (var(--grid-size) - 1px));
+            --grid-size: 5;
+            --cell-size-mobile: 18vw;
+            --cell-size-desktop: 55px;
+            --grid-width-mobile: calc(var(--grid-size) * var(--cell-size-mobile) + (var(--grid-size) - 1px));
+            --grid-width-desktop: calc(var(--grid-size) * var(--cell-size-desktop) + (var(--grid-size) - 1px));
         }
 
         body {
@@ -18,27 +20,24 @@
             padding: 0;
             background: #121212;
             color: #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             height: 100vh;
             overflow: hidden;
         }
         
-        /* 1. STICKY CLUE BAR */
         #sticky-clue-bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             padding: 12px 15px;
-            background: #1c1c1c;
-            border-bottom: 1px solid #333;
+            background: linear-gradient(to bottom, #2c2c2c, #1c1c1c);
+            border-bottom: 1px solid #444;
             z-index: 100;
             font-size: 15px;
             text-align: center;
             min-height: 20px;
             box-sizing: border-box;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         #sticky-clue-bar .clue-number {
@@ -48,35 +47,21 @@
 
         .main-container {
             width: 100%;
+            height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding: 15px;
             box-sizing: border-box;
-            /* 4. KEYBOARD-SAFE LAYOUT: Add padding to avoid overlap with sticky bar */
-            padding-top: 60px; 
-            padding-bottom: 20px;
+            padding-top: 60px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
-
-        .main-title {
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .puzzle-title {
-            font-size: 18px;
-            color: #b3b3b3;
-            margin-bottom: 5px;
-        }
-
-        .puzzle-info {
-            color: #8a8a8a;
-            font-size: 14px;
-        }
+        .main-title { font-size: 28px; font-weight: 700; }
+        .puzzle-title { font-size: 18px; color: #b3b3b3; margin-bottom: 5px; }
+        .puzzle-info { color: #8a8a8a; font-size: 14px; }
 
         .puzzle-controls {
             display: flex;
@@ -84,108 +69,100 @@
             align-items: center;
             margin: 20px 0;
         }
-
         .puzzle-controls button {
-            padding: 10px 18px;
-            font-size: 14px;
-            border: 1px solid #555;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #e0e0e0;
-            cursor: pointer;
-            transition: background-color 0.2s;
+            padding: 10px 18px; font-size: 14px; border: 1px solid #555;
+            border-radius: 8px; background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0; cursor: pointer; transition: background-color 0.2s;
         }
+        .puzzle-controls button:hover { background: rgba(255, 255, 255, 0.2); }
+        .puzzle-controls button:disabled { background: rgba(255, 255, 255, 0.05); cursor: not-allowed; color: #666; }
 
-        .puzzle-controls button:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .puzzle-controls button:disabled {
-            background: rgba(255, 255, 255, 0.05);
-            cursor: not-allowed;
-            color: #666;
-        }
-        
-        /* 2. RESPONSIVE GRID SCALING */
         .crossword-grid {
-            display: grid;
-            gap: 1px;
-            background: #555;
-            border: 1px solid #555;
-            width: var(--grid-width);
+            display: grid; gap: 1px; background: #555; border: 1px solid #555;
             margin: 0 auto 20px auto;
-            grid-template-columns: repeat(var(--grid-size), var(--cell-size));
-            grid-template-rows: repeat(var(--grid-size), var(--cell-size));
+            width: var(--grid-width-mobile);
+            grid-template-columns: repeat(var(--grid-size), var(--cell-size-mobile));
+            grid-template-rows: repeat(var(--grid-size), var(--cell-size-mobile));
         }
-
-        .grid-cell {
-            background: #fff;
-            position: relative;
-        }
-
+        .grid-cell { background: #fff; position: relative; }
         .grid-cell input {
-            width: 100%;
-            height: 100%;
-            border: none;
-            text-align: center;
-            font-size: calc(var(--cell-size) * 0.5);
-            font-weight: 600;
-            text-transform: uppercase;
-            background: transparent;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            color: #121212;
+            width: 100%; height: 100%; border: none; text-align: center;
+            font-size: calc(var(--cell-size-mobile) * 0.5); font-weight: 600; text-transform: uppercase;
+            background: transparent; padding: 0; margin: 0; box-sizing: border-box; color: #121212;
         }
-
-        .grid-cell input:focus {
-            outline: none;
-        }
-        
-        .grid-cell.highlight-word {
-            background-color: #bbdefb;
-        }
-
-        .grid-cell.highlight-active {
-            background-color: #64b5f6;
-        }
-
-        .black-cell {
-            background: #1c1c1c;
-        }
-
+        .grid-cell input:focus { outline: none; }
+        .grid-cell.highlight-word { background-color: #bbdefb; }
+        .grid-cell.highlight-active { background-color: #64b5f6; }
+        .black-cell { background: #1c1c1c; }
         .cell-number {
-            position: absolute;
-            top: 2px;
-            left: 3px;
-            font-size: calc(var(--cell-size) * 0.25);
-            font-weight: 700;
-            color: #666;
-            pointer-events: none;
+            position: absolute; top: 2px; left: 3px;
+            font-size: calc(var(--cell-size-mobile) * 0.25);
+            font-weight: 700; color: #666; pointer-events: none;
         }
 
-        .clues-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .clues-section h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .clue-item {
-            margin-bottom: 8px;
-            line-height: 1.5;
-            font-size: 15px;
-        }
+        .clues-container { display: flex; flex-direction: column; gap: 20px; }
+        .clues-section h3 { margin-top: 0; margin-bottom: 10px; font-size: 18px; font-weight: 600; }
+        .clue-item { margin-bottom: 8px; line-height: 1.5; font-size: 15px; }
         
-        #statusMessage { text-align: center; padding: 15px; margin-top: 20px; border-radius: 12px; font-weight: 600; }
-        .success { background: #4CAF50; color: white; }
+        #victory-screen {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 200; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #victory-screen.show { opacity: 1; pointer-events: auto; }
+        .victory-content {
+            text-align: center; color: white;
+            transform: scale(0.9); transition: transform 0.3s ease;
+        }
+        #victory-screen.show .victory-content { transform: scale(1); }
+        .victory-icon { font-size: 60px; animation: bounce 0.8s ease-in-out; }
+        .victory-gif { max-width: 80vw; max-height: 40vh; border-radius: 12px; margin-bottom: 20px; }
+        .victory-message { font-size: 24px; font-weight: 700; margin: 20px 0; }
+        
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
+        @media (min-width: 768px) {
+            body {
+                height: auto;
+                overflow: auto;
+            }
+
+            #sticky-clue-bar {
+                display: none;
+            }
+
+            .main-container {
+                height: auto;
+                overflow: visible;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 40px;
+                padding: 40px 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            
+            .left-panel { flex-shrink: 0; }
+            .clues-container { flex-grow: 1; }
+            
+            .header, .puzzle-controls {
+                margin-left: auto;
+                margin-right: auto;
+                width: var(--grid-width-desktop);
+            }
+            
+            .crossword-grid {
+                width: var(--grid-width-desktop);
+                grid-template-columns: repeat(var(--grid-size), var(--cell-size-desktop));
+                grid-template-rows: repeat(var(--grid-size), var(--cell-size-desktop));
+            }
+
+            .grid-cell input { font-size: calc(var(--cell-size-desktop) * 0.5); }
+            .cell-number { font-size: calc(var(--cell-size-desktop) * 0.25); }
+        }
     </style>
 </head>
 
@@ -196,19 +173,19 @@
     </div>
     
     <div class="main-container">
-        <div class="header">
-            <div class="main-title">Music Mini</div>
-            <div class="puzzle-title" id="puzzleTitle"></div>
-            <div class="puzzle-info" id="puzzleInfo"></div>
+        <div class="left-panel">
+            <div class="header">
+                <div class="main-title">Music Mini</div>
+                <div class="puzzle-title" id="puzzleTitle"></div>
+                <div class="puzzle-info" id="puzzleInfo"></div>
+            </div>
+            <div class="crossword-grid" id="crosswordGrid"></div>
+            <div class="puzzle-controls">
+                <button id="prevPuzzle">← Previous</button>
+                <button id="nextPuzzle">Next →</button>
+            </div>
         </div>
-
-        <div class="crossword-grid" id="crosswordGrid"></div>
-
-        <div class="puzzle-controls">
-            <button id="prevPuzzle">← Previous</button>
-            <button id="nextPuzzle">Next →</button>
-        </div>
-
+        
         <div class="clues-container">
             <div class="clues-section">
                 <h3>Across</h3>
@@ -219,8 +196,16 @@
                 <div id="cluesDown"></div>
             </div>
         </div>
+    </div>
 
-        <div id="statusMessage"></div>
+    <div id="victory-screen">
+        <div class="victory-content">
+            <div id="victory-icon-container">
+                 <span class="victory-icon">&#9835;</span>
+            </div>
+            <div id="victory-gif-container"></div>
+            <div class="victory-message" id="victory-message-text">You did it!</div>
+        </div>
     </div>
 
 
@@ -231,12 +216,14 @@
                 this.direction = 'across';
                 this.activeCell = null;
                 this.puzzles = [
-                    // Puzzle data remains the same...
-                    // "Cycling Playlist"
                     {
                         title: 'Cycling Playlist',
                         info: '2025-07-19 • Medium • 5×5',
-                        winMessage: "You're spinning fast!",
+                        // --- CUSTOM MESSAGES REMOVED FOR A RELIABLE DEFAULT ---
+                        // You can add back 'winMessage' or 'victoryGif' properties here
+                        // to override the default for a specific puzzle. For example:
+                        // winMessage: "You won the Tour de France!",
+                        // victoryGif: 'https://your-valid-gif-url.gif',
                         gridSize: { rows: 5, cols: 5 },
                         words: [
                             { word: 'RACKS', number: 1, direction: 'across', row: 0, col: 0 }, { word: 'IMHIT', number: 6, direction: 'across', row: 1, col: 0 },
@@ -245,16 +232,7 @@
                             { word: 'AMIRI', number: 2, direction: 'down', row: 0, col: 1 }, { word: 'CHAIN', number: 3, direction: 'down', row: 0, col: 2 },
                             { word: 'KILNS', number: 4, direction: 'down', row: 0, col: 3 }, { word: 'STAGE', number: 5, direction: 'down', row: 0, col: 4 }
                         ],
-                        clues: {
-                            across: [
-                                { number: 1, text: 'Places to park bikes or vinyl' }, { number: 6, text: 'Common war movie line' },
-                                { number: 7, text: '"In my day, you\'d need to _____ number to request a song."' }, { number: 8, text: 'Oura project category?' }, { number: 9, text: 'Before you repeat, sometimes' }
-                            ],
-                            down: [
-                                { number: 1, text: 'Competitor, or list of requirements' }, { number: 2, text: 'Luxe menswear label in hip-hop/celeb niche' },
-                                { number: 3, text: 'Drive component or fashion accessory' }, { number: 4, text: 'Hot spots' }, { number: 5, text: 'Part of a Tour, or a show' }
-                            ]
-                        }
+                        clues: { across: [ { number: 1, text: 'Places to park bikes or vinyl' }, { number: 6, text: 'Common war movie line' }, { number: 7, text: '"In my day, you\'d need to _____ number to request a song."' }, { number: 8, text: 'Oura project category?' }, { number: 9, text: 'Before you repeat, sometimes' } ], down: [ { number: 1, text: 'Competitor, or list of requirements' }, { number: 2, text: 'Luxe menswear label in hip-hop/celeb niche' }, { number: 3, text: 'Drive component or fashion accessory' }, { number: 4, text: 'Hot spots' }, { number: 5, text: 'Part of a Tour, or a show' } ] }
                     }
                 ];
                 this.init();
@@ -268,23 +246,19 @@
             loadPuzzle() {
                 const puzzle = this.puzzles[this.currentPuzzleIndex];
                 document.documentElement.style.setProperty('--grid-size', puzzle.gridSize.cols);
-
                 document.getElementById('puzzleTitle').textContent = puzzle.title;
                 document.getElementById('puzzleInfo').textContent = puzzle.info;
-                document.getElementById('statusMessage').innerHTML = '';
-                
                 this.generateGrid(puzzle);
                 this.updateClues(puzzle);
-
                 document.getElementById('prevPuzzle').disabled = this.currentPuzzleIndex === 0;
                 document.getElementById('nextPuzzle').disabled = this.currentPuzzleIndex === this.puzzles.length - 1;
             }
 
+            // (The rest of the JavaScript is unchanged from the previous version)
             generateGrid(puzzle) {
                 const grid = document.getElementById('crosswordGrid');
                 grid.innerHTML = '';
                 const gridData = Array(puzzle.gridSize.rows).fill(null).map(() => Array(puzzle.gridSize.cols).fill(null));
-                
                 puzzle.words.forEach(wordInfo => {
                     let r = wordInfo.row, c = wordInfo.col;
                     for (let i = 0; i < wordInfo.word.length; i++) {
@@ -295,7 +269,6 @@
                         if (wordInfo.direction === 'across') c++; else r++;
                     }
                 });
-
                 for (let r = 0; r < puzzle.gridSize.rows; r++) {
                     for (let c = 0; c < puzzle.gridSize.cols; c++) {
                         const cellData = gridData[r][c];
@@ -329,7 +302,6 @@
                  const downDiv = document.getElementById('cluesDown');
                  acrossDiv.innerHTML = '';
                  downDiv.innerHTML = '';
-
                  puzzle.clues.across.forEach(clue => {
                      const div = document.createElement('div');
                      div.className = 'clue-item';
@@ -347,11 +319,13 @@
             setupEvents() {
                 document.getElementById('prevPuzzle').addEventListener('click', () => this.navigate(-1));
                 document.getElementById('nextPuzzle').addEventListener('click', () => this.navigate(1));
-                
                 const grid = document.getElementById('crosswordGrid');
                 grid.addEventListener('click', (e) => this.handleCellClick(e));
                 grid.addEventListener('input', (e) => this.handleInput(e));
                 grid.addEventListener('keydown', (e) => this.handleKeydown(e));
+                document.getElementById('victory-screen').addEventListener('click', () => {
+                    document.getElementById('victory-screen').classList.remove('show');
+                });
             }
 
             navigate(direction) {
@@ -359,18 +333,14 @@
                 this.loadPuzzle();
             }
             
-            // 3. TAP-BASED CLUE NAVIGATION LOGIC
             handleCellClick(e) {
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
-                
                 if (input === this.activeCell && input.dataset.across && input.dataset.down) {
                     this.direction = this.direction === 'across' ? 'down' : 'across';
                 } else if (!input.dataset[this.direction]) {
-                    // If the cell isn't part of the current direction, switch to one it is part of.
                     this.direction = input.dataset.across ? 'across' : 'down';
                 }
-                
                 this.activeCell = input;
                 this.highlightWord();
             }
@@ -418,11 +388,9 @@
             highlightWord() {
                 document.querySelectorAll('.grid-cell').forEach(c => c.classList.remove('highlight-word', 'highlight-active'));
                 if (!this.activeCell) return;
-                
                 this.activeCell.select();
                 const clueNum = this.activeCell.dataset[this.direction];
                 if (!clueNum) return;
-                
                 document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
                     cell.parentElement.classList.add('highlight-word');
                 });
@@ -430,19 +398,44 @@
                 this.updateStickyClue(clueNum);
             }
 
-            // 1. UPDATE STICKY CLUE BAR
             updateStickyClue(clueNum) {
                 const puzzle = this.puzzles[this.currentPuzzleIndex];
                 const clueData = puzzle.clues[this.direction].find(c => c.number == clueNum);
-                
                 const clueBar = document.getElementById('sticky-clue-bar');
                 clueBar.querySelector('.clue-number').textContent = `${clueData.number}.`;
                 clueBar.querySelector('.clue-text').textContent = clueData.text;
             }
 
-            loadProgress() { /* ... function remains the same ... */ }
-            saveProgress() { /* ... function remains the same ... */ }
-            checkCompletion() { /* ... function remains the same ... */ }
+            loadProgress() { /* Placeholder */ }
+            saveProgress() { /* Placeholder */ }
+
+            checkCompletion() {
+                const inputs = document.querySelectorAll('.grid-cell input');
+                for (const input of inputs) {
+                    if (input.value.toUpperCase() !== input.dataset.answer) return;
+                }
+                this.showVictoryScreen();
+            }
+
+            showVictoryScreen() {
+                const puzzle = this.puzzles[this.currentPuzzleIndex];
+                const screen = document.getElementById('victory-screen');
+                const iconContainer = document.getElementById('victory-icon-container');
+                const gifContainer = document.getElementById('victory-gif-container');
+                
+                // Set the victory message, defaulting to "You did it!"
+                document.getElementById('victory-message-text').textContent = puzzle.winMessage || "You did it!";
+                
+                if (puzzle.victoryGif) {
+                    iconContainer.style.display = 'none';
+                    gifContainer.innerHTML = `<img src="${puzzle.victoryGif}" class="victory-gif" alt="Victory animation">`;
+                    gifContainer.style.display = 'block';
+                } else {
+                    gifContainer.style.display = 'none';
+                    iconContainer.style.display = 'block';
+                }
+                screen.classList.add('show');
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
