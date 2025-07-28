@@ -23,7 +23,7 @@
             height: 100vh;
             overflow: hidden;
         }
-        
+
         #sticky-clue-bar {
             position: fixed;
             top: 0;
@@ -112,7 +112,7 @@
         .clues-container { display: flex; flex-direction: column; gap: 20px; }
         .clues-section h3 { margin-top: 0; margin-bottom: 10px; font-size: 18px; font-weight: 600; }
         .clue-item { margin-bottom: 8px; line-height: 1.5; font-size: 15px; }
-        
+
         #victory-screen {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
@@ -129,7 +129,7 @@
         .victory-icon { font-size: 60px; animation: bounce 0.8s ease-in-out; }
         .victory-gif { max-width: 80vw; max-height: 40vh; border-radius: 12px; margin-bottom: 20px; }
         .victory-message { font-size: 24px; font-weight: 700; margin: 20px 0; }
-        
+
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         @media (min-width: 768px) {
@@ -153,16 +153,16 @@
                 max-width: 1200px;
                 margin: 0 auto;
             }
-            
+
             .left-panel { flex-shrink: 0; }
             .clues-container { flex-grow: 1; }
-            
+
             .header, .puzzle-controls {
                 margin-left: auto;
                 margin-right: auto;
                 width: var(--grid-width-desktop);
             }
-            
+
             .crossword-grid {
                 width: var(--grid-width-desktop);
                 grid-template-columns: repeat(var(--grid-size), var(--cell-size-desktop));
@@ -180,7 +180,7 @@
         <span class="clue-number"></span>
         <span class="clue-text">Select a square to start</span>
     </div>
-    
+
     <div class="main-container">
         <div class="left-panel">
             <div class="header">
@@ -194,7 +194,7 @@
                 <button id="nextPuzzle">Next →</button>
             </div>
         </div>
-        
+
         <div class="clues-container">
             <div class="clues-section">
                 <h3>Across</h3>
@@ -224,15 +224,12 @@
                 this.currentPuzzleIndex = 0;
                 this.direction = 'across';
                 this.activeCell = null;
+                this.userToken = null;
                 this.puzzles = [
                     {
+                        id: 'cycling-playlist-2025-07-19',
                         title: 'Cycling Playlist',
                         info: '2025-07-19 • Medium • 5×5',
-                        // --- CUSTOM MESSAGES REMOVED FOR A RELIABLE DEFAULT ---
-                        // You can add back 'winMessage' or 'victoryGif' properties here
-                        // to override the default for a specific puzzle. For example:
-                        // winMessage: "You won the Tour de France!",
-                        // victoryGif: 'https://your-valid-gif-url.gif',
                         gridSize: { rows: 5, cols: 5 },
                         words: [
                             { word: 'RACKS', number: 1, direction: 'across', row: 0, col: 0 }, { word: 'IMHIT', number: 6, direction: 'across', row: 1, col: 0 },
@@ -242,14 +239,150 @@
                             { word: 'KILNS', number: 4, direction: 'down', row: 0, col: 3 }, { word: 'STAGE', number: 5, direction: 'down', row: 0, col: 4 }
                         ],
                         clues: { across: [ { number: 1, text: 'Places to park bikes or vinyl' }, { number: 6, text: 'Common war movie line' }, { number: 7, text: '"In my day, you\'d need to _____ number to request a song."' }, { number: 8, text: 'Oura project category?' }, { number: 9, text: 'Before you repeat, sometimes' } ], down: [ { number: 1, text: 'Competitor, or list of requirements' }, { number: 2, text: 'Luxe menswear label in hip-hop/celeb niche' }, { number: 3, text: 'Drive component or fashion accessory' }, { number: 4, text: 'Hot spots' }, { number: 5, text: 'Part of a Tour, or a show' } ] }
+                    },
+                    {
+                        id: 'global-rollout-2025-07-16',
+                        title: 'Global Rollout',
+                        info: '2025-07-16 • Medium • 5×5',
+                        gridSize: { rows: 5, cols: 5 },
+                        words: [
+                            { word: 'YORKE', number: 1, direction: 'across', row: 0, col: 0 },
+                            { word: 'ARENA', number: 6, direction: 'across', row: 1, col: 0 },
+                            { word: 'NIGER', number: 7, direction: 'across', row: 2, col: 0 },
+                            { word: 'NOEL', number: 8, direction: 'across', row: 3, col: 0 },
+                            { word: 'INTL', number: 9, direction: 'across', row: 4, col: 0 },
+                            { word: 'YANNI', number: 1, direction: 'down', row: 0, col: 0 },
+                            { word: 'ORION', number: 2, direction: 'down', row: 0, col: 1 },
+                            { word: 'REGET', number: 3, direction: 'down', row: 0, col: 2 },
+                            { word: 'KNELL', number: 4, direction: 'down', row: 0, col: 3 },
+                            { word: 'EAR', number: 5, direction: 'down', row: 0, col: 4 }
+                        ],
+                        clues: {
+                            across: [
+                                { number: 1, text: 'Ambition makes you look pretty ugly, to him' },
+                                { number: 6, text: 'A step above a shed' },
+                                { number: 7, text: 'Not to be confused with the Afrobeats mecca' },
+                                { number: 8, text: 'Tolerating his brother this summer' },
+                                { number: 9, text: 'Abbr. for worldly major label dept' }
+                            ],
+                            down: [
+                                { number: 1, text: 'A lord of the keytar' },
+                                { number: 2, text: 'Master of Puppets deep cut' },
+                                { number: 3, text: 'Third word in title of Edith Piaf classic, if it were about never obtaining anything again?' },
+                                { number: 4, text: 'A solemn bell sound' },
+                                { number: 5, text: 'Trust this, along with your other one' }
+                            ]
+                        }
+                    },
+                    {
+                        id: 'classic-hiphop-2025-07-17',
+                        title: 'Classic Hip-Hop and Whatnot',
+                        info: '2025-07-17 • Medium • 5×5',
+                        gridSize: { rows: 5, cols: 5 },
+                        words: [
+                            { word: 'FROST', number: 1, direction: 'across', row: 0, col: 0 },
+                            { word: 'RAKIM', number: 6, direction: 'across', row: 1, col: 0 },
+                            { word: 'ORION', number: 7, direction: 'across', row: 2, col: 0 },
+                            { word: 'NEURO', number: 8, direction: 'across', row: 3, col: 0 },
+                            { word: 'TOAST', number: 9, direction: 'across', row: 4, col: 0 },
+                            { word: 'FRONT', number: 1, direction: 'down', row: 0, col: 0 },
+                            { word: 'RADIO', number: 2, direction: 'down', row: 0, col: 1 },
+                            { word: 'OKIES', number: 3, direction: 'down', row: 0, col: 2 },
+                            { word: 'SINUT', number: 4, direction: 'down', row: 0, col: 3 },
+                            { word: 'TMNOT', number: 5, direction: 'down', row: 0, col: 4 }
+                        ],
+                        clues: {
+                            across: [
+                                { number: 1, text: 'O\'Shea\'s friend Kid (Renegade)' },
+                                { number: 6, text: '1/2 of hip-hop royalty' },
+                                { number: 7, text: 'The Hunter' },
+                                { number: 8, text: 'Prefix related to the brain' },
+                                { number: 9, text: 'Cheers with drinks' }
+                            ],
+                            down: [
+                                { number: 1, text: 'Pose, in hip-hop' },
+                                { number: 2, text: 'LL Cool J couldn\'t live without it' },
+                                { number: 3, text: 'Steinbeck\'s migrants' },
+                                { number: 4, text: 'Body cavity in your head' },
+                                { number: 5, text: 'Teenage Mutant Ninja Turtles, initially, when out of order' }
+                            ]
+                        }
                     }
                 ];
                 this.init();
             }
 
             init() {
+                // Check if we're on the live Replit URL
+                this.isProduction = window.location.hostname.includes('.replit.app') || 
+                                    window.location.hostname.includes('.repl.co');
+
+                // Load puzzle from URL parameters
+                this.loadPuzzleFromURL();
+
+                // Check subscription status
+                if (this.isProduction) {
+                    this.checkSubscription();
+                }
+
                 this.loadPuzzle();
                 this.setupEvents();
+            }
+
+            loadPuzzleFromURL() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const puzzleId = urlParams.get('id');
+                const token = urlParams.get('token');
+
+                // Store token for subscription check
+                this.userToken = token;
+
+                // Load specific puzzle
+                if (puzzleId) {
+                    const puzzleIndex = this.puzzles.findIndex(p => p.id === puzzleId);
+                    if (puzzleIndex !== -1) {
+                        this.currentPuzzleIndex = puzzleIndex;
+                    }
+                }
+            }
+
+            checkSubscription() {
+                // For MVP, just check if token exists
+                // Later you can validate with Beehiiv API
+                if (!this.userToken) {
+                    // Show subscription gate after a delay so they see the puzzle briefly
+                    setTimeout(() => this.showSubscriptionGate(), 2000);
+                    return false;
+                }
+                return true;
+            }
+
+            showSubscriptionGate() {
+                const modal = document.createElement('div');
+                modal.id = 'subscription-modal';
+                modal.innerHTML = `
+                    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+                                background: rgba(0,0,0,0.8); display: flex; 
+                                align-items: center; justify-content: center; z-index: 1000;">
+                        <div style="background: white; padding: 40px; border-radius: 12px; 
+                                    max-width: 400px; text-align: center;">
+                            <h2 style="color: #1a1a1a; margin-bottom: 20px;">Subscribe to Music Mini</h2>
+                            <p style="color: #666; margin-bottom: 30px;">
+                                Get daily music crosswords delivered to your inbox
+                            </p>
+                            <a href="https://your-newsletter.beehiiv.com/subscribe" 
+                               style="display: inline-block; background: #1877f2; color: white; 
+                                      padding: 12px 30px; border-radius: 6px; text-decoration: none; 
+                                      font-weight: 600;">
+                                Subscribe Now
+                            </a>
+                            <p style="margin-top: 20px; font-size: 14px; color: #999;">
+                                Already a subscriber? Check your email for the correct link.
+                            </p>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
             }
 
             loadPuzzle() {
@@ -263,7 +396,7 @@
                 document.getElementById('nextPuzzle').disabled = this.currentPuzzleIndex === this.puzzles.length - 1;
             }
 
-            // (The rest of the JavaScript is unchanged from the previous version)
+            // Rest of the methods remain exactly the same as your original
             generateGrid(puzzle) {
                 const grid = document.getElementById('crosswordGrid');
                 grid.innerHTML = '';
@@ -341,7 +474,7 @@
                 this.currentPuzzleIndex += direction;
                 this.loadPuzzle();
             }
-            
+
             handleCellClick(e) {
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
@@ -353,7 +486,7 @@
                 this.activeCell = input;
                 this.highlightWord();
             }
-            
+
             handleInput(e) {
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
@@ -431,10 +564,10 @@
                 const screen = document.getElementById('victory-screen');
                 const iconContainer = document.getElementById('victory-icon-container');
                 const gifContainer = document.getElementById('victory-gif-container');
-                
+
                 // Set the victory message, defaulting to "You did it!"
                 document.getElementById('victory-message-text').textContent = puzzle.winMessage || "You did it!";
-                
+
                 if (puzzle.victoryGif) {
                     iconContainer.style.display = 'none';
                     gifContainer.innerHTML = `<img src="${puzzle.victoryGif}" class="victory-gif" alt="Victory animation">`;
