@@ -99,3 +99,51 @@ h1 {
   font-weight: bold;
   text-align: center;
 }
+
+/* Sticky clue bar for mobile */
+#sticky-clue-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 16px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-bottom: 2px solid #1877f2;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    display: none;
+    font-size: 16px;
+    color: #1c1e21;
+    font-weight: 500;
+}
+
+#sticky-clue-bar.show {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#sticky-clue-bar .clue-number {
+    font-weight: 700;
+    color: #1877f2;
+    margin-right: 8px;
+}
+
+#sticky-clue-bar .clue-text {
+    color: #1c1e21;
+    font-size: 16px;
+    font-weight: 500;
+}
