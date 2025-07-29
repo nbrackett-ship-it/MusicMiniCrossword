@@ -129,6 +129,7 @@
         .victory-icon { font-size: 60px; animation: bounce 0.8s ease-in-out; }
         .victory-gif { max-width: 80vw; max-height: 40vh; border-radius: 12px; margin-bottom: 20px; }
         .victory-message { font-size: 24px; font-weight: 700; margin: 20px 0; }
+        .victory-time { font-size: 18px; color: #b3b3b3; margin-top: 10px; }
 
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
@@ -214,6 +215,7 @@
             </div>
             <div id="victory-gif-container"></div>
             <div class="victory-message" id="victory-message-text">You did it!</div>
+            <div class="victory-time" id="victory-time"></div>
         </div>
     </div>
 
@@ -225,6 +227,9 @@
                 this.direction = 'across';
                 this.activeCell = null;
                 this.userToken = null;
+                this.startTime = null;
+                this.elapsedTime = 0;
+                this.timerInterval = null;
                 this.puzzles = [
                     {
                         id: 'cycling-playlist-2025-07-19',
@@ -394,6 +399,9 @@
                 this.updateClues(puzzle);
                 document.getElementById('prevPuzzle').disabled = this.currentPuzzleIndex === 0;
                 document.getElementById('nextPuzzle').disabled = this.currentPuzzleIndex === this.puzzles.length - 1;
+                
+                // Reset timer for new puzzle
+                this.resetTimer();
             }
 
             // Rest of the methods remain exactly the same as your original
@@ -468,6 +476,26 @@
                 document.getElementById('victory-screen').addEventListener('click', () => {
                     document.getElementById('victory-screen').classList.remove('show');
                 });
+                
+                // Timer management on page visibility change
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        this.stopTimer();
+                    } else {
+                        // Only restart if puzzle not complete and we had started
+                        if (this.elapsedTime > 0 && !this.checkIfComplete()) {
+                            this.startTimer();
+                        }
+                    }
+                });
+                
+                // Also handle window blur/focus
+                window.addEventListener('blur', () => this.stopTimer());
+                window.addEventListener('focus', () => {
+                    if (this.elapsedTime > 0 && !this.checkIfComplete()) {
+                        this.startTimer();
+                    }
+                });
             }
 
             navigate(direction) {
@@ -491,6 +519,12 @@
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
                 input.value = input.value.toUpperCase();
+                
+                // Start timer on first input
+                if (!this.timerInterval && input.value) {
+                    this.startTimer();
+                }
+                
                 this.saveProgress();
                 if (input.value) this.moveArrow(input, this.direction === 'across' ? 0 : 1, this.direction === 'across' ? 1 : 0);
                 this.checkCompletion();
@@ -548,6 +582,48 @@
                 clueBar.querySelector('.clue-text').textContent = clueData.text;
             }
 
+            // Timer management methods
+            startTimer() {
+                if (!this.startTime) {
+                    this.startTime = Date.now() - this.elapsedTime * 1000;
+                }
+                
+                if (!this.timerInterval) {
+                    this.timerInterval = setInterval(() => {
+                        this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
+                    }, 1000);
+                }
+            }
+            
+            stopTimer() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
+                }
+            }
+            
+            resetTimer() {
+                this.stopTimer();
+                this.startTime = null;
+                this.elapsedTime = 0;
+            }
+            
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+            
+            checkIfComplete() {
+                const inputs = document.querySelectorAll('.grid-cell input');
+                for (const input of inputs) {
+                    if (input.value !== input.dataset.answer) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
             loadProgress() { /* Placeholder */ }
             saveProgress() { /* Placeholder */ }
 
@@ -556,6 +632,7 @@
                 for (const input of inputs) {
                     if (input.value.toUpperCase() !== input.dataset.answer) return;
                 }
+                this.stopTimer();
                 this.showVictoryScreen();
             }
 
@@ -567,6 +644,9 @@
 
                 // Set the victory message, defaulting to "You did it!"
                 document.getElementById('victory-message-text').textContent = puzzle.winMessage || "You did it!";
+                
+                // Update timer display
+                document.getElementById('victory-time').textContent = `Your Time: ${this.formatTime(this.elapsedTime)}`;
 
                 if (puzzle.victoryGif) {
                     iconContainer.style.display = 'none';
