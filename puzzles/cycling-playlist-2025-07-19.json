@@ -1,0 +1,34 @@
+{
+  "id": "cycling-playlist-2025-07-19",
+  "title": "Cycling Playlist",
+  "info": "2025-07-19 • Medium • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "RACKS", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "IMHIT", "number": 6, "direction": "across", "row": 1, "col": 0 },
+    { "word": "DIALA", "number": 7, "direction": "across", "row": 2, "col": 0 },
+    { "word": "ERING", "number": 8, "direction": "across", "row": 3, "col": 0 },
+    { "word": "RINSE", "number": 9, "direction": "across", "row": 4, "col": 0 },
+    { "word": "RIDER", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "AMIRI", "number": 2, "direction": "down", "row": 0, "col": 1 },
+    { "word": "CHAIN", "number": 3, "direction": "down", "row": 0, "col": 2 },
+    { "word": "KILNS", "number": 4, "direction": "down", "row": 0, "col": 3 },
+    { "word": "STAGE", "number": 5, "direction": "down", "row": 0, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Places to park bikes or vinyl" },
+      { "number": 6, "text": "Common war movie line" },
+      { "number": 7, "text": "\"In my day, you'd need to _____ number to request a song.\"" },
+      { "number": 8, "text": "Oura project category?" },
+      { "number": 9, "text": "Before you repeat, sometimes" }
+    ],
+    "down": [
+      { "number": 1, "text": "Competitor, or list of requirements" },
+      { "number": 2, "text": "Luxe menswear label in hip-hop/celeb niche" },
+      { "number": 3, "text": "Drive component or fashion accessory" },
+      { "number": 4, "text": "Hot spots" },
+      { "number": 5, "text": "Part of a Tour, or a show" }
+    ]
+  }
+}

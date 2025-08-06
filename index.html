@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,23 +25,22 @@
         }
 
         #sticky-clue-bar {
-            /* No longer fixed; it's part of the page flow */
-            position: relative; 
+            position: relative;
             padding: 12px 15px;
-            background: #282828; /* A darker background to fit in */
+            background: #282828;
             border: 1px solid #444;
-            border-radius: 8px; /* Rounded corners */
+            border-radius: 8px;
             font-size: 15px;
             text-align: center;
             min-height: 20px;
             box-sizing: border-box;
-            color: #e0e0e0; /* Light text color */
-            margin-bottom: 20px; /* Space it from the grid */
+            color: #e0e0e0;
+            margin-bottom: 20px;
         }
 
         #sticky-clue-bar .clue-number {
             font-weight: 700;
-            color: #64b5f6; /* Use highlight color for consistency */
+            color: #64b5f6;
             margin-right: 8px;
         }
 
@@ -58,7 +56,6 @@
             -webkit-overflow-scrolling: touch;
             padding: 15px;
             box-sizing: border-box;
-            /* Removed the large padding-top, no longer needed */
         }
 
         .header {
@@ -181,7 +178,7 @@
                 <div class="puzzle-title" id="puzzleTitle"></div>
                 <div class="puzzle-info" id="puzzleInfo"></div>
             </div>
-            
+
             <div id="sticky-clue-bar">
                 <span class="clue-number"></span>
                 <span class="clue-text">Select a square to start</span>
@@ -221,139 +218,116 @@
     <script>
         class SimpleCrossword {
             constructor() {
+                // --- NEW: This is the only list you need to manage now! ---
+                // Just add the ID (filename without .json) of your new puzzles here.
+                this.puzzleIds = [
+                    'cycling-playlist-2025-07-19',
+                    'global-rollout-2025-07-16',
+                    'classic-hiphop-2025-07-17'
+                ];
+
                 this.currentPuzzleIndex = 0;
+                this.currentPuzzleData = null; // Will hold the data for the currently loaded puzzle
+
                 this.direction = 'across';
                 this.activeCell = null;
                 this.userToken = null;
                 this.startTime = null;
                 this.elapsedTime = 0;
                 this.timerInterval = null;
-                this.puzzles = [
-                    {
-                        id: 'cycling-playlist-2025-07-19',
-                        title: 'Cycling Playlist',
-                        info: '2025-07-19 • Medium • 5×5',
-                        gridSize: { rows: 5, cols: 5 },
-                        words: [
-                            { word: 'RACKS', number: 1, direction: 'across', row: 0, col: 0 }, { word: 'IMHIT', number: 6, direction: 'across', row: 1, col: 0 },
-                            { word: 'DIALA', number: 7, direction: 'across', row: 2, col: 0 }, { word: 'ERING', number: 8, direction: 'across', row: 3, col: 0 },
-                            { word: 'RINSE', number: 9, direction: 'across', row: 4, col: 0 }, { word: 'RIDER', number: 1, direction: 'down', row: 0, col: 0 },
-                            { word: 'AMIRI', number: 2, direction: 'down', row: 0, col: 1 }, { word: 'CHAIN', number: 3, direction: 'down', row: 0, col: 2 },
-                            { word: 'KILNS', number: 4, direction: 'down', row: 0, col: 3 }, { word: 'STAGE', number: 5, direction: 'down', row: 0, col: 4 }
-                        ],
-                        clues: { across: [ { number: 1, text: 'Places to park bikes or vinyl' }, { number: 6, text: 'Common war movie line' }, { number: 7, text: '"In my day, you\'d need to _____ number to request a song."' }, { number: 8, text: 'Oura project category?' }, { number: 9, text: 'Before you repeat, sometimes' } ], down: [ { number: 1, text: 'Competitor, or list of requirements' }, { number: 2, text: 'Luxe menswear label in hip-hop/celeb niche' }, { number: 3, text: 'Drive component or fashion accessory' }, { number: 4, text: 'Hot spots' }, { number: 5, text: 'Part of a Tour, or a show' } ] }
-                    },
-                    {
-                        id: 'global-rollout-2025-07-16',
-                        title: 'Global Rollout',
-                        info: '2025-07-16 • Medium • 5×5',
-                        gridSize: { rows: 5, cols: 5 },
-                        words: [
-                            { word: 'YORKE', number: 1, direction: 'across', row: 0, col: 0 },
-                            { word: 'ARENA', number: 6, direction: 'across', row: 1, col: 0 },
-                            { word: 'NIGER', number: 7, direction: 'across', row: 2, col: 0 },
-                            { word: 'NOEL', number: 8, direction: 'across', row: 3, col: 0 },
-                            { word: 'INTL', number: 9, direction: 'across', row: 4, col: 0 },
-                            { word: 'YANNI', number: 1, direction: 'down', row: 0, col: 0 },
-                            { word: 'ORION', number: 2, direction: 'down', row: 0, col: 1 },
-                            { word: 'REGET', number: 3, direction: 'down', row: 0, col: 2 },
-                            { word: 'KNELL', number: 4, direction: 'down', row: 0, col: 3 },
-                            { word: 'EAR', number: 5, direction: 'down', row: 0, col: 4 }
-                        ],
-                        clues: {
-                            across: [
-                                { number: 1, text: 'Ambition makes you look pretty ugly, to him' },
-                                { number: 6, text: 'A step above a shed' },
-                                { number: 7, text: 'Not to be confused with the Afrobeats mecca' },
-                                { number: 8, text: 'Tolerating his brother this summer' },
-                                { number: 9, text: 'Abbr. for worldly major label dept' }
-                            ],
-                            down: [
-                                { number: 1, text: 'A lord of the keytar' },
-                                { number: 2, text: 'Master of Puppets deep cut' },
-                                { number: 3, text: 'Third word in title of Edith Piaf classic, if it were about never obtaining anything again?' },
-                                { number: 4, text: 'A solemn bell sound' },
-                                { number: 5, text: 'Trust this, along with your other one' }
-                            ]
-                        }
-                    },
-                    {
-                        id: 'classic-hiphop-2025-07-17',
-                        title: 'Classic Hip-Hop and Whatnot',
-                        info: '2025-07-17 • Medium • 5×5',
-                        gridSize: { rows: 5, cols: 5 },
-                        words: [
-                            { word: 'FROST', number: 1, direction: 'across', row: 0, col: 0 },
-                            { word: 'RAKIM', number: 6, direction: 'across', row: 1, col: 0 },
-                            { word: 'ORION', number: 7, direction: 'across', row: 2, col: 0 },
-                            { word: 'NEURO', number: 8, direction: 'across', row: 3, col: 0 },
-                            { word: 'TOAST', number: 9, direction: 'across', row: 4, col: 0 },
-                            { word: 'FRONT', number: 1, direction: 'down', row: 0, col: 0 },
-                            { word: 'RADIO', number: 2, direction: 'down', row: 0, col: 1 },
-                            { word: 'OKIES', number: 3, direction: 'down', row: 0, col: 2 },
-                            { word: 'SINUT', number: 4, direction: 'down', row: 0, col: 3 },
-                            { word: 'TMNOT', number: 5, direction: 'down', row: 0, col: 4 }
-                        ],
-                        clues: {
-                            across: [
-                                { number: 1, text: 'O\'Shea\'s friend Kid (Renegade)' },
-                                { number: 6, text: '1/2 of hip-hop royalty' },
-                                { number: 7, text: 'The Hunter' },
-                                { number: 8, text: 'Prefix related to the brain' },
-                                { number: 9, text: 'Cheers with drinks' }
-                            ],
-                            down: [
-                                { number: 1, text: 'Pose, in hip-hop' },
-                                { number: 2, text: 'LL Cool J couldn\'t live without it' },
-                                { number: 3, text: 'Steinbeck\'s migrants' },
-                                { number: 4, text: 'Body cavity in your head' },
-                                { number: 5, text: 'Teenage Mutant Ninja Turtles, initially, when out of order' }
-                            ]
-                        }
-                    }
-                ];
+
+                // The init method is now async to handle file loading
                 this.init();
             }
 
-            init() {
-                // Check if we're on the live Replit URL
-                this.isProduction = window.location.hostname.includes('.replit.app') || 
+            // --- MODIFIED: Now async to handle fetching puzzle files ---
+            async init() {
+                this.isProduction = window.location.hostname.includes('.replit.app') ||
                                     window.location.hostname.includes('.repl.co');
 
-                // Load puzzle from URL parameters
-                this.loadPuzzleFromURL();
+                this.setupEvents(); // Setup button events first
 
-                // Check subscription status
-                if (this.isProduction) {
-                    this.checkSubscription();
+                const puzzleIdFromUrl = this.getPuzzleIdFromUrl();
+
+                // Find the index of the puzzle from the URL, or default to the first one
+                const initialPuzzleIndex = this.puzzleIds.indexOf(puzzleIdFromUrl);
+                this.currentPuzzleIndex = initialPuzzleIndex !== -1 ? initialPuzzleIndex : 0;
+
+                // Load data for the initial puzzle
+                try {
+                    await this.loadPuzzleById(this.puzzleIds[this.currentPuzzleIndex]);
+                    if (this.isProduction) {
+                        this.checkSubscription();
+                    }
+                } catch (error) {
+                    console.error("Failed to load initial puzzle:", error);
+                    document.getElementById('puzzleTitle').textContent = "Error";
+                    document.getElementById('puzzleInfo').textContent = "Could not load puzzle. Please try again.";
                 }
-
-                this.loadPuzzle();
-                this.setupEvents();
             }
 
-            loadPuzzleFromURL() {
+            // --- NEW: Fetches puzzle data from a JSON file ---
+            async loadPuzzleById(puzzleId) {
+                if (!puzzleId) {
+                    console.error("No puzzle ID provided.");
+                    return;
+                }
+
+                // Assumes a 'puzzles' folder in the same directory as index.html
+                const response = await fetch(`./puzzles/${puzzleId}.json`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status} for puzzle ${puzzleId}`);
+                }
+                this.currentPuzzleData = await response.json();
+
+                // Once data is loaded, build the UI
+                this.renderPuzzle(); 
+            }
+
+            // --- RENAMED & MODIFIED: Was 'loadPuzzle', now 'renderPuzzle' ---
+            // This function now only handles rendering, not loading data.
+            renderPuzzle() {
+                const puzzle = this.currentPuzzleData;
+                if (!puzzle) return;
+
+                document.documentElement.style.setProperty('--grid-size', puzzle.gridSize.cols);
+                document.getElementById('puzzleTitle').textContent = puzzle.title;
+                document.getElementById('puzzleInfo').textContent = puzzle.info;
+
+                this.generateGrid(puzzle);
+                this.updateClues(puzzle);
+
+                document.getElementById('prevPuzzle').disabled = this.currentPuzzleIndex === 0;
+                document.getElementById('nextPuzzle').disabled = this.currentPuzzleIndex === (this.puzzleIds.length - 1);
+
+                this.resetTimer();
+            }
+
+            // --- MODIFIED: This logic now just gets the ID and token from the URL ---
+            getPuzzleIdFromUrl() {
                 const urlParams = new URLSearchParams(window.location.search);
-                const puzzleId = urlParams.get('id');
-                const token = urlParams.get('token');
+                this.userToken = urlParams.get('token');
+                return urlParams.get('id');
+            }
 
-                // Store token for subscription check
-                this.userToken = token;
-
-                // Load specific puzzle
-                if (puzzleId) {
-                    const puzzleIndex = this.puzzles.findIndex(p => p.id === puzzleId);
-                    if (puzzleIndex !== -1) {
-                        this.currentPuzzleIndex = puzzleIndex;
+            // --- MODIFIED: Navigation now loads the next/prev puzzle file ---
+            async navigate(direction) {
+                const newIndex = this.currentPuzzleIndex + direction;
+                if (newIndex >= 0 && newIndex < this.puzzleIds.length) {
+                    this.currentPuzzleIndex = newIndex;
+                    try {
+                        await this.loadPuzzleById(this.puzzleIds[this.currentPuzzleIndex]);
+                    } catch (error) {
+                        console.error("Failed to navigate to new puzzle:", error);
                     }
                 }
             }
 
+            // --- UNCHANGED METHODS BELOW ---
+            // (The rest of your game logic remains the same)
+
             checkSubscription() {
-                // For MVP, just check if token exists
-                // Later you can validate with Beehiiv API
                 if (!this.userToken) {
-                    // Show subscription gate after a delay so they see the puzzle briefly
                     setTimeout(() => this.showSubscriptionGate(), 2000);
                     return false;
                 }
@@ -388,21 +362,6 @@
                 document.body.appendChild(modal);
             }
 
-            loadPuzzle() {
-                const puzzle = this.puzzles[this.currentPuzzleIndex];
-                document.documentElement.style.setProperty('--grid-size', puzzle.gridSize.cols);
-                document.getElementById('puzzleTitle').textContent = puzzle.title;
-                document.getElementById('puzzleInfo').textContent = puzzle.info;
-                this.generateGrid(puzzle);
-                this.updateClues(puzzle);
-                document.getElementById('prevPuzzle').disabled = this.currentPuzzleIndex === 0;
-                document.getElementById('nextPuzzle').disabled = this.currentPuzzleIndex === this.puzzles.length - 1;
-                
-                // Reset timer for new puzzle
-                this.resetTimer();
-            }
-
-            // Rest of the methods remain exactly the same as your original
             generateGrid(puzzle) {
                 const grid = document.getElementById('crosswordGrid');
                 grid.innerHTML = '';
@@ -474,31 +433,23 @@
                 document.getElementById('victory-screen').addEventListener('click', () => {
                     document.getElementById('victory-screen').classList.remove('show');
                 });
-                
-                // Timer management on page visibility change
+
                 document.addEventListener('visibilitychange', () => {
                     if (document.hidden) {
                         this.stopTimer();
                     } else {
-                        // Only restart if puzzle not complete and we had started
                         if (this.elapsedTime > 0 && !this.checkIfComplete()) {
                             this.startTimer();
                         }
                     }
                 });
-                
-                // Also handle window blur/focus
+
                 window.addEventListener('blur', () => this.stopTimer());
                 window.addEventListener('focus', () => {
                     if (this.elapsedTime > 0 && !this.checkIfComplete()) {
                         this.startTimer();
                     }
                 });
-            }
-
-            navigate(direction) {
-                this.currentPuzzleIndex += direction;
-                this.loadPuzzle();
             }
 
             handleCellClick(e) {
@@ -517,12 +468,11 @@
                 if (e.target.tagName !== 'INPUT') return;
                 const input = e.target;
                 input.value = input.value.toUpperCase();
-                
-                // Start timer on first input
+
                 if (!this.timerInterval && input.value) {
                     this.startTimer();
                 }
-                
+
                 this.saveProgress();
                 if (input.value) this.moveArrow(input, this.direction === 'across' ? 0 : 1, this.direction === 'across' ? 1 : 0);
                 this.checkCompletion();
@@ -573,45 +523,44 @@
             }
 
             updateStickyClue(clueNum) {
-                const puzzle = this.puzzles[this.currentPuzzleIndex];
+                const puzzle = this.currentPuzzleData;
                 const clueData = puzzle.clues[this.direction].find(c => c.number == clueNum);
                 const clueBar = document.getElementById('sticky-clue-bar');
                 clueBar.querySelector('.clue-number').textContent = `${clueData.number}.`;
                 clueBar.querySelector('.clue-text').textContent = clueData.text;
             }
 
-            // Timer management methods
             startTimer() {
                 if (!this.startTime) {
                     this.startTime = Date.now() - this.elapsedTime * 1000;
                 }
-                
+
                 if (!this.timerInterval) {
                     this.timerInterval = setInterval(() => {
                         this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
                     }, 1000);
                 }
             }
-            
+
             stopTimer() {
                 if (this.timerInterval) {
                     clearInterval(this.timerInterval);
                     this.timerInterval = null;
                 }
             }
-            
+
             resetTimer() {
                 this.stopTimer();
                 this.startTime = null;
                 this.elapsedTime = 0;
             }
-            
+
             formatTime(seconds) {
                 const mins = Math.floor(seconds / 60);
                 const secs = seconds % 60;
                 return `${mins}:${secs.toString().padStart(2, '0')}`;
             }
-            
+
             checkIfComplete() {
                 const inputs = document.querySelectorAll('.grid-cell input');
                 for (const input of inputs) {
@@ -623,7 +572,7 @@
             }
 
             loadProgress() { /* Placeholder */ }
-            saveProgress() { /* Placeholder */ }
+            saveProgress() { { /* Placeholder */ } }
 
             checkCompletion() {
                 const inputs = document.querySelectorAll('.grid-cell input');
@@ -635,15 +584,13 @@
             }
 
             showVictoryScreen() {
-                const puzzle = this.puzzles[this.currentPuzzleIndex];
+                const puzzle = this.currentPuzzleData;
                 const screen = document.getElementById('victory-screen');
                 const iconContainer = document.getElementById('victory-icon-container');
                 const gifContainer = document.getElementById('victory-gif-container');
 
-                // Set the victory message, defaulting to "You did it!"
                 document.getElementById('victory-message-text').textContent = puzzle.winMessage || "You did it!";
-                
-                // Update timer display
+
                 document.getElementById('victory-time').textContent = `Your Time: ${this.formatTime(this.elapsedTime)}`;
 
                 if (puzzle.victoryGif) {
@@ -664,4 +611,3 @@
     </script>
 </body>
 </html>
-```

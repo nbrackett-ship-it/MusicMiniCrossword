@@ -1,0 +1,34 @@
+{
+  "id": "global-rollout-2025-07-16",
+  "title": "Global Rollout",
+  "info": "2025-07-16 • Medium • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "YORKE", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "ARENA", "number": 6, "direction": "across", "row": 1, "col": 0 },
+    { "word": "NIGER", "number": 7, "direction": "across", "row": 2, "col": 0 },
+    { "word": "NOEL", "number": 8, "direction": "across", "row": 3, "col": 0 },
+    { "word": "INTL", "number": 9, "direction": "across", "row": 4, "col": 0 },
+    { "word": "YANNI", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "ORION", "number": 2, "direction": "down", "row": 0, "col": 1 },
+    { "word": "REGET", "number": 3, "direction": "down", "row": 0, "col": 2 },
+    { "word": "KNELL", "number": 4, "direction": "down", "row": 0, "col": 3 },
+    { "word": "EAR", "number": 5, "direction": "down", "row": 0, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Ambition makes you look pretty ugly, to him" },
+      { "number": 6, "text": "A step above a shed" },
+      { "number": 7, "text": "Not to be confused with the Afrobeats mecca" },
+      { "number": 8, "text": "Tolerating his brother this summer" },
+      { "number": 9, "text": "Abbr. for worldly major label dept" }
+    ],
+    "down": [
+      { "number": 1, "text": "A lord of the keytar" },
+      { "number": 2, "text": "Master of Puppets deep cut" },
+      { "number": 3, "text": "Third word in title of Edith Piaf classic, if it were about never obtaining anything again?" },
+      { "number": 4, "text": "A solemn bell sound" },
+      { "number": 5, "text": "Trust this, along with your other one" }
+    ]
+  }
+}
