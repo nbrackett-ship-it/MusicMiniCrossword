@@ -1,6 +1,6 @@
 {
   "id": "cycling-playlist-2025-07-19",
-  "title": "Cycling Playlist",
+  "title": "Born to Ride",
   "info": "2025-07-19 • Medium • 5×5",
   "gridSize": { "rows": 5, "cols": 5 },
   "words": [
@@ -17,18 +17,18 @@
   ],
   "clues": {
     "across": [
-      { "number": 1, "text": "Places to park bikes or vinyl" },
-      { "number": 6, "text": "Common war movie line" },
-      { "number": 7, "text": "\"In my day, you'd need to _____ number to request a song.\"" },
-      { "number": 8, "text": "Oura project category?" },
-      { "number": 9, "text": "Before you repeat, sometimes" }
+      { "number": 1, "text": "Places to park bikes, or display vinyl" },
+      { "number": 6, "text": "You might hear someone say this in a war movie" },
+      { "number": 7, "text": "Pre-internet, you'd need to _____ number to request a song on the radio." },
+      { "number": 8, "text": "Marketer's name for smart finger jewelry?" },
+      { "number": 9, "text": "______ and repeat" }
     ],
     "down": [
-      { "number": 1, "text": "Competitor, or list of requirements" },
-      { "number": 2, "text": "Luxe menswear label in hip-hop/celeb niche" },
-      { "number": 3, "text": "Drive component or fashion accessory" },
-      { "number": 4, "text": "Hot spots" },
-      { "number": 5, "text": "Part of a Tour, or a show" }
+      { "number": 1, "text": "A biker, or a list of backstage requirements" },
+      { "number": 2, "text": "Poet and 'Blues People' author ______ Baraka" },
+      { "number": 3, "text": "Bike part, or classic hip-hop fashion accessory" },
+      { "number": 4, "text": "You fire clay and ceramics in these" },
+      { "number": 5, "text": "Somewhere to perform + what they call a segment of the Tour de France" }
     ]
   }
 }
