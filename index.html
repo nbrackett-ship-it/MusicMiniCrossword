@@ -21,20 +21,23 @@
             background-color: #FFFFFF;
             color: #1B1B1B;
             line-height: 1.4;
-            font-weight: 500; /* Added base font weight */
+            font-weight: 500;
+            /* Added base font weight */
         }
 
         #sticky-clue-bar {
             padding: 12px 15px;
             background: #FFFFFF;
             border-bottom: 1px solid #1B1B1B;
-            font-size: 15px; /* Increased from 14px */
+            font-size: 15px;
+            /* Increased from 14px */
             text-align: center;
             min-height: 20px;
             box-sizing: border-box;
             color: #1B1B1B;
             margin-bottom: 20px;
-            font-weight: 600; /* Increased weight */
+            font-weight: 600;
+            /* Increased weight */
         }
 
         #sticky-clue-bar .clue-number {
@@ -44,7 +47,8 @@
         }
 
         #sticky-clue-bar .clue-text {
-            font-weight: 600; /* Increased from 500 */
+            font-weight: 600;
+            /* Increased from 500 */
             color: #1B1B1B;
         }
 
@@ -59,21 +63,30 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        .main-title { 
-            font-size: 30px; /* Increased from 28px */
-            font-weight: 700; 
-            color: #1B1B1B; 
-            letter-spacing: -0.5px; /* Tighter letter spacing for boldness */
+
+        .main-title {
+            font-size: 30px;
+            /* Increased from 28px */
+            font-weight: 700;
+            color: #1B1B1B;
+            letter-spacing: -0.5px;
+            /* Tighter letter spacing for boldness */
         }
-        .puzzle-title { 
-            font-size: 19px; /* Increased from 18px */
-            color: #333; /* Darkened from #666 */
-            margin-bottom: 5px; 
-            font-weight: 600; 
+
+        .puzzle-title {
+            font-size: 19px;
+            /* Increased from 18px */
+            color: #333;
+            /* Darkened from #666 */
+            margin-bottom: 5px;
+            font-weight: 600;
         }
-        .puzzle-info { 
-            color: #666; /* Darkened from #8a8a8a */
-            font-size: 15px; /* Increased from 14px */
+
+        .puzzle-info {
+            color: #666;
+            /* Darkened from #8a8a8a */
+            font-size: 15px;
+            /* Increased from 14px */
             font-weight: 500;
         }
 
@@ -83,7 +96,7 @@
         }
 
         .crossword-grid {
-            display: grid; 
+            display: grid;
             gap: 0;
             background: transparent;
             border: 2px solid #1B1B1B;
@@ -93,150 +106,173 @@
             grid-template-rows: repeat(var(--grid-size), var(--cell-size-mobile));
         }
 
-        .grid-cell { 
-            background: #FFFFFF; 
-            position: relative; 
+        .grid-cell {
+            background: #FFFFFF;
+            position: relative;
             border: 1px solid #1B1B1B;
             margin: -0.5px;
         }
 
         .grid-cell input {
-            width: 100%; 
-            height: 100%; 
-            border: none; 
+            width: 100%;
+            height: 100%;
+            border: none;
             text-align: center;
-            font-size: calc(var(--cell-size-mobile) * 0.55); /* Increased from 0.5 */
-            font-weight: 700; /* Increased from 600 */
+            font-size: calc(var(--cell-size-mobile) * 0.55);
+            /* Increased from 0.5 */
+            font-weight: 700;
+            /* Increased from 600 */
             text-transform: uppercase;
-            background: transparent; 
-            padding: 0; 
-            margin: 0; 
-            box-sizing: border-box; 
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
             color: #1B1B1B;
             font-family: 'Courier New', Courier, monospace;
         }
 
-        .grid-cell input:focus { 
+        .grid-cell input:focus {
             outline: 2px solid #1877f2;
             outline-offset: -2px;
             z-index: 1;
         }
 
-        .grid-cell.highlight-word { background-color: #e8e8e8; } /* Slightly darker highlight */
-        .grid-cell.highlight-active { background-color: #d8d8d8; } /* Slightly darker active */
+        .grid-cell.highlight-word {
+            background-color: #e8e8e8;
+        }
 
-        .black-cell { 
-            background: #1B1B1B; 
+        /* Slightly darker highlight */
+        .grid-cell.highlight-active {
+            background-color: #d8d8d8;
+        }
+
+        /* Slightly darker active */
+
+        .black-cell {
+            background: #1B1B1B;
             border: 1px solid #1B1B1B;
             margin: -0.5px;
         }
 
         .cell-number {
-            position: absolute; 
-            top: 2px; 
+            position: absolute;
+            top: 2px;
             left: 3px;
-            font-size: calc(var(--cell-size-mobile) * 0.28); /* Increased from 0.25 */
-            font-weight: 700; 
-            color: #444; /* Darkened from #666 */
+            font-size: calc(var(--cell-size-mobile) * 0.28);
+            /* Increased from 0.25 */
+            font-weight: 700;
+            color: #444;
+            /* Darkened from #666 */
             pointer-events: none;
         }
 
-        .clues-container { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; 
+        .clues-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        
-        .clues-section h3 { 
-            margin-top: 0; 
-            margin-bottom: 10px; 
-            font-size: 19px; /* Increased from 18px */
-            font-weight: 700; /* Increased from 600 */
-            border-bottom: 2px solid #1B1B1B; /* Thicker border */
+
+        .clues-section h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 19px;
+            /* Increased from 18px */
+            font-weight: 700;
+            /* Increased from 600 */
+            border-bottom: 2px solid #1B1B1B;
+            /* Thicker border */
             padding-bottom: 5px;
         }
-        
-        .clue-item { 
-            margin-bottom: 10px; /* Increased spacing */
-            line-height: 1.5; 
-            font-size: 16px; /* Increased from 15px */
-            font-weight: 500; /* Added weight */
+
+        .clue-item {
+            margin-bottom: 10px;
+            /* Increased spacing */
+            line-height: 1.5;
+            font-size: 16px;
+            /* Increased from 15px */
+            font-weight: 500;
+            /* Added weight */
         }
-        
+
         .clue-item b {
-            font-weight: 700; /* Ensure bold numbers stand out */
+            font-weight: 700;
+            /* Ensure bold numbers stand out */
         }
 
         #victory-screen {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             bottom: 0;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(5px);
-            display: flex; 
-            justify-content: center; 
+            display: flex;
+            justify-content: center;
             align-items: center;
-            z-index: 200; 
-            opacity: 0; 
+            z-index: 200;
+            opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
-        
-        #victory-screen.show { 
-            opacity: 1; 
-            pointer-events: auto; 
+
+        #victory-screen.show {
+            opacity: 1;
+            pointer-events: auto;
         }
-        
-        .victory-content { 
-            text-align: center; 
-            color: #1B1B1B; 
-            transform: scale(0.9); 
-            transition: transform 0.3s ease; 
+
+        .victory-content {
+            text-align: center;
+            color: #1B1B1B;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
-        
-        #victory-screen.show .victory-content { 
-            transform: scale(1); 
+
+        #victory-screen.show .victory-content {
+            transform: scale(1);
         }
-        
-        .victory-icon { 
-            font-size: 60px; 
-            animation: bounce 0.8s ease-in-out; 
+
+        .victory-icon {
+            font-size: 60px;
+            animation: bounce 0.8s ease-in-out;
         }
-        
-        .victory-gif { 
-            max-width: 80vw; 
-            max-height: 40vh; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
+
+        .victory-gif {
+            max-width: 80vw;
+            max-height: 40vh;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
-        
-        .victory-message { 
-            font-size: 26px; /* Increased from 24px */
-            font-weight: 700; 
-            margin: 20px 0; 
+
+        .victory-message {
+            font-size: 26px;
+            /* Increased from 24px */
+            font-weight: 700;
+            margin: 20px 0;
         }
-        
-        .victory-time { 
-            font-size: 18px; 
-            color: #333; /* Darkened from #666 */
-            margin-top: 10px; 
+
+        .victory-time {
+            font-size: 18px;
+            color: #333;
+            /* Darkened from #666 */
+            margin-top: 10px;
             font-weight: 500;
         }
 
         /* Star animation */
         @keyframes starPop {
-            0% { 
-                transform: scale(0) rotate(-180deg); 
-                opacity: 0; 
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
             }
-            50% { 
-                transform: scale(1.3) rotate(10deg); 
+
+            50% {
+                transform: scale(1.3) rotate(10deg);
             }
-            100% { 
-                transform: scale(1) rotate(0deg); 
-                opacity: 1; 
+
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
             }
         }
 
@@ -246,9 +282,16 @@
             opacity: 0;
         }
 
-        @keyframes bounce { 
-            0%, 100% { transform: translateY(0); } 
-            50% { transform: translateY(-15px); } 
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         @media (min-width: 768px) {
@@ -259,10 +302,17 @@
                 gap: 40px;
                 padding: 40px 20px;
             }
-            .left-panel { flex: 1; }
-            .clues-container { flex: 1; }
 
-            .header, .puzzle-controls {
+            .left-panel {
+                flex: 1;
+            }
+
+            .clues-container {
+                flex: 1;
+            }
+
+            .header,
+            .puzzle-controls {
                 width: 100%;
             }
 
@@ -272,11 +322,14 @@
                 grid-template-rows: repeat(var(--grid-size), var(--cell-size-desktop));
             }
 
-            .grid-cell input { 
-                font-size: calc(var(--cell-size-desktop) * 0.55); /* Increased from 0.5 */
+            .grid-cell input {
+                font-size: calc(var(--cell-size-desktop) * 0.55);
+                /* Increased from 0.5 */
             }
-            .cell-number { 
-                font-size: calc(var(--cell-size-desktop) * 0.28); /* Increased from 0.25 */
+
+            .cell-number {
+                font-size: calc(var(--cell-size-desktop) * 0.28);
+                /* Increased from 0.25 */
             }
         }
 
@@ -286,7 +339,8 @@
                 border: 2px solid #1B1B1B;
             }
 
-            .grid-cell, .black-cell {
+            .grid-cell,
+            .black-cell {
                 border: 1px solid #1B1B1B;
                 margin: -0.5px;
             }
@@ -330,7 +384,7 @@
     <div id="victory-screen">
         <div class="victory-content">
             <div id="victory-icon-container">
-                 <span class="victory-icon">&#9835;</span>
+                <span class="victory-icon">&#9835;</span>
             </div>
             <div id="victory-gif-container"></div>
             <div class="victory-message" id="victory-message-text">You did it!</div>
@@ -342,8 +396,8 @@
         class SimpleCrossword {
             constructor() {
                 this.puzzleIds = [
-                    'cycling-playlist-2025-07-19',
                     'global-rollout-2025-07-16',
+                    'cycling-playlist-2025-07-19',
                     'classic-hiphop-2025-07-17'
                 ];
 
@@ -362,7 +416,7 @@
 
             async init() {
                 this.isProduction = window.location.hostname.includes('.replit.app') ||
-                                    window.location.hostname.includes('.repl.co');
+                    window.location.hostname.includes('.repl.co');
 
                 this.setupEvents();
 
@@ -395,7 +449,7 @@
                 }
                 this.currentPuzzleData = await response.json();
 
-                this.renderPuzzle(); 
+                this.renderPuzzle();
             }
 
             renderPuzzle() {
@@ -482,7 +536,7 @@
                 puzzle.words.forEach(wordInfo => {
                     let r = wordInfo.row, c = wordInfo.col;
                     for (let i = 0; i < wordInfo.word.length; i++) {
-                        if (!gridData[r][c]) gridData[r][c] = { answer: '', across: null, down: null };
+                        if (!gridData[r][c]) gridData[r][c] = {answer: '', across: null, down: null};
                         gridData[r][c].answer = wordInfo.word[i];
                         gridData[r][c][wordInfo.direction] = wordInfo.number;
                         if (i === 0) gridData[r][c].number = wordInfo.number;
@@ -518,22 +572,22 @@
             }
 
             updateClues(puzzle) {
-                 const acrossDiv = document.getElementById('cluesAcross');
-                 const downDiv = document.getElementById('cluesDown');
-                 acrossDiv.innerHTML = '';
-                 downDiv.innerHTML = '';
-                 puzzle.clues.across.forEach(clue => {
-                     const div = document.createElement('div');
-                     div.className = 'clue-item';
-                     div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
-                     acrossDiv.appendChild(div);
-                 });
-                 puzzle.clues.down.forEach(clue => {
-                     const div = document.createElement('div');
-                     div.className = 'clue-item';
-                     div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
-                     downDiv.appendChild(div);
-                 });
+                const acrossDiv = document.getElementById('cluesAcross');
+                const downDiv = document.getElementById('cluesDown');
+                acrossDiv.innerHTML = '';
+                downDiv.innerHTML = '';
+                puzzle.clues.across.forEach(clue => {
+                    const div = document.createElement('div');
+                    div.className = 'clue-item';
+                    div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
+                    acrossDiv.appendChild(div);
+                });
+                puzzle.clues.down.forEach(clue => {
+                    const div = document.createElement('div');
+                    div.className = 'clue-item';
+                    div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
+                    downDiv.appendChild(div);
+                });
             }
 
             setupEvents() {
@@ -601,8 +655,8 @@
                     case 'ArrowRight': dc = 1; this.direction = 'across'; break;
                     case 'Backspace':
                         if (!this.activeCell.value) {
-                             e.preventDefault();
-                             this.moveArrow(this.activeCell, this.direction === 'across' ? 0 : -1, this.direction === 'across' ? -1 : 0);
+                            e.preventDefault();
+                            this.moveArrow(this.activeCell, this.direction === 'across' ? 0 : -1, this.direction === 'across' ? -1 : 0);
                         }
                         return;
                     default: return;
@@ -616,9 +670,9 @@
                 const c = parseInt(cell.dataset.col) + dc;
                 const nextCell = document.querySelector(`input[data-row='${r}'][data-col='${c}']`);
                 if (nextCell) {
-                     this.activeCell = nextCell;
-                     this.activeCell.focus();
-                     this.highlightWord();
+                    this.activeCell = nextCell;
+                    this.activeCell.focus();
+                    this.highlightWord();
                 }
             }
 
@@ -684,8 +738,8 @@
                 return true;
             }
 
-            loadProgress() { /* Placeholder */ }
-            saveProgress() { { /* Placeholder */ } }
+            loadProgress() { /* Placeholder */}
+            saveProgress() {{ /* Placeholder */} }
 
             checkCompletion() {
                 const inputs = document.querySelectorAll('.grid-cell input');
@@ -699,17 +753,17 @@
             // New method to get star ranking
             getRanking(seconds) {
                 if (seconds <= 30) {
-                    return { stars: "★★★★★", text: "5 Stars (Instant Classic)" };
+                    return {stars: "★★★★★", text: "Instant Classic"};
                 } else if (seconds <= 60) {
-                    return { stars: "★★★★☆", text: "4.5 Stars (Truly Great)" };
+                    return {stars: "★★★★☆", text: "Truly Great"};
                 } else if (seconds <= 90) {
-                    return { stars: "★★★★", text: "4 Stars (Excellent)" };
+                    return {stars: "★★★★", text: "Excellent"};
                 } else if (seconds <= 120) {
-                    return { stars: "★★★☆", text: "3.5 Stars (Damn Good)" };
+                    return {stars: "★★★☆", text: "Damn Good"};
                 } else if (seconds <= 240) {
-                    return { stars: "★★★", text: "3 Stars (Good)" };
+                    return {stars: "★★★", text: "Good"};
                 } else {
-                    return { stars: "★★", text: "2 Stars (Decent Effort)" };
+                    return {stars: "★★", text: "Decent Effort"};
                 }
             }
 
@@ -724,13 +778,13 @@
 
                 // Get ranking based on completion time
                 const ranking = this.getRanking(this.elapsedTime);
-                
+
                 // Update the victory-time div with animated stars
                 document.getElementById('victory-time').innerHTML = `
                     <div id="stars-container" style="font-size: 36px; margin: 10px 0; color: #1B1B1B; letter-spacing: 4px;">
-                        ${ranking.stars.split('').map((star, i) => 
-                            `<span class="star-animate" style="animation-delay: ${i * 0.1}s">${star}</span>`
-                        ).join('')}
+                        ${ranking.stars.split('').map((star, i) =>
+                    `<span class="star-animate" style="animation-delay: ${i * 0.1}s">${star}</span>`
+                ).join('')}
                     </div>
                     <div style="font-size: 22px; font-weight: 700; margin-bottom: 10px; color: #1B1B1B;">${ranking.text}</div>
                     <div style="font-size: 17px; color: #444; font-weight: 600;">Your Time: ${this.formatTime(this.elapsedTime)}</div>
@@ -753,4 +807,5 @@
         });
     </script>
 </body>
+
 </html>
