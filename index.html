@@ -15,24 +15,26 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding: 20px;
             background-color: #FFFFFF;
             color: #1B1B1B;
             line-height: 1.4;
+            font-weight: 500; /* Added base font weight */
         }
 
         #sticky-clue-bar {
             padding: 12px 15px;
             background: #FFFFFF;
             border-bottom: 1px solid #1B1B1B;
-            font-size: 14px;
+            font-size: 15px; /* Increased from 14px */
             text-align: center;
             min-height: 20px;
             box-sizing: border-box;
             color: #1B1B1B;
             margin-bottom: 20px;
+            font-weight: 600; /* Increased weight */
         }
 
         #sticky-clue-bar .clue-number {
@@ -42,13 +44,13 @@
         }
 
         #sticky-clue-bar .clue-text {
-            font-weight: 500;
+            font-weight: 600; /* Increased from 500 */
             color: #1B1B1B;
         }
 
         .main-container {
             width: 100%;
-            max-width: 1000px; /* Max width for desktop */
+            max-width: 1000px;
             margin: 0 auto;
             box-sizing: border-box;
         }
@@ -57,9 +59,23 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        .main-title { font-size: 28px; font-weight: 700; color: #1B1B1B; }
-        .puzzle-title { font-size: 18px; color: #666; margin-bottom: 5px; }
-        .puzzle-info { color: #8a8a8a; font-size: 14px; }
+        .main-title { 
+            font-size: 30px; /* Increased from 28px */
+            font-weight: 700; 
+            color: #1B1B1B; 
+            letter-spacing: -0.5px; /* Tighter letter spacing for boldness */
+        }
+        .puzzle-title { 
+            font-size: 19px; /* Increased from 18px */
+            color: #333; /* Darkened from #666 */
+            margin-bottom: 5px; 
+            font-weight: 600; 
+        }
+        .puzzle-info { 
+            color: #666; /* Darkened from #8a8a8a */
+            font-size: 15px; /* Increased from 14px */
+            font-weight: 500;
+        }
 
         /* Hide Previous/Next buttons */
         .puzzle-controls {
@@ -68,8 +84,8 @@
 
         .crossword-grid {
             display: grid; 
-            gap: 0; /* Changed from 1px to 0 */
-            background: transparent; /* Changed from #1B1B1B to transparent */
+            gap: 0;
+            background: transparent;
             border: 2px solid #1B1B1B;
             margin: 0 auto 20px auto;
             width: var(--grid-width-mobile);
@@ -80,58 +96,160 @@
         .grid-cell { 
             background: #FFFFFF; 
             position: relative; 
-            border: 1px solid #1B1B1B; /* Added border */
-            margin: -0.5px; /* Added negative margin */
+            border: 1px solid #1B1B1B;
+            margin: -0.5px;
         }
 
         .grid-cell input {
-            width: 100%; height: 100%; border: none; text-align: center;
-            font-size: calc(var(--cell-size-mobile) * 0.5); font-weight: 600; text-transform: uppercase;
-            background: transparent; padding: 0; margin: 0; box-sizing: border-box; color: #1B1B1B;
-            font-family: 'Courier New', monospace;
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            text-align: center;
+            font-size: calc(var(--cell-size-mobile) * 0.55); /* Increased from 0.5 */
+            font-weight: 700; /* Increased from 600 */
+            text-transform: uppercase;
+            background: transparent; 
+            padding: 0; 
+            margin: 0; 
+            box-sizing: border-box; 
+            color: #1B1B1B;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .grid-cell input:focus { 
             outline: 2px solid #1877f2;
-            outline-offset: -2px; /* Added outline offset */
+            outline-offset: -2px;
             z-index: 1;
         }
 
-        .grid-cell.highlight-word { background-color: #f0f0f0; }
-        .grid-cell.highlight-active { background-color: #e0e0e0; }
+        .grid-cell.highlight-word { background-color: #e8e8e8; } /* Slightly darker highlight */
+        .grid-cell.highlight-active { background-color: #d8d8d8; } /* Slightly darker active */
 
         .black-cell { 
             background: #1B1B1B; 
-            border: 1px solid #1B1B1B; /* Added border */
-            margin: -0.5px; /* Added negative margin */
+            border: 1px solid #1B1B1B;
+            margin: -0.5px;
         }
 
         .cell-number {
-            position: absolute; top: 2px; left: 3px;
-            font-size: calc(var(--cell-size-mobile) * 0.25);
-            font-weight: 700; color: #666; pointer-events: none;
+            position: absolute; 
+            top: 2px; 
+            left: 3px;
+            font-size: calc(var(--cell-size-mobile) * 0.28); /* Increased from 0.25 */
+            font-weight: 700; 
+            color: #444; /* Darkened from #666 */
+            pointer-events: none;
         }
 
-        .clues-container { display: flex; flex-direction: column; gap: 20px; }
-        .clues-section h3 { margin-top: 0; margin-bottom: 10px; font-size: 18px; font-weight: 600; border-bottom: 1px solid #1B1B1B; padding-bottom: 5px;}
-        .clue-item { margin-bottom: 8px; line-height: 1.5; font-size: 15px; }
+        .clues-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+        }
+        
+        .clues-section h3 { 
+            margin-top: 0; 
+            margin-bottom: 10px; 
+            font-size: 19px; /* Increased from 18px */
+            font-weight: 700; /* Increased from 600 */
+            border-bottom: 2px solid #1B1B1B; /* Thicker border */
+            padding-bottom: 5px;
+        }
+        
+        .clue-item { 
+            margin-bottom: 10px; /* Increased spacing */
+            line-height: 1.5; 
+            font-size: 16px; /* Increased from 15px */
+            font-weight: 500; /* Added weight */
+        }
+        
+        .clue-item b {
+            font-weight: 700; /* Ensure bold numbers stand out */
+        }
 
         #victory-screen {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.9); backdrop-filter: blur(5px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 200; opacity: 0; pointer-events: none;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(5px);
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            z-index: 200; 
+            opacity: 0; 
+            pointer-events: none;
             transition: opacity 0.3s ease;
         }
-        #victory-screen.show { opacity: 1; pointer-events: auto; }
-        .victory-content { text-align: center; color: #1B1B1B; transform: scale(0.9); transition: transform 0.3s ease; }
-        #victory-screen.show .victory-content { transform: scale(1); }
-        .victory-icon { font-size: 60px; animation: bounce 0.8s ease-in-out; }
-        .victory-gif { max-width: 80vw; max-height: 40vh; border-radius: 12px; margin-bottom: 20px; }
-        .victory-message { font-size: 24px; font-weight: 700; margin: 20px 0; }
-        .victory-time { font-size: 18px; color: #666; margin-top: 10px; }
+        
+        #victory-screen.show { 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+        
+        .victory-content { 
+            text-align: center; 
+            color: #1B1B1B; 
+            transform: scale(0.9); 
+            transition: transform 0.3s ease; 
+        }
+        
+        #victory-screen.show .victory-content { 
+            transform: scale(1); 
+        }
+        
+        .victory-icon { 
+            font-size: 60px; 
+            animation: bounce 0.8s ease-in-out; 
+        }
+        
+        .victory-gif { 
+            max-width: 80vw; 
+            max-height: 40vh; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+        }
+        
+        .victory-message { 
+            font-size: 26px; /* Increased from 24px */
+            font-weight: 700; 
+            margin: 20px 0; 
+        }
+        
+        .victory-time { 
+            font-size: 18px; 
+            color: #333; /* Darkened from #666 */
+            margin-top: 10px; 
+            font-weight: 500;
+        }
 
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        /* Star animation */
+        @keyframes starPop {
+            0% { 
+                transform: scale(0) rotate(-180deg); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.3) rotate(10deg); 
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1; 
+            }
+        }
+
+        .star-animate {
+            display: inline-block;
+            animation: starPop 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes bounce { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-15px); } 
+        }
 
         @media (min-width: 768px) {
             .main-container {
@@ -141,7 +259,7 @@
                 gap: 40px;
                 padding: 40px 20px;
             }
-            .left-panel { flex: 1; /* Adjust flex properties */ }
+            .left-panel { flex: 1; }
             .clues-container { flex: 1; }
 
             .header, .puzzle-controls {
@@ -154,22 +272,26 @@
                 grid-template-rows: repeat(var(--grid-size), var(--cell-size-desktop));
             }
 
-            .grid-cell input { font-size: calc(var(--cell-size-desktop) * 0.5); }
-            .cell-number { font-size: calc(var(--cell-size-desktop) * 0.25); }
+            .grid-cell input { 
+                font-size: calc(var(--cell-size-desktop) * 0.55); /* Increased from 0.5 */
+            }
+            .cell-number { 
+                font-size: calc(var(--cell-size-desktop) * 0.28); /* Increased from 0.25 */
+            }
         }
 
         /* Mobile-specific border reinforcement */
         @media (max-width: 768px) {
             .crossword-grid {
-                border: 2px solid #1B1B1B; /* Ensure border on mobile */
+                border: 2px solid #1B1B1B;
             }
 
             .grid-cell, .black-cell {
-                border: 1px solid #1B1B1B; /* Ensure cell borders on mobile */
+                border: 1px solid #1B1B1B;
                 margin: -0.5px;
             }
         }
-    </style>    </style>
+    </style>
 </head>
 
 <body>
@@ -216,12 +338,9 @@
         </div>
     </div>
 
-
     <script>
         class SimpleCrossword {
             constructor() {
-                // --- NEW: This is the only list you need to manage now! ---
-                // Just add the ID (filename without .json) of your new puzzles here.
                 this.puzzleIds = [
                     'cycling-playlist-2025-07-19',
                     'global-rollout-2025-07-16',
@@ -229,7 +348,7 @@
                 ];
 
                 this.currentPuzzleIndex = 0;
-                this.currentPuzzleData = null; // Will hold the data for the currently loaded puzzle
+                this.currentPuzzleData = null;
 
                 this.direction = 'across';
                 this.activeCell = null;
@@ -238,24 +357,20 @@
                 this.elapsedTime = 0;
                 this.timerInterval = null;
 
-                // The init method is now async to handle file loading
                 this.init();
             }
 
-            // --- MODIFIED: Now async to handle fetching puzzle files ---
             async init() {
                 this.isProduction = window.location.hostname.includes('.replit.app') ||
                                     window.location.hostname.includes('.repl.co');
 
-                this.setupEvents(); // Setup button events first
+                this.setupEvents();
 
                 const puzzleIdFromUrl = this.getPuzzleIdFromUrl();
 
-                // Find the index of the puzzle from the URL, or default to the first one
                 const initialPuzzleIndex = this.puzzleIds.indexOf(puzzleIdFromUrl);
                 this.currentPuzzleIndex = initialPuzzleIndex !== -1 ? initialPuzzleIndex : 0;
 
-                // Load data for the initial puzzle
                 try {
                     await this.loadPuzzleById(this.puzzleIds[this.currentPuzzleIndex]);
                     if (this.isProduction) {
@@ -268,26 +383,21 @@
                 }
             }
 
-            // --- NEW: Fetches puzzle data from a JSON file ---
             async loadPuzzleById(puzzleId) {
                 if (!puzzleId) {
                     console.error("No puzzle ID provided.");
                     return;
                 }
 
-                // Assumes a 'puzzles' folder in the same directory as index.html
                 const response = await fetch(`./puzzles/${puzzleId}.json`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status} for puzzle ${puzzleId}`);
                 }
                 this.currentPuzzleData = await response.json();
 
-                // Once data is loaded, build the UI
                 this.renderPuzzle(); 
             }
 
-            // --- RENAMED & MODIFIED: Was 'loadPuzzle', now 'renderPuzzle' ---
-            // This function now only handles rendering, not loading data.
             renderPuzzle() {
                 const puzzle = this.currentPuzzleData;
                 if (!puzzle) return;
@@ -305,22 +415,18 @@
                 this.resetTimer();
             }
 
-            // --- MODIFIED: This logic now just gets the ID and token from the URL ---
             getPuzzleIdFromUrl() {
                 const urlParams = new URLSearchParams(window.location.search);
                 this.userToken = urlParams.get('token');
 
-                // ADD THIS: Track newsletter source
                 const source = urlParams.get('source');
                 if (source === 'newsletter') {
                     console.log('User came from newsletter');
-                    // Later you can add analytics here
                 }
 
                 return urlParams.get('id');
             }
 
-            // --- MODIFIED: Navigation now loads the next/prev puzzle file ---
             async navigate(direction) {
                 const newIndex = this.currentPuzzleIndex + direction;
                 if (newIndex >= 0 && newIndex < this.puzzleIds.length) {
@@ -332,9 +438,6 @@
                     }
                 }
             }
-
-            // --- UNCHANGED METHODS BELOW ---
-            // (The rest of your game logic remains the same)
 
             checkSubscription() {
                 if (!this.userToken) {
@@ -593,6 +696,24 @@
                 this.showVictoryScreen();
             }
 
+            // New method to get star ranking
+            getRanking(seconds) {
+                if (seconds <= 30) {
+                    return { stars: "★★★★★", text: "5 Stars (Instant Classic)" };
+                } else if (seconds <= 60) {
+                    return { stars: "★★★★☆", text: "4.5 Stars (Truly Great)" };
+                } else if (seconds <= 90) {
+                    return { stars: "★★★★", text: "4 Stars (Excellent)" };
+                } else if (seconds <= 120) {
+                    return { stars: "★★★☆", text: "3.5 Stars (Damn Good)" };
+                } else if (seconds <= 240) {
+                    return { stars: "★★★", text: "3 Stars (Good)" };
+                } else {
+                    return { stars: "★★", text: "2 Stars (Decent Effort)" };
+                }
+            }
+
+            // Updated showVictoryScreen with star animation
             showVictoryScreen() {
                 const puzzle = this.currentPuzzleData;
                 const screen = document.getElementById('victory-screen');
@@ -601,7 +722,19 @@
 
                 document.getElementById('victory-message-text').textContent = puzzle.winMessage || "You did it!";
 
-                document.getElementById('victory-time').textContent = `Your Time: ${this.formatTime(this.elapsedTime)}`;
+                // Get ranking based on completion time
+                const ranking = this.getRanking(this.elapsedTime);
+                
+                // Update the victory-time div with animated stars
+                document.getElementById('victory-time').innerHTML = `
+                    <div id="stars-container" style="font-size: 36px; margin: 10px 0; color: #1B1B1B; letter-spacing: 4px;">
+                        ${ranking.stars.split('').map((star, i) => 
+                            `<span class="star-animate" style="animation-delay: ${i * 0.1}s">${star}</span>`
+                        ).join('')}
+                    </div>
+                    <div style="font-size: 22px; font-weight: 700; margin-bottom: 10px; color: #1B1B1B;">${ranking.text}</div>
+                    <div style="font-size: 17px; color: #444; font-weight: 600;">Your Time: ${this.formatTime(this.elapsedTime)}</div>
+                `;
 
                 if (puzzle.victoryGif) {
                     iconContainer.style.display = 'none';
