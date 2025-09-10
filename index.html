@@ -7,11 +7,8 @@
     <title>Music Mini</title>
     <style>
         :root {
-            --grid-size: 5;
             --cell-size-mobile: 18vw;
             --cell-size-desktop: 55px;
-            --grid-width-mobile: calc(18vw * 5);
-            --grid-width-desktop: calc(55px * 5);
         }
 
         body {
@@ -101,9 +98,6 @@
             background: transparent;
             border: 2px solid #1B1B1B;
             margin: 0 auto 20px auto;
-            width: var(--grid-width-mobile);
-            grid-template-columns: repeat(var(--grid-size), var(--cell-size-mobile));
-            grid-template-rows: repeat(var(--grid-size), var(--cell-size-mobile));
         }
 
         .grid-cell {
@@ -316,12 +310,6 @@
                 width: 100%;
             }
 
-            .crossword-grid {
-                width: var(--grid-width-desktop);
-                grid-template-columns: repeat(var(--grid-size), var(--cell-size-desktop));
-                grid-template-rows: repeat(var(--grid-size), var(--cell-size-desktop));
-            }
-
             .grid-cell input {
                 font-size: calc(var(--cell-size-desktop) * 0.55);
                 /* Increased from 0.5 */
@@ -455,7 +443,6 @@
                 const puzzle = this.currentPuzzleData;
                 if (!puzzle) return;
 
-                document.documentElement.style.setProperty('--grid-size', puzzle.gridSize.cols);
                 document.getElementById('puzzleTitle').textContent = puzzle.title;
                 document.getElementById('puzzleInfo').textContent = puzzle.info;
 
@@ -531,7 +518,17 @@
             generateGrid(puzzle) {
                 const grid = document.getElementById('crosswordGrid');
                 grid.innerHTML = '';
-                const gridData = Array(puzzle.gridSize.rows).fill(null).map(() => Array(puzzle.gridSize.cols).fill(null));
+
+                const { rows, cols } = puzzle.gridSize;
+                const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+                const cellSize = isDesktop ? 55 : 18;
+                const unit = isDesktop ? 'px' : 'vw';
+
+                grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}${unit})`;
+                grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}${unit})`;
+                grid.style.width = `${cols * cellSize}${unit}`;
+
+                const gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
                 puzzle.words.forEach(wordInfo => {
                     let r = wordInfo.row, c = wordInfo.col;
                     for (let i = 0; i < wordInfo.word.length; i++) {
@@ -542,8 +539,8 @@
                         if (wordInfo.direction === 'across') c++; else r++;
                     }
                 });
-                for (let r = 0; r < puzzle.gridSize.rows; r++) {
-                    for (let c = 0; c < puzzle.gridSize.cols; c++) {
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
                         const cellData = gridData[r][c];
                         if (!cellData) {
                             grid.appendChild(document.createElement('div')).className = 'black-cell';
