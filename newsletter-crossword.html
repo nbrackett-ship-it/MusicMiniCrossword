@@ -281,7 +281,7 @@
                 }
 
                 // Load from your established puzzles folder structure
-                const response = await fetch(`./puzzles/${puzzleId}.json`);
+                const response = await fetch(`/puzzles/${puzzleId}.json`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status} for puzzle ${puzzleId}`);
                 }
