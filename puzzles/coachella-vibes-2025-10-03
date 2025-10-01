@@ -1,0 +1,34 @@
+{
+  "id": "coachella-vibes-2025-10-03",
+  "title": "Coachella-ish",
+  "info": "10-03-2025 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "LIKE", "number": 1, "direction": "across", "row": 0, "col": 1 },
+    { "word": "CANNY", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "ORDER", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "AGILE", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "TOOL", "number": 5, "direction": "across", "row": 4, "col": 0 },
+    { "word": "COAT", "number": 1, "direction": "down", "row": 1, "col": 0 },
+    { "word": "LARGO", "number": 6, "direction": "down", "row": 0, "col": 1 },
+    { "word": "INDIO", "number": 7, "direction": "down", "row": 0, "col": 2 },
+    { "word": "KNELL", "number": 8, "direction": "down", "row": 0, "col": 3 },
+    { "word": "EYRE", "number": 9, "direction": "down", "row": 0, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "___ a Prayer" },
+      { "number": 2, "text": "Astute" },
+      { "number": 3, "text": "Joy Division inheritors New ___" },
+      { "number": 4, "text": "Quick" },
+      { "number": 5, "text": "Maynard James Keenan's outfit" }
+    ],
+    "down": [
+      { "number": 1, "text": "___ of Many Colors" },
+      { "number": 6, "text": "LA club where Jon Brion has a residency" },
+      { "number": 7, "text": "Coachella hometown" },
+      { "number": 8, "text": "Mournful bell" },
+      { "number": 9, "text": "Novel 'Jane ___'" }
+    ]
+  }
+}
