@@ -1,3 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music Mini Crossword</title>
+  <!-- optional but nice: -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* tiny safety net in case style.css isn’t loaded */
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; }
+    #app { display: grid; gap: 20px; }
+    #gridAndClues { display: grid; gap: 20px; grid-template-columns: 1fr; }
+    @media (min-width: 900px) { #gridAndClues { grid-template-columns: auto 1fr; align-items: start; } }
+    #crosswordGrid { display: grid; gap: 2px; background: #ddd; padding: 4px; }
+    .grid-cell { position: relative; background: #fff; display: grid; place-items: center; }
+    .grid-cell input { width: 100%; height: 100%; text-align: center; border: none; font-size: 24px; text-transform: uppercase; }
+    .cell-number { position: absolute; top: 2px; left: 4px; font-size: 10px; color: #666; }
+    .black-cell { background: #111; }
+    .clue-item { margin: 6px 0; }
+    .highlight-word { outline: 2px solid #000; }
+    .highlight-active { outline: 2px solid #1a73e8; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1 id="puzzleTitle">Loading…</h1>
+      <div id="puzzleInfo"></div>
+    </header>
+
+    <section id="gridAndClues">
+      <div id="crosswordGrid" aria-label="Crossword grid"></div>
+
+      <aside id="clues">
+        <h2>Across</h2>
+        <div id="cluesAcross"></div>
+        <h2 style="margin-top:16px">Down</h2>
+        <div id="cluesDown"></div>
+      </aside>
+    </section>
+  </div>
+
+  <!-- keep ONLY ONE script block — the one we already fixed -->
+  <!-- paste your SimpleCrossword <script> block right below this line -->
+  <!-- (or include it as a single external file, but not both) -->
+</body>
+</html>
+
+
+
 <script>
 class SimpleCrossword {
   constructor() {
