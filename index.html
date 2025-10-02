@@ -304,12 +304,22 @@
       handleCellClick(e){
         if (e.target.tagName !== 'INPUT') return;
         const input = e.target;
+        
+        // If tapping the already-active cell at an intersection, toggle direction
         if (input === this.activeCell && input.dataset.across && input.dataset.down){
           this.direction = this.direction === 'across' ? 'down' : 'across';
-        } else if (!input.dataset[this.direction]){
-          this.direction = input.dataset.across ? 'across' : 'down';
+        } 
+        // If tapping a new cell, determine direction
+        else {
+          // If the new cell doesn't support the current direction, switch to available direction
+          if (!input.dataset[this.direction]){
+            this.direction = input.dataset.across ? 'across' : 'down';
+          }
+          // Otherwise keep current direction if the new cell supports it
         }
+        
         this.activeCell = input;
+        input.focus(); // Ensure input has focus
         this.highlightWord();
       }
 
