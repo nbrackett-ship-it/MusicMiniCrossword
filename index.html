@@ -353,12 +353,24 @@
       }
 
       moveInDirection(cell, direction, isBackspace = false) {
+        const r = parseInt(cell.dataset.row);
+        const c = parseInt(cell.dataset.col);
         const move = isBackspace ? -1 : 1;
-        const dr = (direction === 'down') ? move : 0;
-        const dc = (direction === 'across') ? move : 0;
-        this.moveArrow(cell, dr, dc);
+        
+        let nextR = r, nextC = c;
+        if (direction === 'across') {
+          nextC = c + move;
+        } else {
+          nextR = r + move;
+        }
+        
+        const next = document.querySelector(`input[data-row='${nextR}'][data-col='${nextC}']`);
+        if (next) {
+          this.activeCell = next;
+          next.focus();
+          this.highlightWord();
+        }
       }
-
       moveArrow(cell, dr, dc){
         const r = parseInt(cell.dataset.row) + dr;
         const c = parseInt(cell.dataset.col) + dc;
