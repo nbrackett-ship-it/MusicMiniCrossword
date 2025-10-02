@@ -6,11 +6,12 @@
   <title>Music Mini Crossword</title>
 
   <style>
-    /* === Issue 1 look, but with hard grid lines and top sticky bar === */
+    /* === FIX: Grid is now sized by JS; CSS is simplified for layout and styling === */
     :root{
       --ink:#111; --ink-2:#333; --ink-3:#555; --paper:#fff;
       --rule-strong:3px; --rule-fine:1px;
-      --maxw:980px; --gridMax:560px; --blue:#1a1ae8;
+      --maxw:600px; /* Adjusted for a better single-column experience */
+      --gridMax:560px; --blue:#1a1ae8;
       --stickyH:48px;
     }
 
@@ -21,7 +22,8 @@
       margin:24px; display:flex; justify-content:center;
       transition:padding-top .15s ease;
     }
-    body.has-sticky{ padding-top:var(--stickyH); } /* reserve room when sticky appears */
+    /* FIX: Make room for the clue bar which is now always visible */
+    body.has-sticky{ padding-top:var(--stickyH); }
     #app{ width:100%; max-width:var(--maxw); }
 
     /* Header */
@@ -32,20 +34,20 @@
     .mm-instruction{ font-size:14px; font-weight:700; margin:6px 0 10px 0; }
     .mm-rule{ border:0; height:0; border-top:var(--rule-fine) solid var(--ink); margin:8px 0 14px 0; }
 
-    /* Layout: grid above clues on mobile; side-by-side on wide screens */
+    /* FIX: Layout is now always a single column. The media query for side-by-side has been removed. */
     #gridAndClues{ display:grid; gap:24px; grid-template-columns:1fr; }
-    @media (min-width: 900px){ #gridAndClues{ grid-template-columns:auto 1fr; align-items:start; } }
 
-    /* GRID: no gap hack; draw borders on each cell for crisp lines on iOS */
+    /* FIX: GRID sizing is now driven by JS to ensure integer pixel values and eliminate broken borders. */
     #crosswordGrid{
       display:grid;
-      /* we’ll set template rows/cols in JS */
-      width:100%; max-width:var(--gridMax);
+      width:100%; /* JS will override this with a pixel-perfect value */
+      max-width:var(--gridMax);
       margin:0 auto 8px auto;
     }
+    /* FIX: Removed aspect-ratio and width:100%. Sizing is handled by the container. */
     .grid-cell, .black-cell{
-      position:relative; width:100%; aspect-ratio:1/1; background:#fff;
-      /* draw single-pixel grid using per-edge borders */
+      position:relative; background:#fff;
+      /* Borders are applied per-edge for consistency */
       border-right:1px solid var(--ink);
       border-bottom:1px solid var(--ink);
     }
@@ -56,7 +58,8 @@
     .grid-cell input{
       width:100%; height:100%; text-align:center; border:0; outline:0;
       font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
-      font-size:22px; text-transform:uppercase; color:var(--ink);
+      font-size: clamp(18px, 4.5vw, 24px); /* Responsive font size */
+      text-transform:uppercase; color:var(--ink);
       caret-color:var(--blue);
       background:transparent;
     }
@@ -64,27 +67,33 @@
     .highlight-word{ box-shadow: inset 0 0 0 2px var(--ink); }
     .highlight-active{ box-shadow: inset 0 0 0 2px var(--blue); }
 
-    /* Clues + “rules” look like issue 1 (thick then fine) */
+    /* FIX: Re-implementing the thick+fine double rule from Issue #1 */
     #clues h2{
-      font-size:18px; margin:18px 0 8px 0; padding-top:8px;
+      font-size:18px; margin:18px 0 12px 0; padding-bottom: 8px; /* space for the second rule */
       border-top:var(--rule-strong) solid var(--ink);
+      position:relative;
     }
-    #clues h2 + div{
-      border-top:var(--rule-fine) solid var(--ink);
-      padding-top:8px; margin-top:6px;
+    #clues h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: var(--rule-fine);
+        background-color: var(--ink);
     }
     .clue-item{ font-size:14px; line-height:1.5; color:var(--ink-2); margin:10px 0; }
     .clue-item b{ font-weight:700; color:var(--ink); margin-right:6px; display:inline-block; min-width:22px; }
 
-    /* Sticky clue at TOP of page */
+    /* FIX: Sticky clue bar is now persistent. Removed transform/transition animation. */
     #sticky-clue-bar{
       position:fixed; left:0; right:0; top:0; height:var(--stickyH);
       display:flex; align-items:center; gap:8px;
-      padding:10px 12px; background:#F3F4F6; border-bottom:1px solid var(--ink);
-      transform:translateY(-100%); transition:transform .18s ease;
+      padding:0 12px;
+      background:#F3F4F6;
+      border-bottom:1px solid var(--ink);
       z-index:1000; font-size:14px;
     }
-    #sticky-clue-bar.show{ transform:translateY(0); }
     #sticky-clue-bar .clue-number{ font-weight:700; min-width:26px; }
     #sticky-clue-bar .dir{ font-weight:700; margin-right:4px; color:var(--ink-2); }
 
@@ -94,18 +103,14 @@
     #stars-container{ font-size:36px; letter-spacing:4px; margin:10px 0; }
     .star-animate{ display:inline-block; opacity:0; transform:translateY(8px); animation:pop .45s forwards; }
     @keyframes pop{ to{ opacity:1; transform:translateY(0); } }
-
-    /* Mobile font nudges */
-    @media (max-width:420px){ .grid-cell input{ font-size:20px; } }
   </style>
 </head>
 <body>
   <div id="app">
     <header class="mm-header">
       <h1 class="mm-title">Music Mini</h1>
-      <div class="mm-subtitle">World Premiere</div>
+      <div class="mm-subtitle" id="puzzleTitle">World Premiere</div>
       <div class="mm-meta" id="puzzleInfo">— • —</div>
-      <div class="mm-instruction">Select a square to start</div>
       <hr class="mm-rule" />
     </header>
 
@@ -116,20 +121,16 @@
         <h2>Across</h2>
         <div id="cluesAcross"></div>
 
-        <h2 style="margin-top:16px;">Down</h2>
+        <h2>Down</h2>
         <div id="cluesDown"></div>
       </aside>
     </main>
   </div>
 
-  <!-- Sticky clue (TOP) -->
   <div id="sticky-clue-bar" aria-live="polite">
-    <span class="dir" id="sticky-dir">Across</span>
-    <span class="clue-number" id="sticky-num">1.</span>
-    <span class="clue-text" id="sticky-text">—</span>
+    <span class="clue-text" id="sticky-text">Select a square to start</span>
   </div>
 
-  <!-- Victory -->
   <div id="victory-screen" role="dialog" aria-modal="true">
     <div id="victory-card">
       <div id="victory-message-text" style="font-weight:700; margin-bottom:6px;">You did it!</div>
@@ -142,7 +143,7 @@
       constructor() {
         this.puzzleIds = [
           'coachella-vibes-2025-10-03',
-          'global-rollout-2025-07-16',
+          'world-premiere-2025-09-26',
           'cycling-playlist-2025-07-19'
         ];
         this.currentPuzzleIndex = 0;
@@ -155,11 +156,17 @@
         this.elapsedTime = 0;
         this.timerInterval = null;
 
+        // FIX: Debounced resize handler for performance
+        this.debouncedResize = this.debounce(this.resizeGrid.bind(this), 250);
+
         this.init();
       }
 
       async init() {
+        document.body.classList.add('has-sticky'); // Make room for persistent clue bar
         this.setupEvents();
+        window.addEventListener('resize', this.debouncedResize); // Add resize listener
+
         const puzzleIdFromUrl = this.getPuzzleIdFromUrl();
         const idx = this.puzzleIds.indexOf(puzzleIdFromUrl);
         this.currentPuzzleIndex = idx !== -1 ? idx : 0;
@@ -172,14 +179,20 @@
       }
 
       async loadPuzzleById(puzzleId) {
-        const res = await fetch(`/puzzles/${puzzleId}.json`, { cache: 'no-store' });
-        if (!res.ok) throw new Error(`Failed to load puzzle ${puzzleId}`);
-        this.currentPuzzleData = await res.json();
-        this.renderPuzzle();
+        try {
+          const res = await fetch(`/puzzles/${puzzleId}.json`, { cache: 'no-store' });
+          if (!res.ok) throw new Error(`Failed to load puzzle ${puzzleId}`);
+          this.currentPuzzleData = await res.json();
+          this.renderPuzzle();
+        } catch(e) {
+            console.error(e);
+            document.getElementById('puzzleTitle').textContent = "Puzzle Not Found";
+        }
       }
 
       renderPuzzle() {
         const p = this.currentPuzzleData;
+        document.querySelector('.mm-subtitle').textContent = p.title;
         document.querySelector('#puzzleInfo').textContent = p.info;
 
         this.generateGrid(p);
@@ -189,18 +202,31 @@
         this.resetTimer();
       }
 
+      // FIX: New function to calculate and apply integer pixel sizes to the grid
+      resizeGrid() {
+        const p = this.currentPuzzleData;
+        if (!p) return;
+
+        const grid = document.getElementById('crosswordGrid');
+        const { cols } = p.gridSize;
+
+        // Calculate size based on the available width of the parent container
+        const containerWidth = grid.parentElement.clientWidth;
+        const cellSize = Math.floor(containerWidth / cols);
+
+        const finalGridWidth = cellSize * cols;
+
+        grid.style.width = `${finalGridWidth}px`;
+        grid.style.height = `${finalGridWidth}px`;
+      }
+
       generateGrid(puzzle) {
         const grid = document.getElementById('crosswordGrid');
         grid.innerHTML = '';
 
         const { rows, cols } = puzzle.gridSize;
-        const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-        const cellSize = isDesktop ? 55 : 18;
-        const unit = isDesktop ? 'px' : 'vw';
-
-        grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}${unit})`;
-        grid.style.gridTemplateRows   = `repeat(${rows}, ${cellSize}${unit})`;
-        grid.style.width = `${cols * cellSize}${unit}`;
+        grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        grid.style.gridTemplateRows   = `repeat(${rows}, 1fr)`;
 
         // build matrix
         const gridData = Array.from({ length: rows }, () => Array(cols).fill(null));
@@ -216,7 +242,7 @@
           }
         });
 
-        // render cells with real borders
+        // render cells
         for (let r=0;r<rows;r++){
           for (let c=0;c<cols;c++){
             const cell = gridData[r][c];
@@ -249,6 +275,8 @@
             }
           }
         }
+        // Set initial size after generation
+        this.resizeGrid();
       }
 
       updateClues(puzzle){
@@ -275,14 +303,13 @@
         grid.addEventListener('click',e=>this.handleCellClick(e));
         grid.addEventListener('input',e=>this.handleInput(e));
         grid.addEventListener('keydown',e=>this.handleKeydown(e));
+        grid.addEventListener('focusin', e => {
+            if (e.target.tagName === 'INPUT') this.handleCellClick(e);
+        });
 
         document.addEventListener('visibilitychange', () => {
           if (document.hidden) this.stopTimer();
-          else if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
-        });
-        window.addEventListener('blur', () => this.stopTimer());
-        window.addEventListener('focus', () => {
-          if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
+          else if (this.startTime && !this.checkIfComplete()) this.startTimer();
         });
 
         document.getElementById('victory-screen').addEventListener('click', () => {
@@ -312,7 +339,7 @@
         this.saveProgress();
 
         if (input.value)
-          this.moveArrow(input, this.direction==='across'?0:1, this.direction==='across'?1:0);
+          this.moveInDirection(input, this.direction);
 
         this.checkCompletion();
       }
@@ -326,15 +353,25 @@
           case 'ArrowLeft':dc=-1;this.direction='across';break;
           case 'ArrowRight':dc=1;this.direction='across';break;
           case 'Backspace':
-            if (!this.activeCell.value){
-              e.preventDefault();
-              this.moveArrow(this.activeCell, this.direction==='across'?0:-1, this.direction==='across'?-1:0);
+            e.preventDefault();
+            if (this.activeCell.value){
+                 this.activeCell.value = '';
+            } else {
+                 this.moveInDirection(this.activeCell, this.direction, true);
             }
             return;
           default:return;
         }
         e.preventDefault();
         this.moveArrow(this.activeCell,dr,dc);
+      }
+
+      moveInDirection(cell, direction, isBackspace = false) {
+        const move = isBackspace ? -1 : 1;
+        let dr = 0, dc = 0;
+        if (direction === 'across') dc = move;
+        else dr = move;
+        this.moveArrow(cell, dr, dc);
       }
 
       moveArrow(cell,dr,dc){
@@ -359,15 +396,9 @@
         const p=this.currentPuzzleData;
         const list = p.clues[this.direction];
         const clue = list.find(c=>c.number==clueNum);
-        const bar=document.getElementById('sticky-clue-bar');
-        document.getElementById('sticky-dir').textContent = this.direction[0].toUpperCase()+this.direction.slice(1);
-        document.getElementById('sticky-num').textContent = `${clue.number}.`;
-        document.getElementById('sticky-text').textContent = clue.text;
-        bar.classList.add('show');
-        document.body.classList.add('has-sticky');
+        document.getElementById('sticky-text').innerHTML = `<span class="dir">${this.direction.charAt(0).toUpperCase() + this.direction.slice(1)}</span> <span class="clue-number">${clue.number}.</span> ${clue.text}`;
       }
 
-      /* ===== Timer + Victory ===== */
       startTimer(){
         if (!this.startTime) this.startTime = Date.now() - this.elapsedTime*1000;
         if (!this.timerInterval){
@@ -388,6 +419,7 @@
         return {stars:"★★", text:"Decent Effort"};
       }
       showVictoryScreen(){
+        this.stopTimer();
         const p=this.currentPuzzleData;
         const screen=document.getElementById('victory-screen');
         const msg=document.getElementById('victory-message-text');
@@ -405,11 +437,9 @@
         screen.style.display='flex';
       }
 
-      /* ===== Persistence ===== */
       storageKey(){
-        const params = new URLSearchParams(window.location.search);
-        const pid = params.get('puzzle') || this.puzzleIds[this.currentPuzzleIndex];
-        return `mm-progress:${pid}`;
+        const puzzleId = this.currentPuzzleData?.id || this.puzzleIds[this.currentPuzzleIndex];
+        return `mm-progress:${puzzleId}`;
       }
       saveProgress(){
         const inputs=[...document.querySelectorAll('.grid-cell input')];
@@ -421,17 +451,20 @@
         if (!blob) return;
         try{
           const {data,t}=JSON.parse(blob);
+          if (!data) return;
           const byKey = new Map(data.map(d=>[`${d.r},${d.c}`, d.v]));
           document.querySelectorAll('.grid-cell input').forEach(i=>{
             const v=byKey.get(`${i.dataset.row},${i.dataset.col}`) || '';
             i.value = v.toUpperCase();
           });
           if (t && Number.isFinite(t)) this.elapsedTime = t;
-        }catch{}
+          if (this.elapsedTime > 0) this.startTimer(); // Resume timer if progress was loaded
+        }catch(e){ console.error("Could not load progress", e); }
       }
 
       checkIfComplete(){
         const inputs=document.querySelectorAll('.grid-cell input');
+        if (inputs.length === 0) return false;
         for(const input of inputs){
           if (input.value.toUpperCase() !== input.dataset.answer) return false;
         }
@@ -439,8 +472,20 @@
       }
       checkCompletion(){
         if (!this.checkIfComplete()) return;
-        this.stopTimer();
         this.showVictoryScreen();
+      }
+
+      // Debounce utility to limit how often a function can run
+      debounce(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+              const later = () => {
+                  clearTimeout(timeout);
+                  func(...args);
+              };
+              clearTimeout(timeout);
+              timeout = setTimeout(later, wait);
+          };
       }
     }
 
