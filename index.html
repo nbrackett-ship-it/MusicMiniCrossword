@@ -6,19 +6,22 @@
   <title>Music Mini Crossword</title>
 
   <style>
-    /* ===== Issue 1 visual system ===== */
+    /* === Issue 1 look, but with hard grid lines and top sticky bar === */
     :root{
       --ink:#111; --ink-2:#333; --ink-3:#555; --paper:#fff;
-      --rule-strong:3px; --rule-fine:1px; --gap:2px;
-      --maxw:980px; --gridMax:560px;
-      --blue:#1a1ae8;
+      --rule-strong:3px; --rule-fine:1px;
+      --maxw:980px; --gridMax:560px; --blue:#1a1ae8;
+      --stickyH:48px;
     }
+
     html,body{ background:var(--paper); margin:0; padding:0; }
     body{
       font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
       color:var(--ink);
       margin:24px; display:flex; justify-content:center;
+      transition:padding-top .15s ease;
     }
+    body.has-sticky{ padding-top:var(--stickyH); } /* reserve room when sticky appears */
     #app{ width:100%; max-width:var(--maxw); }
 
     /* Header */
@@ -29,86 +32,71 @@
     .mm-instruction{ font-size:14px; font-weight:700; margin:6px 0 10px 0; }
     .mm-rule{ border:0; height:0; border-top:var(--rule-fine) solid var(--ink); margin:8px 0 14px 0; }
 
-    /* Layout */
+    /* Layout: grid above clues on mobile; side-by-side on wide screens */
     #gridAndClues{ display:grid; gap:24px; grid-template-columns:1fr; }
-    @media (min-width: 900px){
-      #gridAndClues{ grid-template-columns:auto 1fr; align-items:start; }
-    }
+    @media (min-width: 900px){ #gridAndClues{ grid-template-columns:auto 1fr; align-items:start; } }
 
-    /* Grid frame */
+    /* GRID: no gap hack; draw borders on each cell for crisp lines on iOS */
     #crosswordGrid{
-      display:grid; gap:var(--gap);
-      background:#ddd; padding:var(--gap);
-      border:var(--rule-fine) solid var(--ink);
+      display:grid;
+      /* we’ll set template rows/cols in JS */
+      width:100%; max-width:var(--gridMax);
       margin:0 auto 8px auto;
-      width:100%;
-      max-width:var(--gridMax);
     }
-    .grid-cell{
-      position:relative; background:#fff; display:grid; place-items:center;
-      width:100%; aspect-ratio:1/1; border:var(--rule-fine) solid transparent;
+    .grid-cell, .black-cell{
+      position:relative; width:100%; aspect-ratio:1/1; background:#fff;
+      /* draw single-pixel grid using per-edge borders */
+      border-right:1px solid var(--ink);
+      border-bottom:1px solid var(--ink);
     }
+    .grid-cell.first-col, .black-cell.first-col{ border-left:1px solid var(--ink); }
+    .grid-cell.first-row, .black-cell.first-row{ border-top:1px solid var(--ink); }
+    .black-cell{ background:#111; }
+
     .grid-cell input{
       width:100%; height:100%; text-align:center; border:0; outline:0;
       font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
       font-size:22px; text-transform:uppercase; color:var(--ink);
       caret-color:var(--blue);
+      background:transparent;
     }
-    .black-cell{ background:var(--ink); width:100%; aspect-ratio:1/1; }
-    .cell-number{ position:absolute; top:3px; left:4px; font-size:10px; color:#666; }
-    .highlight-word{ outline:2px solid var(--ink); }
-    .highlight-active{ outline:2px solid var(--blue); }
+    .cell-number{ position:absolute; top:3px; left:4px; font-size:10px; color:#777; }
+    .highlight-word{ box-shadow: inset 0 0 0 2px var(--ink); }
+    .highlight-active{ box-shadow: inset 0 0 0 2px var(--blue); }
 
-    /* Clues */
+    /* Clues + “rules” look like issue 1 (thick then fine) */
     #clues h2{
       font-size:18px; margin:18px 0 8px 0; padding-top:8px;
-      border-top:var(--rule-strong) solid var(--ink); /* thick rule above header */
+      border-top:var(--rule-strong) solid var(--ink);
     }
-    /* fine rule under header before the first clue */
     #clues h2 + div{
       border-top:var(--rule-fine) solid var(--ink);
       padding-top:8px; margin-top:6px;
     }
-    .clue-item{
-      font-size:14px; line-height:1.5; color:var(--ink-2);
-      margin:10px 0; white-space:normal;
-    }
-    .clue-item b{
-      font-weight:700; color:var(--ink); margin-right:6px;
-      display:inline-block; min-width:22px;
-    }
+    .clue-item{ font-size:14px; line-height:1.5; color:var(--ink-2); margin:10px 0; }
+    .clue-item b{ font-weight:700; color:var(--ink); margin-right:6px; display:inline-block; min-width:22px; }
 
-    /* Sticky clue bar (mobile helper) */
+    /* Sticky clue at TOP of page */
     #sticky-clue-bar{
-      position:fixed; left:0; right:0; bottom:-120px;
-      background:#F3F4F6; border-top:var(--rule-fine) solid var(--ink);
-      padding:10px 12px; transition:transform .2s ease, bottom .2s ease;
-      display:flex; gap:8px; align-items:center; z-index:20;
-      transform:translateY(0);
-      font-size:14px;
+      position:fixed; left:0; right:0; top:0; height:var(--stickyH);
+      display:flex; align-items:center; gap:8px;
+      padding:10px 12px; background:#F3F4F6; border-bottom:1px solid var(--ink);
+      transform:translateY(-100%); transition:transform .18s ease;
+      z-index:1000; font-size:14px;
     }
-    #sticky-clue-bar.show{ bottom:0; }
+    #sticky-clue-bar.show{ transform:translateY(0); }
     #sticky-clue-bar .clue-number{ font-weight:700; min-width:26px; }
     #sticky-clue-bar .dir{ font-weight:700; margin-right:4px; color:var(--ink-2); }
 
     /* Victory screen */
-    #victory-screen{
-      position:fixed; inset:0; background:rgba(255,255,255,.96);
-      display:none; align-items:center; justify-content:center; z-index:50;
-    }
-    #victory-card{
-      border:var(--rule-fine) solid var(--ink); background:#fff; padding:22px;
-      max-width:480px; width:90%;
-      text-align:center;
-    }
+    #victory-screen{ position:fixed; inset:0; background:rgba(255,255,255,.96); display:none; align-items:center; justify-content:center; z-index:1100; }
+    #victory-card{ border:1px solid var(--ink); background:#fff; padding:22px; max-width:480px; width:90%; text-align:center; }
     #stars-container{ font-size:36px; letter-spacing:4px; margin:10px 0; }
     .star-animate{ display:inline-block; opacity:0; transform:translateY(8px); animation:pop .45s forwards; }
     @keyframes pop{ to{ opacity:1; transform:translateY(0); } }
 
-    /* Mobile sizing */
-    @media (max-width:420px){
-      .grid-cell input{ font-size:20px; }
-    }
+    /* Mobile font nudges */
+    @media (max-width:420px){ .grid-cell input{ font-size:20px; } }
   </style>
 </head>
 <body>
@@ -134,7 +122,7 @@
     </main>
   </div>
 
-  <!-- Sticky clue -->
+  <!-- Sticky clue (TOP) -->
   <div id="sticky-clue-bar" aria-live="polite">
     <span class="dir" id="sticky-dir">Across</span>
     <span class="clue-number" id="sticky-num">1.</span>
@@ -197,7 +185,6 @@
         this.generateGrid(p);
         this.updateClues(p);
 
-        // load saved progress
         this.loadProgress();
         this.resetTimer();
       }
@@ -210,10 +197,12 @@
         const isDesktop = window.matchMedia('(min-width: 768px)').matches;
         const cellSize = isDesktop ? 55 : 18;
         const unit = isDesktop ? 'px' : 'vw';
+
         grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}${unit})`;
         grid.style.gridTemplateRows   = `repeat(${rows}, ${cellSize}${unit})`;
         grid.style.width = `${cols * cellSize}${unit}`;
 
+        // build matrix
         const gridData = Array.from({ length: rows }, () => Array(cols).fill(null));
 
         puzzle.words.forEach(w => {
@@ -227,29 +216,33 @@
           }
         });
 
+        // render cells with real borders
         for (let r=0;r<rows;r++){
           for (let c=0;c<cols;c++){
             const cell = gridData[r][c];
             if (!cell){
               const div=document.createElement('div');
               div.className='black-cell';
+              if (r===0) div.classList.add('first-row');
+              if (c===0) div.classList.add('first-col');
               grid.appendChild(div);
             } else {
               const wrap=document.createElement('div');
               wrap.className='grid-cell';
+              if (r===0) wrap.classList.add('first-row');
+              if (c===0) wrap.classList.add('first-col');
+
               const input=document.createElement('input');
-              input.type='text';
-              input.maxLength=1;
-              input.dataset.row=r;
-              input.dataset.col=c;
+              input.type='text'; input.maxLength=1;
+              input.dataset.row=r; input.dataset.col=c;
               input.dataset.answer=cell.answer;
               if (cell.across) input.dataset.across=cell.across;
               if (cell.down) input.dataset.down=cell.down;
+
               wrap.appendChild(input);
               if (cell.number){
                 const num=document.createElement('span');
-                num.className='cell-number';
-                num.textContent=cell.number;
+                num.className='cell-number'; num.textContent=cell.number;
                 wrap.appendChild(num);
               }
               grid.appendChild(wrap);
@@ -283,7 +276,6 @@
         grid.addEventListener('input',e=>this.handleInput(e));
         grid.addEventListener('keydown',e=>this.handleKeydown(e));
 
-        // timer visibility handling
         document.addEventListener('visibilitychange', () => {
           if (document.hidden) this.stopTimer();
           else if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
@@ -293,7 +285,6 @@
           if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
         });
 
-        // close victory on click anywhere
         document.getElementById('victory-screen').addEventListener('click', () => {
           document.getElementById('victory-screen').style.display = 'none';
         });
@@ -364,7 +355,7 @@
         });
         this.activeCell.parentElement.classList.add('highlight-active');
 
-        // sticky clue
+        // top sticky clue
         const p=this.currentPuzzleData;
         const list = p.clues[this.direction];
         const clue = list.find(c=>c.number==clueNum);
@@ -373,13 +364,14 @@
         document.getElementById('sticky-num').textContent = `${clue.number}.`;
         document.getElementById('sticky-text').textContent = clue.text;
         bar.classList.add('show');
+        document.body.classList.add('has-sticky');
       }
 
       /* ===== Timer + Victory ===== */
       startTimer(){
         if (!this.startTime) this.startTime = Date.now() - this.elapsedTime*1000;
         if (!this.timerInterval){
-          this.timerInterval = setInterval(()=> {
+          this.timerInterval = setInterval(()=>{
             this.elapsedTime = Math.floor((Date.now() - this.startTime)/1000);
           }, 1000);
         }
