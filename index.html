@@ -352,7 +352,7 @@
         this.moveArrow(this.activeCell, dr, dc);
       }
 
-moveInDirection(cell, direction, isBackspace = false) {
+      moveInDirection(cell, direction, isBackspace = false) {
         const r = parseInt(cell.dataset.row);
         const c = parseInt(cell.dataset.col);
         const move = isBackspace ? -1 : 1;
@@ -370,7 +370,7 @@ moveInDirection(cell, direction, isBackspace = false) {
           next.focus();
           this.highlightWord();
         }
-      }     
+      }
       
       moveArrow(cell, dr, dc){
         const r = parseInt(cell.dataset.row) + dr;
