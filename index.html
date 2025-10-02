@@ -152,6 +152,8 @@
         this.startTime = null;
         this.elapsedTime = 0;
         this.timerInterval = null;
+        // FIX: Add a flag to track programmatic focus changes during auto-advance.
+        this.isAutoAdvancing = false;
 
         // FIX: Create a debounced resize handler for performance.
         this.debouncedResize = this.debounce(this.resizeGrid.bind(this), 250);
@@ -290,6 +292,8 @@
         grid.addEventListener('input', e => this.handleInput(e));
         grid.addEventListener('keydown', e => this.handleKeydown(e));
         grid.addEventListener('focusin', e => {
+            // FIX: Prevent focusin from re-triggering click handler during auto-advance
+            if (this.isAutoAdvancing) return;
             if (e.target.tagName === 'INPUT') this.handleCellClick(e);
         });
         document.addEventListener('visibilitychange', () => {
@@ -329,7 +333,12 @@
         input.value = input.value.toUpperCase();
         if (!this.timerInterval && input.value) this.startTimer();
         this.saveProgress();
-        if (input.value) this.moveInDirection(input, this.direction);
+        if (input.value) {
+          // FIX: Wrap auto-advance in a flag to prevent direction toggling
+          this.isAutoAdvancing = true;
+          this.moveInDirection(input, this.direction);
+          this.isAutoAdvancing = false;
+        }
         this.checkCompletion();
       }
 
