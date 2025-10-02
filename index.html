@@ -1,355 +1,337 @@
 <script>
-    class SimpleCrossword {
-        constructor() {
-            this.puzzleIds = [
-                'coachella-vibes-2025-10-03', 
-                'global-rollout-2025-07-16',
-                'cycling-playlist-2025-07-19'
-            ];
+class SimpleCrossword {
+  constructor() {
+    this.puzzleIds = [
+      'coachella-vibes-2025-10-03',
+      'global-rollout-2025-07-16',
+      'cycling-playlist-2025-07-19'
+    ];
+    this.currentPuzzleIndex = 0;
+    this.currentPuzzleData = null;
+    this.direction = 'across';
+    this.activeCell = null;
+    this.startTime = null;
+    this.elapsedTime = 0;
+    this.timerInterval = null;
+    this.init();
+  }
 
-            this.currentPuzzleIndex = 0;
-            this.currentPuzzleData = null;
+  async init() {
+    this.setupEvents();
+    const puzzleIdFromUrl = this.getPuzzleIdFromUrl();
+    const idx = this.puzzleIds.indexOf(puzzleIdFromUrl);
+    this.currentPuzzleIndex = idx !== -1 ? idx : 0;
 
-            this.direction = 'across';
-            this.activeCell = null;
-            this.startTime = null;
-            this.elapsedTime = 0;
-            this.timerInterval = null;
+    try {
+      await this.loadPuzzleById(this.puzzleIds[this.currentPuzzleIndex]);
+    } catch (err) {
+      console.error(err);
+      this.uiSet('puzzleTitle', 'Load error');
+      this.uiSet('puzzleInfo', String(err.message || err));
+    }
+  }
 
-            this.init();
+  getPuzzleIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('source');
+    if (source === 'social') {
+      const btn = document.getElementById('stemsCtaButton');
+      if (btn) btn.textContent = 'Get Stems Weekly';
+    }
+    return urlParams.get('puzzle'); // ← correct param
+  }
+
+  async loadPuzzleById(puzzleId) {
+    if (!puzzleId) throw new Error('No puzzle ID provided.');
+    const res = await fetch(`/puzzles/${puzzleId}.json`, { cache: 'no-store' });
+    if (!res.ok) {
+      throw new Error(`Failed to load /puzzles/${puzzleId}.json (HTTP ${res.status})`);
+    }
+    this.currentPuzzleData = await res.json();
+    this.renderPuzzle();
+  }
+
+  renderPuzzle() {
+    const p = this.currentPuzzleData;
+    if (!p) return;
+    this.uiSet('puzzleTitle', p.title);
+    this.uiSet('puzzleInfo', p.info);
+    this.generateGrid(p);
+    this.updateClues(p);
+    this.resetTimer();
+  }
+
+  generateGrid(puzzle) {
+    const grid = document.getElementById('crosswordGrid');
+    if (!grid) throw new Error('Missing #crosswordGrid in HTML.');
+    grid.innerHTML = '';
+
+    const { rows, cols } = puzzle.gridSize;
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    const cellSize = isDesktop ? 55 : 18;
+    const unit = isDesktop ? 'px' : 'vw';
+
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}${unit})`;
+    grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}${unit})`;
+    grid.style.width = `${cols * cellSize}${unit}`;
+
+    const gridData = Array.from({ length: rows }, () => Array(cols).fill(null));
+
+    puzzle.words.forEach(w => {
+      let r = w.row, c = w.col;
+      for (let i = 0; i < w.word.length; i++) {
+        if (!gridData[r][c]) gridData[r][c] = { answer: '', across: null, down: null };
+        gridData[r][c].answer = w.word[i];
+        gridData[r][c][w.direction] = w.number;
+        if (i === 0) gridData[r][c].number = w.number;
+        if (w.direction === 'across') c++; else r++;
+      }
+    });
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const cell = gridData[r][c];
+        if (!cell) {
+          const div = document.createElement('div');
+          div.className = 'black-cell';
+          grid.appendChild(div);
+          continue;
         }
+        const wrap = document.createElement('div');
+        wrap.className = 'grid-cell';
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = 1;
+        input.autocapitalize = 'characters';
+        input.dataset.row = r;
+        input.dataset.col = c;
+        input.dataset.answer = cell.answer;
+        if (cell.across) input.dataset.across = cell.across;
+        if (cell.down) input.dataset.down = cell.down;
+        wrap.appendChild(input);
 
-        async init() {
-            this.setupEvents();
-
-            const puzzleIdFromUrl = this.getPuzzleIdFromUrl();
-
-            const initialPuzzleIndex = this.puzzleIds.indexOf(puzzleIdFromUrl);
-            this.currentPuzzleIndex = initialPuzzleIndex !== -1 ? initialPuzzleIndex : 0;
-
-            try {
-                await this.loadPuzzleById(this.puzzleIds[this.currentPuzzleIndex]);
-            } catch (error) {
-                console.error("Failed to load initial puzzle:", error);
-                document.getElementById('puzzleTitle').textContent = "Error";
-                document.getElementById('puzzleInfo').textContent = "Could not load puzzle. Please try again.";
-            }
+        if (cell.number) {
+          const n = document.createElement('span');
+          n.className = 'cell-number';
+          n.textContent = cell.number;
+          wrap.appendChild(n);
         }
-
-        async loadPuzzleById(puzzleId) {
-            if (!puzzleId) {
-                console.error("No puzzle ID provided.");
-                return;
-            }
-
-            const response = await fetch(`/puzzles/${puzzleId}.json`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status} for puzzle ${puzzleId}`);
-            }
-            this.currentPuzzleData = await response.json();
-
-            this.renderPuzzle();
-        }
-
-        renderPuzzle() {
-            const puzzle = this.currentPuzzleData;
-            if (!puzzle) return;
-
-            document.getElementById('puzzleTitle').textContent = puzzle.title;
-            document.getElementById('puzzleInfo').textContent = puzzle.info;
-
-            this.generateGrid(puzzle);
-            this.updateClues(puzzle);
-
-            this.resetTimer();
-        }
-
-        getPuzzleIdFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            const source = urlParams.get('source');
-            if (source === 'social') {
-                document.getElementById('stemsCtaButton').textContent = 'Get Stems Weekly';
-            }
-            
-            return urlParams.get('id');
-        }
-
-        generateGrid(puzzle) {
-            const grid = document.getElementById('crosswordGrid');
-            grid.innerHTML = '';
-
-            const { rows, cols } = puzzle.gridSize;
-            const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-            const cellSize = isDesktop ? 55 : 18;
-            const unit = isDesktop ? 'px' : 'vw';
-
-            grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}${unit})`;
-            grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}${unit})`;
-            grid.style.width = `${cols * cellSize}${unit}`;
-
-            const gridData = Array(rows).fill(null).map(() => Array(cols).fill(null));
-            puzzle.words.forEach(wordInfo => {
-                let r = wordInfo.row, c = wordInfo.col;
-                for (let i = 0; i < wordInfo.word.length; i++) {
-                    if (!gridData[r][c]) gridData[r][c] = {answer: '', across: null, down: null};
-                    gridData[r][c].answer = wordInfo.word[i];
-                    gridData[r][c][wordInfo.direction] = wordInfo.number;
-                    if (i === 0) gridData[r][c].number = wordInfo.number;
-                    if (wordInfo.direction === 'across') c++; else r++;
-                }
-            });
-            for (let r = 0; r < rows; r++) {
-                for (let c = 0; c < cols; c++) {
-                    const cellData = gridData[r][c];
-                    if (!cellData) {
-                        grid.appendChild(document.createElement('div')).className = 'black-cell';
-                    } else {
-                        const cellWrapper = document.createElement('div');
-                        cellWrapper.className = 'grid-cell';
-                        const input = document.createElement('input');
-                        input.type = 'text'; input.maxLength = 1;
-                        input.dataset.row = r; input.dataset.col = c;
-                        input.dataset.answer = cellData.answer;
-                        if (cellData.across) input.dataset.across = cellData.across;
-                        if (cellData.down) input.dataset.down = cellData.down;
-                        cellWrapper.appendChild(input);
-                        if (cellData.number) {
-                            const numberSpan = document.createElement('span');
-                            numberSpan.className = 'cell-number';
-                            numberSpan.textContent = cellData.number;
-                            cellWrapper.appendChild(numberSpan);
-                        }
-                        grid.appendChild(cellWrapper);
-                    }
-                }
-            }
-            this.loadProgress();
-        }
-
-        updateClues(puzzle) {
-            const acrossDiv = document.getElementById('cluesAcross');
-            const downDiv = document.getElementById('cluesDown');
-            acrossDiv.innerHTML = '';
-            downDiv.innerHTML = '';
-            puzzle.clues.across.forEach(clue => {
-                const div = document.createElement('div');
-                div.className = 'clue-item';
-                div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
-                acrossDiv.appendChild(div);
-            });
-            puzzle.clues.down.forEach(clue => {
-                const div = document.createElement('div');
-                div.className = 'clue-item';
-                div.innerHTML = `<b>${clue.number}.</b> ${clue.text}`;
-                downDiv.appendChild(div);
-            });
-        }
-
-        setupEvents() {
-            const grid = document.getElementById('crosswordGrid');
-            grid.addEventListener('click', (e) => this.handleCellClick(e));
-            grid.addEventListener('input', (e) => this.handleInput(e));
-            grid.addEventListener('keydown', (e) => this.handleKeydown(e));
-            document.getElementById('victory-screen').addEventListener('click', () => {
-                document.getElementById('victory-screen').classList.remove('show');
-            });
-
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    this.stopTimer();
-                } else {
-                    if (this.elapsedTime > 0 && !this.checkIfComplete()) {
-                        this.startTimer();
-                    }
-                }
-            });
-
-            window.addEventListener('blur', () => this.stopTimer());
-            window.addEventListener('focus', () => {
-                if (this.elapsedTime > 0 && !this.checkIfComplete()) {
-                    this.startTimer();
-                }
-            });
-        }
-
-        handleCellClick(e) {
-            if (e.target.tagName !== 'INPUT') return;
-            const input = e.target;
-            if (input === this.activeCell && input.dataset.across && input.dataset.down) {
-                this.direction = this.direction === 'across' ? 'down' : 'across';
-            } else if (!input.dataset[this.direction]) {
-                this.direction = input.dataset.across ? 'across' : 'down';
-            }
-            this.activeCell = input;
-            this.highlightWord();
-        }
-
-        handleInput(e) {
-            if (e.target.tagName !== 'INPUT') return;
-            const input = e.target;
-            input.value = input.value.toUpperCase();
-
-            if (!this.timerInterval && input.value) {
-                this.startTimer();
-            }
-
-            this.saveProgress();
-            if (input.value) this.moveArrow(input, this.direction === 'across' ? 0 : 1, this.direction === 'across' ? 1 : 0);
-            this.checkCompletion();
-        }
-
-        handleKeydown(e) {
-            if (!this.activeCell) return;
-            let dr = 0, dc = 0;
-            switch (e.key) {
-                case 'ArrowUp': dr = -1; this.direction = 'down'; break;
-                case 'ArrowDown': dr = 1; this.direction = 'down'; break;
-                case 'ArrowLeft': dc = -1; this.direction = 'across'; break;
-                case 'ArrowRight': dc = 1; this.direction = 'across'; break;
-                case 'Backspace':
-                    if (!this.activeCell.value) {
-                        e.preventDefault();
-                        this.moveArrow(this.activeCell, this.direction === 'across' ? 0 : -1, this.direction === 'across' ? -1 : 0);
-                    }
-                    return;
-                default: return;
-            }
-            e.preventDefault();
-            this.moveArrow(this.activeCell, dr, dc);
-        }
-
-        moveArrow(cell, dr, dc) {
-            const r = parseInt(cell.dataset.row) + dr;
-            const c = parseInt(cell.dataset.col) + dc;
-            const nextCell = document.querySelector(`input[data-row='${r}'][data-col='${c}']`);
-            if (nextCell) {
-                this.activeCell = nextCell;
-                this.activeCell.focus();
-                this.highlightWord();
-            }
-        }
-
-        highlightWord() {
-            document.querySelectorAll('.grid-cell').forEach(c => c.classList.remove('highlight-word', 'highlight-active'));
-            if (!this.activeCell) return;
-            this.activeCell.select();
-            const clueNum = this.activeCell.dataset[this.direction];
-            if (!clueNum) return;
-            document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
-                cell.parentElement.classList.add('highlight-word');
-            });
-            this.activeCell.parentElement.classList.add('highlight-active');
-            this.updateStickyClue(clueNum);
-        }
-
-        updateStickyClue(clueNum) {
-            const puzzle = this.currentPuzzleData;
-            const clueData = puzzle.clues[this.direction].find(c => c.number == clueNum);
-            const clueBar = document.getElementById('sticky-clue-bar');
-            clueBar.querySelector('.clue-number').textContent = `${clueData.number}.`;
-            clueBar.querySelector('.clue-text').textContent = clueData.text;
-        }
-
-        startTimer() {
-            if (!this.startTime) {
-                this.startTime = Date.now() - this.elapsedTime * 1000;
-            }
-
-            if (!this.timerInterval) {
-                this.timerInterval = setInterval(() => {
-                    this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
-                }, 1000);
-            }
-        }
-
-        stopTimer() {
-            if (this.timerInterval) {
-                clearInterval(this.timerInterval);
-                this.timerInterval = null;
-            }
-        }
-
-        resetTimer() {
-            this.stopTimer();
-            this.startTime = null;
-            this.elapsedTime = 0;
-        }
-
-        formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        checkIfComplete() {
-            const inputs = document.querySelectorAll('.grid-cell input');
-            for (const input of inputs) {
-                if (input.value.toUpperCase() !== input.dataset.answer) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        loadProgress() { }
-        saveProgress() { }
-
-        checkCompletion() {
-            if (!this.checkIfComplete()) return;
-            this.stopTimer();
-            this.showVictoryScreen();
-        }
-
-        getRanking(seconds) {
-            if (seconds <= 30) {
-                return {stars: "★★★★★", text: "Instant Classic"};
-            } else if (seconds <= 60) {
-                return {stars: "★★★★☆", text: "Truly Great"};
-            } else if (seconds <= 90) {
-                return {stars: "★★★★", text: "Excellent"};
-            } else if (seconds <= 120) {
-                return {stars: "★★★☆", text: "Damn Good"};
-            } else if (seconds <= 240) {
-                return {stars: "★★★", text: "Good"};
-            } else {
-                return {stars: "★★", text: "Decent Effort"};
-            }
-        }
-        
-        showVictoryScreen() {
-            const puzzle = this.currentPuzzleData;
-            const screen = document.getElementById('victory-screen');
-            const iconContainer = document.getElementById('victory-icon-container');
-            const gifContainer = document.getElementById('victory-gif-container');
-
-            document.getElementById('victory-message-text').textContent = puzzle.winMessage || "You did it!";
-            
-            const ranking = this.getRanking(this.elapsedTime);
-
-            document.getElementById('victory-time').innerHTML = `
-                <div id="stars-container" style="font-size: 36px; margin: 10px 0; color: #1B1B1B; letter-spacing: 4px;">
-                    ${ranking.stars.split('').map((star, i) =>
-                `<span class="star-animate" style="animation-delay: ${i * 0.1}s">${star}</span>`
-            ).join('')}
-                </div>
-                <div style="font-size: 22px; font-weight: 700; margin-bottom: 10px; color: #1B1B1B;">${ranking.text}</div>
-                <div style="font-size: 17px; color: #444; font-weight: 600;">Your Time: ${this.formatTime(this.elapsedTime)}</div>
-            `;
-
-            if (puzzle.victoryGif) {
-                iconContainer.style.display = 'none';
-                gifContainer.innerHTML = `<img src="${puzzle.victoryGif}" class="victory-gif" alt="Victory animation">`;
-                gifContainer.style.display = 'block';
-            } else {
-                gifContainer.style.display = 'none';
-                iconContainer.style.display = 'block';
-            }
-            screen.classList.add('show');
-        }
+        grid.appendChild(wrap);
+      }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        new SimpleCrossword();
+    this.loadProgress();
+  }
+
+  updateClues(puzzle) {
+    const acrossDiv = document.getElementById('cluesAcross');
+    const downDiv = document.getElementById('cluesDown');
+    if (!acrossDiv || !downDiv) throw new Error('Missing #cluesAcross or #cluesDown in HTML.');
+    acrossDiv.innerHTML = '';
+    downDiv.innerHTML = '';
+
+    puzzle.clues.across.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'clue-item';
+      div.innerHTML = `<b>${c.number}.</b> ${c.text}`;
+      acrossDiv.appendChild(div);
     });
+
+    puzzle.clues.down.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'clue-item';
+      div.innerHTML = `<b>${c.number}.</b> ${c.text}`;
+      downDiv.appendChild(div);
+    });
+  }
+
+  setupEvents() {
+    const grid = document.getElementById('crosswordGrid');
+    if (!grid) return;
+    grid.addEventListener('click', e => this.handleCellClick(e));
+    grid.addEventListener('input', e => this.handleInput(e));
+    grid.addEventListener('keydown', e => this.handleKeydown(e));
+
+    const victory = document.getElementById('victory-screen');
+    if (victory) victory.addEventListener('click', () => victory.classList.remove('show'));
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.stopTimer();
+      else if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
+    });
+    window.addEventListener('blur', () => this.stopTimer());
+    window.addEventListener('focus', () => {
+      if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
+    });
+  }
+
+  handleCellClick(e) {
+    if (e.target.tagName !== 'INPUT') return;
+    const input = e.target;
+    if (input === this.activeCell && input.dataset.across && input.dataset.down) {
+      this.direction = this.direction === 'across' ? 'down' : 'across';
+    } else if (!input.dataset[this.direction]) {
+      this.direction = input.dataset.across ? 'across' : 'down';
+    }
+    this.activeCell = input;
+    this.highlightWord();
+  }
+
+  handleInput(e) {
+    if (e.target.tagName !== 'INPUT') return;
+    const input = e.target;
+    input.value = input.value.toUpperCase();
+    if (!this.timerInterval && input.value) this.startTimer();
+    this.saveProgress();
+    if (input.value) this.moveArrow(input, this.direction === 'across' ? 0 : 1, this.direction === 'across' ? 1 : 0);
+    this.checkCompletion();
+  }
+
+  handleKeydown(e) {
+    if (!this.activeCell) return;
+    let dr = 0, dc = 0;
+    switch (e.key) {
+      case 'ArrowUp': dr = -1; this.direction = 'down'; break;
+      case 'ArrowDown': dr = 1; this.direction = 'down'; break;
+      case 'ArrowLeft': dc = -1; this.direction = 'across'; break;
+      case 'ArrowRight': dc = 1; this.direction = 'across'; break;
+      case 'Backspace':
+        if (!this.activeCell.value) {
+          e.preventDefault();
+          this.moveArrow(this.activeCell, this.direction === 'across' ? 0 : -1, this.direction === 'across' ? -1 : 0);
+        }
+        return;
+      default: return;
+    }
+    e.preventDefault();
+    this.moveArrow(this.activeCell, dr, dc);
+  }
+
+  moveArrow(cell, dr, dc) {
+    const r = parseInt(cell.dataset.row) + dr;
+    const c = parseInt(cell.dataset.col) + dc;
+    const next = document.querySelector(`input[data-row='${r}'][data-col='${c}']`);
+    if (next) {
+      this.activeCell = next;
+      this.activeCell.focus();
+      this.highlightWord();
+    }
+  }
+
+  highlightWord() {
+    document.querySelectorAll('.grid-cell').forEach(c => c.classList.remove('highlight-word', 'highlight-active'));
+    if (!this.activeCell) return;
+    this.activeCell.select();
+    const clueNum = this.activeCell.dataset[this.direction];
+    if (!clueNum) return;
+    document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
+      cell.parentElement.classList.add('highlight-word');
+    });
+    this.activeCell.parentElement.classList.add('highlight-active');
+
+    const bar = document.getElementById('sticky-clue-bar');
+    if (bar) {
+      const puzzle = this.currentPuzzleData;
+      const clueData = puzzle.clues[this.direction].find(c => c.number == clueNum);
+      const numEl = bar.querySelector('.clue-number');
+      const textEl = bar.querySelector('.clue-text');
+      if (numEl) numEl.textContent = `${clueData.number}.`;
+      if (textEl) textEl.textContent = clueData.text;
+    }
+  }
+
+  startTimer() {
+    if (!this.startTime) this.startTime = Date.now() - this.elapsedTime * 1000;
+    if (!this.timerInterval) {
+      this.timerInterval = setInterval(() => {
+        this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
+      }, 1000);
+    }
+  }
+
+  stopTimer() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+  }
+
+  resetTimer() {
+    this.stopTimer();
+    this.startTime = null;
+    this.elapsedTime = 0;
+  }
+
+  formatTime(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  }
+
+  checkIfComplete() {
+    const inputs = document.querySelectorAll('.grid-cell input');
+    for (const input of inputs) {
+      if (input.value.toUpperCase() !== input.dataset.answer) return false;
+    }
+    return true;
+  }
+
+  loadProgress() {}
+  saveProgress() {}
+
+  checkCompletion() {
+    if (!this.checkIfComplete()) return;
+    this.stopTimer();
+    this.showVictoryScreen();
+  }
+
+  getRanking(seconds) {
+    if (seconds <= 30) return { stars: '★★★★★', text: 'Instant Classic' };
+    if (seconds <= 60) return { stars: '★★★★☆', text: 'Truly Great' };
+    if (seconds <= 90) return { stars: '★★★★',  text: 'Excellent' };
+    if (seconds <= 120) return { stars: '★★★☆', text: 'Damn Good' };
+    if (seconds <= 240) return { stars: '★★★',  text: 'Good' };
+    return { stars: '★★', text: 'Decent Effort' };
+  }
+
+  showVictoryScreen() {
+    const p = this.currentPuzzleData;
+    const screen = document.getElementById('victory-screen');
+    if (!screen) return;
+    const icon = document.getElementById('victory-icon-container');
+    const gif = document.getElementById('victory-gif-container');
+
+    this.uiSet('victory-message-text', p.winMessage || 'You did it!');
+
+    const rank = this.getRanking(this.elapsedTime);
+    const timeEl = document.getElementById('victory-time');
+    if (timeEl) {
+      timeEl.innerHTML = `
+        <div id="stars-container" style="font-size:36px;margin:10px 0;color:#1B1B1B;letter-spacing:4px;">
+          ${rank.stars.split('').map((star,i)=>`<span class="star-animate" style="animation-delay:${i*0.1}s">${star}</span>`).join('')}
+        </div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:10px;color:#1B1B1B;">${rank.text}</div>
+        <div style="font-size:17px;color:#444;font-weight:600;">Your Time: ${this.formatTime(this.elapsedTime)}</div>
+      `;
+    }
+
+    if (p.victoryGif && gif) {
+      if (icon) icon.style.display = 'none';
+      gif.innerHTML = `<img src="${p.victoryGif}" class="victory-gif" alt="Victory animation">`;
+      gif.style.display = 'block';
+    } else {
+      if (gif) gif.style.display = 'none';
+      if (icon) icon.style.display = 'block';
+    }
+    screen.classList.add('show');
+  }
+
+  uiSet(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => new SimpleCrossword());
 </script>
