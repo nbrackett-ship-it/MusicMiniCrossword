@@ -17,18 +17,18 @@
   ],
   "clues": {
     "across": [
-      { "number": 1, "text": "___ a Prayer" },
+      { "number": 1, "text": ""___ a Prayer"" },
       { "number": 2, "text": "Astute" },
-      { "number": 3, "text": "Joy Division inheritors New ___" },
+      { "number": 3, "text": "New ___ (Joy Division inheritors)" },
       { "number": 4, "text": "Quick" },
       { "number": 5, "text": "Maynard James Keenan's outfit" }
     ],
     "down": [
-      { "number": 1, "text": "___ of Many Colors" },
+      { "number": 1, "text": ""___ of Many Colors"" },
       { "number": 6, "text": "LA club where Jon Brion has a residency" },
       { "number": 7, "text": "Coachella hometown" },
-      { "number": 8, "text": "Mournful bell" },
-      { "number": 9, "text": "Novel 'Jane ___'" }
+      { "number": 8, "text": "Mournful bell (callback to last issue)" },
+      { "number": 9, "text": "Charlotte Brontë's "Jane ___"" }
     ]
   }
 }
