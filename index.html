@@ -4,104 +4,149 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Music Mini Crossword</title>
-  <link rel="stylesheet" href="style.css" />
-<style>
-  /* ===== Music Mini (Issue 1) exact-ish styling ===== */
-  :root{
-    --ink:#111; --ink-2:#333; --ink-3:#555; --paper:#fff;
-    --rule-strong:3px; --rule-fine:1px; --gap:2px;
-    --maxw:520px;
-  }
 
-  html,body{ background:var(--paper); margin:0; padding:0; }
-  body{
-    font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
-    color:var(--ink);
-    margin:24px; display:flex; justify-content:center;
-  }
-  #app{ max-width:var(--maxw); width:100%; }
+  <style>
+    /* ===== Issue 1 visual system ===== */
+    :root{
+      --ink:#111; --ink-2:#333; --ink-3:#555; --paper:#fff;
+      --rule-strong:3px; --rule-fine:1px; --gap:2px;
+      --maxw:980px; --gridMax:560px;
+      --blue:#1a1ae8;
+    }
+    html,body{ background:var(--paper); margin:0; padding:0; }
+    body{
+      font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
+      color:var(--ink);
+      margin:24px; display:flex; justify-content:center;
+    }
+    #app{ width:100%; max-width:var(--maxw); }
 
-  /* Header */
-  .mm-header{ text-align:center; margin:0 auto 14px auto; }
-  .mm-title{ font-size:34px; letter-spacing:1px; margin:6px 0 2px 0; }
-  .mm-subtitle{ font-size:18px; font-weight:700; margin:2px 0 6px 0; }
-  .mm-meta{ font-size:12px; color:var(--ink-3); margin-bottom:10px; }
-  .mm-instruction{ font-size:14px; font-weight:700; margin:6px 0 8px 0; }
+    /* Header */
+    .mm-header{ text-align:center; margin:0 auto 14px auto; }
+    .mm-title{ font-size:42px; letter-spacing:1.5px; margin:2px 0 6px 0; }
+    .mm-subtitle{ font-size:18px; font-weight:700; margin:0 0 4px 0; }
+    .mm-meta{ font-size:12px; color:var(--ink-3); margin-bottom:8px; }
+    .mm-instruction{ font-size:14px; font-weight:700; margin:6px 0 10px 0; }
+    .mm-rule{ border:0; height:0; border-top:var(--rule-fine) solid var(--ink); margin:8px 0 14px 0; }
 
-  /* header separator: single fine rule */
-  .mm-rule{ border:0; height:0; border-top:var(--rule-fine) solid var(--ink); margin:8px 0 14px 0; }
+    /* Layout */
+    #gridAndClues{ display:grid; gap:24px; grid-template-columns:1fr; }
+    @media (min-width: 900px){
+      #gridAndClues{ grid-template-columns:auto 1fr; align-items:start; }
+    }
 
-  /* Grid + layout */
-  #gridAndClues{ display:grid; gap:20px; grid-template-columns:1fr; }
-  @media (min-width: 900px){ #gridAndClues{ grid-template-columns:auto 1fr; align-items:start; } }
+    /* Grid frame */
+    #crosswordGrid{
+      display:grid; gap:var(--gap);
+      background:#ddd; padding:var(--gap);
+      border:var(--rule-fine) solid var(--ink);
+      margin:0 auto 8px auto;
+      width:100%;
+      max-width:var(--gridMax);
+    }
+    .grid-cell{
+      position:relative; background:#fff; display:grid; place-items:center;
+      width:100%; aspect-ratio:1/1; border:var(--rule-fine) solid transparent;
+    }
+    .grid-cell input{
+      width:100%; height:100%; text-align:center; border:0; outline:0;
+      font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
+      font-size:22px; text-transform:uppercase; color:var(--ink);
+      caret-color:var(--blue);
+    }
+    .black-cell{ background:var(--ink); width:100%; aspect-ratio:1/1; }
+    .cell-number{ position:absolute; top:3px; left:4px; font-size:10px; color:#666; }
+    .highlight-word{ outline:2px solid var(--ink); }
+    .highlight-active{ outline:2px solid var(--blue); }
 
-  #crosswordGrid{
-    display:grid; gap:var(--gap);
-    background:#ddd; padding:var(--gap);
-    border:var(--rule-fine) solid var(--ink);   /* outer frame like Issue 1 */
-    margin:0 auto 8px auto;
-  }
-  .grid-cell{
-    position:relative; background:#fff; display:grid; place-items:center;
-    width:100%; aspect-ratio:1/1; border:var(--rule-fine) solid transparent;
-  }
-  .grid-cell input{
-    width:100%; height:100%; text-align:center; border:0; outline:0;
-    font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
-    font-size:22px; text-transform:uppercase; color:var(--ink);
-  }
-  .black-cell{ background:var(--ink); width:100%; aspect-ratio:1/1; }
-  .cell-number{ position:absolute; top:3px; left:4px; font-size:10px; color:#666; }
+    /* Clues */
+    #clues h2{
+      font-size:18px; margin:18px 0 8px 0; padding-top:8px;
+      border-top:var(--rule-strong) solid var(--ink); /* thick rule above header */
+    }
+    /* fine rule under header before the first clue */
+    #clues h2 + div{
+      border-top:var(--rule-fine) solid var(--ink);
+      padding-top:8px; margin-top:6px;
+    }
+    .clue-item{
+      font-size:14px; line-height:1.5; color:var(--ink-2);
+      margin:10px 0; white-space:normal;
+    }
+    .clue-item b{
+      font-weight:700; color:var(--ink); margin-right:6px;
+      display:inline-block; min-width:22px;
+    }
 
-  .highlight-word{ outline:2px solid var(--ink); }
-  .highlight-active{ outline:2px solid #1a1ae8; }
+    /* Sticky clue bar (mobile helper) */
+    #sticky-clue-bar{
+      position:fixed; left:0; right:0; bottom:-120px;
+      background:#F3F4F6; border-top:var(--rule-fine) solid var(--ink);
+      padding:10px 12px; transition:transform .2s ease, bottom .2s ease;
+      display:flex; gap:8px; align-items:center; z-index:20;
+      transform:translateY(0);
+      font-size:14px;
+    }
+    #sticky-clue-bar.show{ bottom:0; }
+    #sticky-clue-bar .clue-number{ font-weight:700; min-width:26px; }
+    #sticky-clue-bar .dir{ font-weight:700; margin-right:4px; color:var(--ink-2); }
 
-  /* Clue section rules: thick bar above ‘Across/Down’, fine hairline below header before items */
-  #clues h2{
-    font-size:18px; margin:18px 0 8px 0; padding-top:8px;
-    border-top:var(--rule-strong) solid var(--ink);    /* thick rule above */
-  }
-  /* fine rule under header before the first clue */
-  #clues h2 + div{
-    border-top:var(--rule-fine) solid var(--ink);
-    padding-top:8px; margin-top:6px;
-  }
+    /* Victory screen */
+    #victory-screen{
+      position:fixed; inset:0; background:rgba(255,255,255,.96);
+      display:none; align-items:center; justify-content:center; z-index:50;
+    }
+    #victory-card{
+      border:var(--rule-fine) solid var(--ink); background:#fff; padding:22px;
+      max-width:480px; width:90%;
+      text-align:center;
+    }
+    #stars-container{ font-size:36px; letter-spacing:4px; margin:10px 0; }
+    .star-animate{ display:inline-block; opacity:0; transform:translateY(8px); animation:pop .45s forwards; }
+    @keyframes pop{ to{ opacity:1; transform:translateY(0); } }
 
-  .clue-item{
-    font-size:14px; line-height:1.5; color:var(--ink-2);
-    margin:10px 0; white-space:normal;
-  }
-  .clue-item b{
-    font-weight:700; color:var(--ink); margin-right:6px;
-    display:inline-block; min-width:22px;
-  }
-
-  /* Mobile */
-  @media (max-width:420px){
-    .grid-cell input{ font-size:20px; }
-  }
-</style>
-
+    /* Mobile sizing */
+    @media (max-width:420px){
+      .grid-cell input{ font-size:20px; }
+    }
+  </style>
 </head>
 <body>
   <div id="app">
     <header class="mm-header">
       <h1 class="mm-title">Music Mini</h1>
       <div class="mm-subtitle">World Premiere</div>
-      <div class="mm-meta" id="puzzleInfo">09–26–2025 • 5×5</div>
+      <div class="mm-meta" id="puzzleInfo">— • —</div>
       <div class="mm-instruction">Select a square to start</div>
       <hr class="mm-rule" />
     </header>
 
     <main id="gridAndClues">
       <div id="crosswordGrid" aria-label="Crossword grid"></div>
+
       <aside id="clues">
         <h2>Across</h2>
         <div id="cluesAcross"></div>
+
         <h2 style="margin-top:16px;">Down</h2>
         <div id="cluesDown"></div>
       </aside>
     </main>
+  </div>
+
+  <!-- Sticky clue -->
+  <div id="sticky-clue-bar" aria-live="polite">
+    <span class="dir" id="sticky-dir">Across</span>
+    <span class="clue-number" id="sticky-num">1.</span>
+    <span class="clue-text" id="sticky-text">—</span>
+  </div>
+
+  <!-- Victory -->
+  <div id="victory-screen" role="dialog" aria-modal="true">
+    <div id="victory-card">
+      <div id="victory-message-text" style="font-weight:700; margin-bottom:6px;">You did it!</div>
+      <div id="victory-time"></div>
+    </div>
   </div>
 
   <script>
@@ -116,18 +161,21 @@
         this.currentPuzzleData = null;
         this.direction = 'across';
         this.activeCell = null;
+
+        // Timer
         this.startTime = null;
         this.elapsedTime = 0;
         this.timerInterval = null;
+
         this.init();
       }
 
       async init() {
+        this.setupEvents();
         const puzzleIdFromUrl = this.getPuzzleIdFromUrl();
         const idx = this.puzzleIds.indexOf(puzzleIdFromUrl);
         this.currentPuzzleIndex = idx !== -1 ? idx : 0;
         await this.loadPuzzleById(this.puzzleIds[this.currentPuzzleIndex]);
-        this.setupEvents();
       }
 
       getPuzzleIdFromUrl() {
@@ -144,23 +192,30 @@
 
       renderPuzzle() {
         const p = this.currentPuzzleData;
-        document.querySelector('.mm-meta').textContent = p.info;
+        document.querySelector('#puzzleInfo').textContent = p.info;
+
         this.generateGrid(p);
         this.updateClues(p);
+
+        // load saved progress
+        this.loadProgress();
+        this.resetTimer();
       }
 
       generateGrid(puzzle) {
         const grid = document.getElementById('crosswordGrid');
         grid.innerHTML = '';
+
         const { rows, cols } = puzzle.gridSize;
         const isDesktop = window.matchMedia('(min-width: 768px)').matches;
         const cellSize = isDesktop ? 55 : 18;
         const unit = isDesktop ? 'px' : 'vw';
         grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}${unit})`;
-        grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}${unit})`;
+        grid.style.gridTemplateRows   = `repeat(${rows}, ${cellSize}${unit})`;
         grid.style.width = `${cols * cellSize}${unit}`;
 
         const gridData = Array.from({ length: rows }, () => Array(cols).fill(null));
+
         puzzle.words.forEach(w => {
           let r = w.row, c = w.col;
           for (let i = 0; i < w.word.length; i++) {
@@ -207,6 +262,7 @@
         const across=document.getElementById('cluesAcross');
         const down=document.getElementById('cluesDown');
         across.innerHTML=''; down.innerHTML='';
+
         puzzle.clues.across.forEach(c=>{
           const div=document.createElement('div');
           div.className='clue-item';
@@ -226,6 +282,21 @@
         grid.addEventListener('click',e=>this.handleCellClick(e));
         grid.addEventListener('input',e=>this.handleInput(e));
         grid.addEventListener('keydown',e=>this.handleKeydown(e));
+
+        // timer visibility handling
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) this.stopTimer();
+          else if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
+        });
+        window.addEventListener('blur', () => this.stopTimer());
+        window.addEventListener('focus', () => {
+          if (this.elapsedTime > 0 && !this.checkIfComplete()) this.startTimer();
+        });
+
+        // close victory on click anywhere
+        document.getElementById('victory-screen').addEventListener('click', () => {
+          document.getElementById('victory-screen').style.display = 'none';
+        });
       }
 
       handleCellClick(e){
@@ -244,7 +315,14 @@
         if (e.target.tagName!=='INPUT') return;
         const input=e.target;
         input.value=input.value.toUpperCase();
-        if (input.value) this.moveArrow(input,this.direction==='across'?0:1,this.direction==='across'?1:0);
+
+        if (!this.timerInterval && input.value) this.startTimer();
+
+        this.saveProgress();
+
+        if (input.value)
+          this.moveArrow(input, this.direction==='across'?0:1, this.direction==='across'?1:0);
+
         this.checkCompletion();
       }
 
@@ -259,8 +337,9 @@
           case 'Backspace':
             if (!this.activeCell.value){
               e.preventDefault();
-              this.moveArrow(this.activeCell,this.direction==='across'?0:-1,this.direction==='across'?-1:0);
-            } return;
+              this.moveArrow(this.activeCell, this.direction==='across'?0:-1, this.direction==='across'?-1:0);
+            }
+            return;
           default:return;
         }
         e.preventDefault();
@@ -271,7 +350,7 @@
         const r=parseInt(cell.dataset.row)+dr;
         const c=parseInt(cell.dataset.col)+dc;
         const next=document.querySelector(`input[data-row='${r}'][data-col='${c}']`);
-        if (next){this.activeCell=next;next.focus();this.highlightWord();}
+        if (next){ this.activeCell=next; next.focus(); this.highlightWord(); }
       }
 
       highlightWord(){
@@ -284,18 +363,96 @@
           cell.parentElement.classList.add('highlight-word');
         });
         this.activeCell.parentElement.classList.add('highlight-active');
+
+        // sticky clue
+        const p=this.currentPuzzleData;
+        const list = p.clues[this.direction];
+        const clue = list.find(c=>c.number==clueNum);
+        const bar=document.getElementById('sticky-clue-bar');
+        document.getElementById('sticky-dir').textContent = this.direction[0].toUpperCase()+this.direction.slice(1);
+        document.getElementById('sticky-num').textContent = `${clue.number}.`;
+        document.getElementById('sticky-text').textContent = clue.text;
+        bar.classList.add('show');
       }
 
-      checkCompletion(){
+      /* ===== Timer + Victory ===== */
+      startTimer(){
+        if (!this.startTime) this.startTime = Date.now() - this.elapsedTime*1000;
+        if (!this.timerInterval){
+          this.timerInterval = setInterval(()=> {
+            this.elapsedTime = Math.floor((Date.now() - this.startTime)/1000);
+          }, 1000);
+        }
+      }
+      stopTimer(){ if (this.timerInterval){ clearInterval(this.timerInterval); this.timerInterval=null; } }
+      resetTimer(){ this.stopTimer(); this.startTime = null; this.elapsedTime = 0; }
+      formatTime(s){ const m=Math.floor(s/60), sec=(s%60).toString().padStart(2,'0'); return `${m}:${sec}`; }
+      getRanking(seconds){
+        if (seconds<=30) return {stars:"★★★★★", text:"Instant Classic"};
+        if (seconds<=60) return {stars:"★★★★☆", text:"Truly Great"};
+        if (seconds<=90) return {stars:"★★★★",  text:"Excellent"};
+        if (seconds<=120) return {stars:"★★★☆", text:"Damn Good"};
+        if (seconds<=240) return {stars:"★★★",   text:"Good"};
+        return {stars:"★★", text:"Decent Effort"};
+      }
+      showVictoryScreen(){
+        const p=this.currentPuzzleData;
+        const screen=document.getElementById('victory-screen');
+        const msg=document.getElementById('victory-message-text');
+        const timeBox=document.getElementById('victory-time');
+
+        msg.textContent = p.winMessage || "You did it!";
+        const ranking = this.getRanking(this.elapsedTime);
+        timeBox.innerHTML = `
+          <div id="stars-container">
+            ${ranking.stars.split('').map((s,i)=>`<span class="star-animate" style="animation-delay:${i*0.1}s">${s}</span>`).join('')}
+          </div>
+          <div style="font-size:18px; font-weight:700; margin-bottom:8px;">${ranking.text}</div>
+          <div style="font-size:15px; color:#444; font-weight:600;">Your Time: ${this.formatTime(this.elapsedTime)}</div>
+        `;
+        screen.style.display='flex';
+      }
+
+      /* ===== Persistence ===== */
+      storageKey(){
+        const params = new URLSearchParams(window.location.search);
+        const pid = params.get('puzzle') || this.puzzleIds[this.currentPuzzleIndex];
+        return `mm-progress:${pid}`;
+      }
+      saveProgress(){
+        const inputs=[...document.querySelectorAll('.grid-cell input')];
+        const data=inputs.map(i=>({r:i.dataset.row,c:i.dataset.col,v:i.value||''}));
+        localStorage.setItem(this.storageKey(), JSON.stringify({data, t:this.elapsedTime}));
+      }
+      loadProgress(){
+        const blob = localStorage.getItem(this.storageKey());
+        if (!blob) return;
+        try{
+          const {data,t}=JSON.parse(blob);
+          const byKey = new Map(data.map(d=>[`${d.r},${d.c}`, d.v]));
+          document.querySelectorAll('.grid-cell input').forEach(i=>{
+            const v=byKey.get(`${i.dataset.row},${i.dataset.col}`) || '';
+            i.value = v.toUpperCase();
+          });
+          if (t && Number.isFinite(t)) this.elapsedTime = t;
+        }catch{}
+      }
+
+      checkIfComplete(){
         const inputs=document.querySelectorAll('.grid-cell input');
         for(const input of inputs){
-          if(input.value.toUpperCase()!==input.dataset.answer)return;
+          if (input.value.toUpperCase() !== input.dataset.answer) return false;
         }
-        alert("🎉 You solved it!");
+        return true;
+      }
+      checkCompletion(){
+        if (!this.checkIfComplete()) return;
+        this.stopTimer();
+        this.showVictoryScreen();
       }
     }
 
-    document.addEventListener('DOMContentLoaded',()=>new SimpleCrossword());
+    document.addEventListener('DOMContentLoaded', () => { new SimpleCrossword(); });
   </script>
 </body>
 </html>
