@@ -9,11 +9,11 @@
     { "word": "ORDER", "number": 3, "direction": "across", "row": 2, "col": 0 },
     { "word": "AGILE", "number": 4, "direction": "across", "row": 3, "col": 0 },
     { "word": "TOOL", "number": 5, "direction": "across", "row": 4, "col": 0 },
-    { "word": "COAT", "number": 1, "direction": "down", "row": 1, "col": 0 },
-    { "word": "LARGO", "number": 6, "direction": "down", "row": 0, "col": 1 },
-    { "word": "INDIO", "number": 7, "direction": "down", "row": 0, "col": 2 },
-    { "word": "KNELL", "number": 8, "direction": "down", "row": 0, "col": 3 },
-    { "word": "EYRE", "number": 9, "direction": "down", "row": 0, "col": 4 }
+    { "word": "LARGO", "number": 1, "direction": "down", "row": 0, "col": 1 },
+    { "word": "COAT", "number": 2, "direction": "down", "row": 1, "col": 0 },
+    { "word": "INDIO", "number": 3, "direction": "down", "row": 0, "col": 2 },
+    { "word": "KNELL", "number": 4, "direction": "down", "row": 0, "col": 3 },
+    { "word": "EYRE", "number": 5, "direction": "down", "row": 0, "col": 4 }
   ],
   "clues": {
     "across": [
@@ -24,11 +24,11 @@
       { "number": 5, "text": "Maynard James Keenan's outfit" }
     ],
     "down": [
-      { "number": 1, "text": "'___ of Many Colors'" },
-      { "number": 6, "text": "LA club where Jon Brion has a residency" },
-      { "number": 7, "text": "Coachella hometown" },
-      { "number": 8, "text": "Mournful bell (callback to last issue)" },
-      { "number": 9, "text": "Charlotte Brontë's 'Jane ___'" }
+      { "number": 1, "text": "LA club where Jon Brion has a residency" },
+      { "number": 2, "text": "'___ of Many Colors'" },
+      { "number": 3, "text": "Coachella hometown" },
+      { "number": 4, "text": "Mournful bell" },
+      { "number": 5, "text": "Charlotte Brontë's 'Jane ___'" }
     ]
   }
 }
