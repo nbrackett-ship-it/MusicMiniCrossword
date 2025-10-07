@@ -1,0 +1,34 @@
+{
+  "id": "just-super-2025-10-10",
+  "title": "Just Super",
+  "info": "10-10-2025 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "ABLE", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "BRENT", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "BUNNY", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "ANDUP", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "OLIO", "number": 5, "direction": "across", "row": 4, "col": 1 },
+    { "word": "ABBA", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "BRUNO", "number": 2, "direction": "down", "row": 0, "col": 1 },
+    { "word": "LENDL", "number": 3, "direction": "down", "row": 0, "col": 2 },
+    { "word": "ENNUI", "number": 4, "direction": "down", "row": 0, "col": 3 },
+    { "word": "TYPO", "number": 5, "direction": "down", "row": 1, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Competent or skilled" },
+      { "number": 2, "text": "Late Grateful Dead keyboardist Mydland" },
+      { "number": 3, "text": "Last name of 2026 Super Bowl headliner" },
+      { "number": 4, "text": "No problem if she doesn't have a fake ID, it's an 18 ___ show" },
+      { "number": 5, "text": "Aglio y _____ ('90s Beastie Boys EP)" }
+    ],
+    "down": [
+      { "number": 1, "text": "Agnetha, Björn, Benny, and Anni-Frid" },
+      { "number": 2, "text": "Hernandez who performs as Mars" },
+      { "number": 3, "text": "'80s tennis legend Ivan _____" },
+      { "number": 4, "text": "Listless feeling pervading much shoegaze" },
+      { "number": 5, "text": "Printing mistake" }
+    ]
+  }
+}
