@@ -21,8 +21,8 @@
       color:var(--ink);
       margin:24px; display:flex; justify-content:center;
     }
-    /* FIX: Make room for the clue bar which is now always visible */
-    body.has-sticky{ padding-top:var(--stickyH); }
+    /* FIX: (Clue Bar) Removed body padding, as the bar is no longer fixed. */
+    /* body.has-sticky{ padding-top:var(--stickyH); } */
     #app{ width:100%; max-width:var(--maxw); }
 
     /* Header */
@@ -92,14 +92,23 @@
     .clue-item{ font-size:16px; line-height:1.5; color:var(--ink-2); margin:10px 0; font-weight: 600; }
     .clue-item b{ font-weight:700; color:var(--ink); margin-right:6px; display:inline-block; min-width:22px; }
 
-    /* FIX: (Lock sticky bar) Bar is now persistent. Removed transform/transition animation. */
+    /* FIX: (Lock sticky bar) Bar is no longer fixed. It's now a static block. */
     /* --- FONT SIZE FIX --- */
     #sticky-clue-bar{
-      position:fixed; left:0; right:0; top:0; height:var(--stickyH);
+      /* REMOVED: position:fixed, left, right, top, z-index, height */
       display:flex; align-items:center; gap:8px;
-      padding:10px 12px; background:#F3F4F6; border-bottom:1px solid var(--ink);
-      z-index:1000; font-size:16px;
+      padding:10px 12px; 
+      background:#F3F4F6;
+      border:1px solid var(--ink); /* Added a full border */
+      margin-bottom: 8px; /* Added space between bar and grid */
+      font-size:16px;
       font-weight: 600;
+      
+      /* Make it match the grid width */
+      max-width:var(--gridMax);
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box; /* Ensure padding doesn't break width */
     }
     #sticky-clue-bar .clue-number{ font-weight:700; min-width:26px; }
     #sticky-clue-bar .dir{ font-weight:700; margin-right:4px; color:var(--ink-2); }
@@ -123,6 +132,10 @@
     </header>
 
     <main id="gridAndClues">
+      <div id="sticky-clue-bar" aria-live="polite">
+        <span class="clue-text" id="sticky-text">Select a square to start</span>
+      </div>
+
       <div id="crosswordGrid" aria-label="Crossword grid"></div>
 
       <aside id="clues">
@@ -133,10 +146,6 @@
         <div id="cluesDown"></div>
       </aside>
     </main>
-  </div>
-
-  <div id="sticky-clue-bar" aria-live="polite">
-    <span class="clue-text" id="sticky-text">Select a square to start</span>
   </div>
 
   <div id="victory-screen" role="dialog" aria-modal="true">
@@ -172,8 +181,8 @@
       }
 
       async init() {
-        // FIX: Make space for the clue bar, which is now always visible.
-        document.body.classList.add('has-sticky');
+        // FIX: (Clue Bar) Removed the class that added body padding.
+        // document.body.classList.add('has-sticky');
         this.setupEvents();
         window.addEventListener('resize', this.debouncedResize);
 
@@ -228,6 +237,12 @@
         // Apply the exact pixel dimensions to the grid container.
         grid.style.width = `${finalGridWidth}px`;
         grid.style.height = `${finalGridWidth}px`;
+
+        // FIX: (Clue Bar) Also apply this width to the clue bar so they match.
+        const clueBar = document.getElementById('sticky-clue-bar');
+        if (clueBar) {
+            clueBar.style.width = `${finalGridWidth}px`;
+        }
       }
 
       generateGrid(puzzle) {
