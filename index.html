@@ -6,152 +6,242 @@
   <title>Music Mini Crossword</title>
 
   <style>
-    /* === FIX: All pending visual issues from the dev log are addressed here === */
+    /* === CORE STYLING (Courier Theme) === */
     :root{
-      --ink:#111; --ink-2:#333; --ink-3:#555; --paper:#fff;
+      --ink:#1B1B1B; --ink-2:#333; --ink-3:#555; --paper:#FFFFFF;
       --rule-strong:3px; --rule-fine:1px;
-      --maxw:600px; /* Reduced max-width for a better single-column experience */
-      --gridMax:560px; --blue:#1a1ae8;
-      --stickyH:48px;
+      --gridMax:560px; --blue:#1877f2;
+      /* Define max widths for layout */
+      --app-max-width: 960px;
+      --grid-panel-width: 560px;
+      --clues-panel-width: 340px;
     }
 
     html,body{ background:var(--paper); margin:0; padding:0; }
     body{
       font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
       color:var(--ink);
-      margin:24px; display:flex; justify-content:center;
+      margin:0; padding:20px;
+      display:flex; justify-content:center;
+      line-height: 1.4;
+      font-weight: 500;
     }
-    /* FIX: (Clue Bar) Removed body padding, as the bar is no longer fixed. */
-    /* body.has-sticky{ padding-top:var(--stickyH); } */
-    #app{ width:100%; max-width:var(--maxw); }
+    
+    #app{ 
+      width:100%; 
+      max-width:var(--grid-panel-width); /* Mobile-first: constrain to grid width */
+      margin: 0 auto;
+    }
 
     /* Header */
-    .mm-header{ text-align:center; margin:0 auto 14px auto; }
-    /* --- FONT SIZE FIX --- */
-    .mm-title{ font-size:42px; letter-spacing:1.5px; margin:2px 0 6px 0; }
-    .mm-subtitle{ font-size:20px; font-weight:700; margin:0 0 4px 0; }
-    .mm-meta{ font-size:14px; color:var(--ink-3); margin-bottom:8px; font-weight: 600; }
-    .mm-instruction{ font-size:14px; font-weight:700; margin:6px 0 10px 0; }
-    .mm-rule{ border:0; height:0; border-top:var(--rule-fine) solid var(--ink); margin:8px 0 14px 0; }
+    .mm-header{ text-align:center; margin:0 auto 20px auto; }
+    .mm-title{ font-size:30px; font-weight:700; letter-spacing:-0.5px; margin:0; }
+    .mm-subtitle{ font-size:19px; color:var(--ink-2); margin:8px 0 5px 0; font-weight:600; }
+    .mm-meta{ font-size:15px; color:var(--ink-3); margin-bottom:5px; font-weight:500; }
+    .mm-instruction{ display:none; } /* Hide the default instruction */
+    
+    /* FIX: This is the new 2-column wrapper */
+    .main-content-wrapper {
+      width: 100%;
+    }
 
-    /* FIX: (Standardize layout) The media query for a two-column desktop layout has been removed. */
-    #gridAndClues{ display:grid; gap:24px; grid-template-columns:1fr; }
+    /* Grid Panel (Left side on desktop) */
+    .grid-panel {
+      width: 100%;
+    }
 
-    /* FIX: (Grid rendering) Grid sizing is now driven by JS to guarantee integer pixel values. */
+    /* Clue Bar (Moved into flow) */
+    #sticky-clue-bar{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 16px; 
+      background: var(--paper);
+      border:1px solid var(--ink);
+      box-shadow: 0 2px 0 rgba(27, 27, 27, 0.12);
+      margin: 14px auto 24px;
+      font-size:16px;
+      font-weight: 500;
+      line-height: 1.4;
+      box-sizing: border-box; /* Ensure padding doesn't break width */
+      text-align: left;
+    }
+    #sticky-clue-bar .dir{ 
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    #sticky-clue-bar .clue-number{ font-weight:700; }
+    #sticky-clue-bar .clue-text{ flex: 1; }
+    #sticky-clue-bar .dir:empty,
+    #sticky-clue-bar .clue-number:empty {
+        display: none;
+    }
+
+    /* Grid */
     #crosswordGrid{
       display:grid;
       /* JS will override width/height with pixel-perfect values */
       margin:0 auto 8px auto;
-      max-width:var(--gridMax);
+      border: 2px solid var(--ink); /* Main outer border */
+      gap: 0;
+      background: transparent;
     }
-    /* FIX: Removed 'aspect-ratio' and 'width:100%'. Sizing is now handled by the grid container. */
+    
     .grid-cell, .black-cell{
       position:relative; background:#fff;
-      /* Borders are applied per-edge for maximum consistency */
-      border-right:1px solid var(--ink);
-      border-bottom:1px solid var(--ink);
+      /* FIX: Individual borders for consistency */
+      border: 1px solid var(--ink);
+      margin: -0.5px; /* Overlap borders */
     }
-    .grid-cell.first-col, .black-cell.first-col{ border-left:1px solid var(--ink); }
-    .grid-cell.first-row, .black-cell.first-row{ border-top:1px solid var(--ink); }
-    .black-cell{ background:#111; }
+    .black-cell{ background:var(--ink); }
 
     .grid-cell input{
-      width:100%; height:100%; text-align:center; border:0; outline:0;
+      width:100%; height:100%; text-align:center; border:0;
       font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
-      /* --- FONT SIZE FIX --- */
-      font-size: clamp(20px, 5vw, 26px); /* Use a responsive font size for accessibility */
+      font-size: clamp(20px, 5.5vw, 30px); /* Responsive font size */
       text-transform:uppercase; color:var(--ink);
       caret-color:var(--blue);
       background:transparent;
-      font-weight: 600;
-    }
-    /* --- FONT SIZE FIX --- */
-    .cell-number{ position:absolute; top:3px; left:4px; font-size:12px; color:#333; font-weight: 700; }
-    .highlight-word{ box-shadow: inset 0 0 0 2px var(--ink); }
-    .highlight-active{ box-shadow: inset 0 0 0 2px var(--blue); }
-
-    /* FIX: (Rule visuals) Implemented the thick+fine double rule from Issue #1 */
-    /* --- FONT SIZE FIX --- */
-    #clues h2{
-      font-size:20px; margin:18px 0 12px 0; padding-bottom: 8px; /* Space for the fine rule */
-      border-top:var(--rule-strong) solid var(--ink);
-      position:relative;
       font-weight: 700;
+      padding: 0; margin: 0; box-sizing: border-box;
     }
-    #clues h2::after {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: var(--rule-fine);
-        background-color: var(--ink);
+    .grid-cell input:focus{
+      outline: 2px solid var(--blue);
+      outline-offset: -2px;
+      z-index: 1;
     }
-    /* Removed the old rule styling that was on the container div */
-    #clues h2 + div { border-top: none; padding-top: 0; margin-top: 0; }
     
-    /* --- FONT SIZE FIX --- */
-    .clue-item{ font-size:16px; line-height:1.5; color:var(--ink-2); margin:10px 0; font-weight: 600; }
-    .clue-item b{ font-weight:700; color:var(--ink); margin-right:6px; display:inline-block; min-width:22px; }
-
-    /* FIX: (Lock sticky bar) Bar is no longer fixed. It's now a static block. */
-    /* --- FONT SIZE FIX --- */
-    #sticky-clue-bar{
-      /* REMOVED: position:fixed, left, right, top, z-index, height */
-      display:flex; align-items:center; gap:8px;
-      padding:10px 12px; 
-      background:#F3F4F6;
-      border:1px solid var(--ink); /* Added a full border */
-      margin-bottom: 8px; /* Added space between bar and grid */
-      font-size:16px;
-      font-weight: 600;
-      
-      /* Make it match the grid width */
-      max-width:var(--gridMax);
-      margin-left: auto;
-      margin-right: auto;
-      box-sizing: border-box; /* Ensure padding doesn't break width */
+    .cell-number{ 
+      position:absolute; top: 2px; left: 3px; 
+      font-size: clamp(10px, 2.8vw, 14px);
+      font-weight: 700; color:#444; 
+      pointer-events: none; 
     }
-    #sticky-clue-bar .clue-number{ font-weight:700; min-width:26px; }
-    #sticky-clue-bar .dir{ font-weight:700; margin-right:4px; color:var(--ink-2); }
+    
+    .highlight-word{ background-color: #e8e8e8; }
+    .highlight-active{ background-color: #d8d8d8; }
+
+    /* Clues Panel (Right side on desktop) */
+    .clues-panel h2{
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 19px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 5px;
+    }
+    .clues-panel h2:nth-of-type(2) {
+      margin-top: 20px; /* Space between Across/Down */
+    }
+    .clue-item{ 
+      margin-bottom: 10px;
+      line-height: 1.5;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .clue-item b{ font-weight:700; }
 
     /* Victory screen */
-    #victory-screen{ position:fixed; inset:0; background:rgba(255,255,255,.96); display:none; align-items:center; justify-content:center; z-index:1100; }
-    #victory-card{ border:1px solid var(--ink); background:#fff; padding:22px; max-width:480px; width:90%; text-align:center; }
-    #stars-container{ font-size:36px; letter-spacing:4px; margin:10px 0; }
+    #victory-screen{ 
+      position:fixed; inset:0; 
+      background:rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(5px);
+      display:none; /* Changed to none */
+      align-items:center; justify-content:center; 
+      z-index:1100;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #victory-screen.show {
+        display: flex; /* Use flex to show */
+        opacity: 1;
+    }
+    .victory-content { 
+      text-align:center; color:var(--ink); 
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    #victory-screen.show .victory-content {
+        transform: scale(1);
+    }
+    .victory-icon { font-size: 60px; }
+    #victory-message-text{ font-size: 26px; font-weight: 700; margin: 20px 0; }
+    #victory-time { font-size: 18px; color: var(--ink-2); margin-top: 10px; font-weight: 500; }
+    
+    #stars-container{ font-size: 36px; margin: 10px 0; color: var(--ink); letter-spacing: 4px; }
     .star-animate{ display:inline-block; opacity:0; transform:translateY(8px); animation:pop .45s forwards; }
     @keyframes pop{ to{ opacity:1; transform:translateY(0); } }
+
+    /* === FIX: DESKTOP 2-COLUMN LAYOUT === */
+    @media (min-width: 900px) { /* Using 900px from LDD */
+      #app {
+        max-width: var(--app-max-width);
+      }
+      
+      .main-content-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        justify-content: center;
+      }
+      
+      .grid-panel {
+        flex-basis: var(--grid-panel-width);
+        flex-shrink: 0; /* Don't shrink grid panel */
+      }
+      
+      .clues-panel {
+        flex-basis: var(--clues-panel-width);
+        flex-shrink: 0; /* Don't shrink clues panel */
+        margin-top: 10px; /* Align tops */
+      }
+      
+      /* Adjust font sizes for desktop */
+      .grid-cell input {
+          font-size: 30px; /* 55px * 0.55 (from newsletter.html) */
+      }
+      .cell-number {
+          font-size: 15px; /* 55px * 0.28 */
+      }
+    }
   </style>
 </head>
 <body>
+  
   <div id="app">
+    
     <header class="mm-header">
       <h1 class="mm-title">Music Mini</h1>
       <div class="mm-subtitle" id="puzzleTitle">World Premiere</div>
       <div class="mm-meta" id="puzzleInfo">— • —</div>
       <div class="mm-instruction">Select a square to start</div>
-      <hr class="mm-rule" />
     </header>
 
-    <main id="gridAndClues">
-      <div id="sticky-clue-bar" aria-live="polite">
-        <span class="clue-text" id="sticky-text">Select a square to start</span>
-      </div>
+    <div class="main-content-wrapper">
+      
+      <main class="grid-panel">
+        <div id="sticky-clue-bar" aria-live="polite">
+          <span class="dir" id="sticky-dir"></span>
+          <span class="clue-number" id="sticky-num"></span>
+          <span class="clue-text" id="sticky-text">Select a square to start</span>
+        </div>
+        <div id="crosswordGrid" aria-label="Crossword grid"></div>
+      </main>
 
-      <div id="crosswordGrid" aria-label="Crossword grid"></div>
-
-      <aside id="clues">
+      <aside class="clues-panel" id="clues">
         <h2>Across</h2>
         <div id="cluesAcross"></div>
-
         <h2>Down</h2>
         <div id="cluesDown"></div>
       </aside>
-    </main>
-  </div>
-
-  <div id="victory-screen" role="dialog" aria-modal="true">
-    <div id="victory-card">
-      <div id="victory-message-text" style="font-weight:700; margin-bottom:6px;">You did it!</div>
-      <div id="victory-time"></div>
+      
+    </div> </div> <div id="victory-screen" role="dialog" aria-modal="true">
+    <div class="victory-content">
+        <div id="victory-icon-container">
+            <span class="victory-icon">&#9835;</span>
+        </div>
+        <div class="victory-message" id="victory-message-text">You did it!</div>
+        <div class="victory-time" id="victory-time"></div>
     </div>
   </div>
 
@@ -172,17 +262,13 @@
         this.startTime = null;
         this.elapsedTime = 0;
         this.timerInterval = null;
-        // FIX: Add a flag to track programmatic focus changes during auto-advance.
         this.isAutoAdvancing = false;
 
-        // FIX: Create a debounced resize handler for performance.
         this.debouncedResize = this.debounce(this.resizeGrid.bind(this), 250);
         this.init();
       }
 
       async init() {
-        // FIX: (Clue Bar) Removed the class that added body padding.
-        // document.body.classList.add('has-sticky');
         this.setupEvents();
         window.addEventListener('resize', this.debouncedResize);
 
@@ -217,10 +303,10 @@
         this.updateClues(p);
         this.loadProgress();
         this.resetTimer();
+        this.resetClueBar();
       }
 
-      // FIX: New function to calculate and apply integer pixel sizes to the grid.
-      // This is the core of the fix for the broken grid lines.
+      // FIX: resizeGrid now constrains itself on desktop
       resizeGrid() {
         const p = this.currentPuzzleData;
         if (!p) return;
@@ -228,17 +314,24 @@
         const grid = document.getElementById('crosswordGrid');
         const { cols } = p.gridSize;
 
-        // Calculate size based on the available width of the parent container.
+        // Get constraints
+        const rootStyles = getComputedStyle(document.documentElement);
+        const maxGridPx = parseInt(rootStyles.getPropertyValue('--gridMax') || '560');
         const containerWidth = grid.parentElement.clientWidth;
-        // Use Math.floor() to guarantee an integer pixel value, which prevents rounding errors.
-        const cellSize = Math.floor(containerWidth / cols);
+        
+        // On desktop, parent width is constrained by CSS, but we still cap at --gridMax
+        // On mobile, parent width is screen width, so we cap at --gridMax
+        const targetWidth = Math.min(containerWidth, maxGridPx);
+
+        // Use Math.floor() to guarantee an integer pixel value
+        const cellSize = Math.floor(targetWidth / cols);
         const finalGridWidth = cellSize * cols;
 
         // Apply the exact pixel dimensions to the grid container.
         grid.style.width = `${finalGridWidth}px`;
         grid.style.height = `${finalGridWidth}px`;
 
-        // FIX: (Clue Bar) Also apply this width to the clue bar so they match.
+        // Also apply this width to the clue bar so they match.
         const clueBar = document.getElementById('sticky-clue-bar');
         if (clueBar) {
             clueBar.style.width = `${finalGridWidth}px`;
@@ -250,8 +343,6 @@
         grid.innerHTML = '';
 
         const { rows, cols } = puzzle.gridSize;
-        // Use fractional units (fr). The container's pixel dimensions (set by resizeGrid)
-        // will ensure each cell becomes a perfect, integer-sized square.
         grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
         grid.style.gridTemplateRows   = `repeat(${rows}, 1fr)`;
 
@@ -271,14 +362,12 @@
           for (let c=0; c<cols; c++){
             const cell = gridData[r][c];
             const div = document.createElement('div');
-            if (r===0) div.classList.add('first-row');
-            if (c===0) div.classList.add('first-col');
-
+            
             if (!cell) {
-              div.className += ' black-cell';
+              div.className = 'black-cell';
               grid.appendChild(div);
             } else {
-              div.className += ' grid-cell';
+              div.className = 'grid-cell';
               const input = document.createElement('input');
               input.type='text'; input.maxLength=1;
               input.dataset.row=r; input.dataset.col=c;
@@ -318,7 +407,6 @@
         grid.addEventListener('input', e => this.handleInput(e));
         grid.addEventListener('keydown', e => this.handleKeydown(e));
         grid.addEventListener('focusin', e => {
-            // FIX: Prevent focusin from re-triggering click handler during auto-advance
             if (this.isAutoAdvancing) return;
             if (e.target.tagName === 'INPUT') this.handleCellClick(e);
         });
@@ -327,7 +415,7 @@
           else if (this.startTime && !this.checkIfComplete()) this.startTimer();
         });
         document.getElementById('victory-screen').addEventListener('click', () => {
-          document.getElementById('victory-screen').style.display = 'none';
+          document.getElementById('victory-screen').classList.remove('show');
         });
       }
 
@@ -335,21 +423,17 @@
         if (e.target.tagName !== 'INPUT') return;
         const input = e.target;
         
-        // If tapping the already-active cell at an intersection, toggle direction
         if (input === this.activeCell && input.dataset.across && input.dataset.down){
           this.direction = this.direction === 'across' ? 'down' : 'across';
         } 
-        // If tapping a new cell, determine direction
         else {
-          // If the new cell doesn't support the current direction, switch to available direction
           if (!input.dataset[this.direction]){
             this.direction = input.dataset.across ? 'across' : 'down';
           }
-          // Otherwise keep current direction if the new cell supports it
         }
         
         this.activeCell = input;
-        input.focus(); // Ensure input has focus
+        input.focus(); 
         this.highlightWord();
       }
 
@@ -360,7 +444,6 @@
         if (!this.timerInterval && input.value) this.startTimer();
         this.saveProgress();
         if (input.value) {
-          // FIX: Wrap auto-advance in a flag to prevent direction toggling
           this.isAutoAdvancing = true;
           this.moveInDirection(input, this.direction);
           this.isAutoAdvancing = false;
@@ -380,11 +463,11 @@
             e.preventDefault();
             if (this.activeCell.value) { this.activeCell.value = ''; }
             else { 
-                // --- BACKSPACE FIX ---
                 this.isAutoAdvancing = true;
                 this.moveInDirection(this.activeCell, this.direction, true); 
                 this.isAutoAdvancing = false;
             }
+            this.saveProgress(); // Save on backspace
             return;
           default: return;
         }
@@ -424,13 +507,26 @@
         if (!this.activeCell) return;
         this.activeCell.select();
         const clueNum = this.activeCell.dataset[this.direction];
-        if (!clueNum) return;
+        if (!clueNum) {
+            this.resetClueBar(); // Reset if we're on a cell with no clue
+            return;
+        }
         document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
           cell.parentElement.classList.add('highlight-word');
         });
         this.activeCell.parentElement.classList.add('highlight-active');
+        
+        // Update sticky bar
         const clue = this.currentPuzzleData.clues[this.direction].find(c => c.number == clueNum);
-        document.getElementById('sticky-text').innerHTML = `<span class="dir">${this.direction.charAt(0).toUpperCase() + this.direction.slice(1)}</span> <span class="clue-number">${clue.number}.</span> ${clue.text}`;
+        document.getElementById('sticky-dir').textContent = this.direction;
+        document.getElementById('sticky-num').textContent = `${clue.number}.`;
+        document.getElementById('sticky-text').textContent = clue.text;
+      }
+      
+      resetClueBar() {
+        document.getElementById('sticky-dir').textContent = '';
+        document.getElementById('sticky-num').textContent = '';
+        document.getElementById('sticky-text').textContent = 'Select a square to start';
       }
 
       startTimer(){
@@ -444,6 +540,7 @@
       stopTimer(){ if (this.timerInterval) { clearInterval(this.timerInterval); this.timerInterval=null; } }
       resetTimer(){ this.stopTimer(); this.startTime = null; this.elapsedTime = 0; }
       formatTime(s){ const m=Math.floor(s/60), sec=(s%60).toString().padStart(2,'0'); return `${m}:${sec}`; }
+      
       getRanking(seconds){
         if (seconds<=30) return {stars:"★★★★★", text:"Instant Classic"};
         if (seconds<=60) return {stars:"★★★★☆", text:"Truly Great"};
@@ -452,6 +549,7 @@
         if (seconds<=240) return {stars:"★★★",   text:"Good"};
         return {stars:"★★", text:"Decent Effort"};
       }
+      
       showVictoryScreen(){
         this.stopTimer();
         const p=this.currentPuzzleData;
@@ -461,9 +559,9 @@
           <div id="stars-container">
             ${ranking.stars.split('').map((s,i) => `<span class="star-animate" style="animation-delay:${i*0.1}s">${s}</span>`).join('')}
           </div>
-          <div style="font-size:18px; font-weight:700; margin-bottom:8px;">${ranking.text}</div>
-          <div style="font-size:15px; color:#444; font-weight:600;">Your Time: ${this.formatTime(this.elapsedTime)}</div>`;
-        document.getElementById('victory-screen').style.display='flex';
+          <div style="font-size: 22px; font-weight: 700; margin-bottom: 10px;">${ranking.text}</div>
+          <div style="font-size: 17px; color: #444; font-weight: 600;">Your Time: ${this.formatTime(this.elapsedTime)}</div>`;
+        document.getElementById('victory-screen').classList.add('show');
       }
 
       storageKey(){ return `mm-progress:${this.currentPuzzleData.id}`; }
@@ -482,8 +580,11 @@
           document.querySelectorAll('.grid-cell input').forEach(i=>{
             i.value = (byKey.get(`${i.dataset.row},${i.dataset.col}`) || '').toUpperCase();
           });
-          if (t && Number.isFinite(t)) this.elapsedTime = t;
-          if (this.elapsedTime > 0) this.startTimer();
+          if (t && Number.isFinite(t) && t > 0) {
+              this.elapsedTime = t;
+              this.startTimer();
+          }
+          this.checkCompletion(); // Check if loaded state is already complete
         } catch(e){ console.error("Could not load progress", e); }
       }
 
