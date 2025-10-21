@@ -9,6 +9,7 @@
         :root {
             --cell-size-mobile: 18vw;
             --cell-size-desktop: 55px;
+            --clue-bar-width: auto;
         }
 
         body {
@@ -21,28 +22,10 @@
             font-weight: 500;
         }
 
-        #sticky-clue-bar {
-            padding: 12px 15px;
-            background: #FFFFFF;
-            border-bottom: 1px solid #1B1B1B;
-            font-size: 15px;
-            text-align: center;
-            min-height: 20px;
-            box-sizing: border-box;
-            color: #1B1B1B;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        #sticky-clue-bar .clue-number {
-            font-weight: 700;
-            color: #1B1B1B;
-            margin-right: 8px;
-        }
-
-        #sticky-clue-bar .clue-text {
-            font-weight: 600;
-            color: #1B1B1B;
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .main-container {
@@ -55,6 +38,7 @@
         .header {
             text-align: center;
             margin-bottom: 20px;
+            width: 100%;
         }
 
         .main-title {
@@ -82,7 +66,51 @@
             gap: 0;
             background: transparent;
             border: 2px solid #1B1B1B;
-            margin: 0 auto 20px auto;
+            margin: 0 auto;
+        }
+
+        .clue-bar {
+            width: var(--clue-bar-width);
+            max-width: 90vw;
+            margin: 14px auto 24px;
+            padding: 10px 16px;
+            background: #FFFFFF;
+            border: 1px solid #1B1B1B;
+            box-shadow: 0 2px 0 rgba(27, 27, 27, 0.12);
+            color: #1B1B1B;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.4;
+            box-sizing: border-box;
+            transition: opacity 0.2s ease;
+            opacity: 1;
+            text-align: left;
+        }
+
+        .clue-bar .clue-direction {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1B1B1B;
+        }
+
+        .clue-bar .clue-number {
+            font-weight: 700;
+            color: #1B1B1B;
+        }
+
+        .clue-bar .clue-text {
+            flex: 1;
+        }
+
+        .clue-bar .clue-direction:empty,
+        .clue-bar .clue-number:empty {
+            display: none;
         }
 
         .grid-cell {
@@ -332,13 +360,14 @@
                 <div class="puzzle-info" id="puzzleInfo"></div>
             </div>
 
-            <div id="sticky-clue-bar">
+            <div class="crossword-grid" id="crosswordGrid"></div>
+
+            <div id="sticky-clue-bar" class="clue-bar" aria-live="polite">
+                <span class="clue-direction"></span>
                 <span class="clue-number"></span>
                 <span class="clue-text">Select a square to start</span>
             </div>
 
-            <div class="crossword-grid" id="crosswordGrid"></div>
-            
             <div class="stems-cta-container">
                 <a href="https://www.stems.media" class="stems-cta-button" id="stemsCtaButton">Read Stems</a>
             </div>
@@ -375,7 +404,8 @@
                     'world-premiere-2025-09-26',
                     'cycling-playlist-2025-07-19',
                     'global-rollout-2025-07-16',
-                    'classic-hiphop-2025-07-17'
+                    'classic-hiphop-2025-07-17',
+                    'clue-bar-demo'
                 ];
 
                 this.currentPuzzleIndex = 0;
@@ -431,8 +461,13 @@
                 document.getElementById('puzzleTitle').textContent = puzzle.title;
                 document.getElementById('puzzleInfo').textContent = puzzle.info;
 
+                this.direction = 'across';
+                this.activeCell = null;
+
                 this.generateGrid(puzzle);
+                this.positionClueBar();
                 this.updateClues(puzzle);
+                this.resetClueBar();
 
                 this.resetTimer();
             }
@@ -472,6 +507,7 @@
                         this.startTimer();
                     }
                 });
+                window.addEventListener('resize', () => this.positionClueBar());
             }
 
             generateGrid(puzzle) {
@@ -523,6 +559,19 @@
                         }
                     }
                 }
+            }
+
+            positionClueBar() {
+                const grid = document.getElementById('crosswordGrid');
+                const clueBar = document.getElementById('sticky-clue-bar');
+                if (!grid || !clueBar) return;
+
+                window.requestAnimationFrame(() => {
+                    const widthFromStyle = grid.style.width;
+                    const fallbackWidth = grid.getBoundingClientRect().width;
+                    const targetWidth = widthFromStyle || (fallbackWidth ? `${fallbackWidth}px` : 'auto');
+                    document.documentElement.style.setProperty('--clue-bar-width', targetWidth);
+                });
             }
 
             updateClues(puzzle) {
@@ -605,7 +654,10 @@
                 if (!this.activeCell) return;
                 this.activeCell.select();
                 const clueNum = this.activeCell.dataset[this.direction];
-                if (!clueNum) return;
+                if (!clueNum) {
+                    this.resetClueBar();
+                    return;
+                }
                 document.querySelectorAll(`input[data-${this.direction}='${clueNum}']`).forEach(cell => {
                     cell.parentElement.classList.add('highlight-word');
                 });
@@ -615,10 +667,52 @@
 
             updateStickyClue(clueNum) {
                 const puzzle = this.currentPuzzleData;
-                const clueData = puzzle.clues[this.direction].find(c => c.number == clueNum);
+                if (!puzzle) return;
+                const clueList = puzzle.clues ? puzzle.clues[this.direction] : null;
+                if (!Array.isArray(clueList)) return;
+                const clueData = clueList.find(c => c.number == clueNum);
                 const clueBar = document.getElementById('sticky-clue-bar');
-                clueBar.querySelector('.clue-number').textContent = `${clueData.number}.`;
-                clueBar.querySelector('.clue-text').textContent = clueData.text;
+                if (!clueData || !clueBar) return;
+
+                const newClueKey = `${this.direction}-${clueData.number}`;
+                if (clueBar.dataset.currentClue === newClueKey && clueBar.dataset.state === 'active') {
+                    return;
+                }
+
+                clueBar.dataset.currentClue = newClueKey;
+                clueBar.dataset.state = 'active';
+                clueBar.style.opacity = 0;
+
+                window.requestAnimationFrame(() => {
+                    const directionEl = clueBar.querySelector('.clue-direction');
+                    const numberEl = clueBar.querySelector('.clue-number');
+                    const textEl = clueBar.querySelector('.clue-text');
+
+                    if (directionEl) directionEl.textContent = this.direction === 'across' ? 'Across' : 'Down';
+                    if (numberEl) numberEl.textContent = `${clueData.number}.`;
+                    if (textEl) textEl.textContent = clueData.text;
+
+                    window.requestAnimationFrame(() => {
+                        clueBar.style.opacity = 1;
+                    });
+                });
+            }
+
+            resetClueBar() {
+                const clueBar = document.getElementById('sticky-clue-bar');
+                if (!clueBar) return;
+
+                clueBar.dataset.currentClue = '';
+                clueBar.dataset.state = 'idle';
+                clueBar.style.opacity = 1;
+
+                const directionEl = clueBar.querySelector('.clue-direction');
+                const numberEl = clueBar.querySelector('.clue-number');
+                const textEl = clueBar.querySelector('.clue-text');
+
+                if (directionEl) directionEl.textContent = '';
+                if (numberEl) numberEl.textContent = '';
+                if (textEl) textEl.textContent = 'Select a square to start';
             }
 
             startTimer() {

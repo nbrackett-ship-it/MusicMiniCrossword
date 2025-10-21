@@ -1,0 +1,34 @@
+{
+  "id": "clue-bar-demo",
+  "title": "Clue Bar Demo",
+  "info": "Test Grid • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "YORKE", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "ARENA", "number": 6, "direction": "across", "row": 1, "col": 0 },
+    { "word": "NIGER", "number": 7, "direction": "across", "row": 2, "col": 0 },
+    { "word": "NOELS", "number": 8, "direction": "across", "row": 3, "col": 0 },
+    { "word": "INTL", "number": 9, "direction": "across", "row": 4, "col": 0 },
+    { "word": "YANNI", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "ORION", "number": 2, "direction": "down", "row": 0, "col": 1 },
+    { "word": "REGET", "number": 3, "direction": "down", "row": 0, "col": 2 },
+    { "word": "KNELL", "number": 4, "direction": "down", "row": 0, "col": 3 },
+    { "word": "EARS", "number": 5, "direction": "down", "row": 0, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "'Weird Fishes / Arpeggi' singer (watch the clue bar fade!)" },
+      { "number": 6, "text": "Before you headline a stadium, you prove you can fill this" },
+      { "number": 7, "text": "West African nation with Tuareg guitar heroes" },
+      { "number": 8, "text": "Late Hendrix bassist Redding and Gallagher" },
+      { "number": 9, "text": "Another way of saying global (abbr.)" }
+    ],
+    "down": [
+      { "number": 1, "text": "Maestro of the keytar, perfect for demo day" },
+      { "number": 2, "text": "Constellation that keeps our grid aligned" },
+      { "number": 3, "text": "Archaic way to say 'obtain again'" },
+      { "number": 4, "text": "A solemn bell sound, like the bar when idle" },
+      { "number": 5, "text": "Crucial organs for industry people" }
+    ]
+  }
+}
