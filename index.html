@@ -10,11 +10,12 @@
     :root{
       --ink:#1B1B1B; --ink-2:#333; --ink-3:#555; --paper:#FFFFFF;
       --rule-strong:3px; --rule-fine:1px;
-      --gridMax:560px; --blue:#1877f2;
+      --gridMax:560px; --gridMaxMobile:420px; --blue:#1877f2;
       /* Define max widths for layout */
       --app-max-width: 960px;
       --grid-panel-width: 560px;
       --clues-panel-width: 340px;
+      --clue-bar-height: 80px; /* Reserve space for sticky clue bar */
     }
 
     html,body{ background:var(--paper); margin:0; padding:0; }
@@ -48,30 +49,47 @@
     /* Grid Panel (Left side on desktop) */
     .grid-panel {
       width: 100%;
+      /* Add bottom padding on mobile to prevent grid being hidden by fixed clue bar */
+      padding-bottom: 80px;
     }
 
-    /* Clue Bar (Moved into flow) */
+    /* Clue Bar (Fixed to bottom on mobile, like NYT Mini) */
     #sticky-clue-bar{
-      display:flex; align-items:center; gap:10px;
-      padding:10px 16px; 
+      display:flex; align-items:center; gap:12px;
+      padding:14px 18px;
       background: var(--paper);
-      border:1px solid var(--ink);
-      box-shadow: 0 2px 0 rgba(27, 27, 27, 0.12);
-      margin: 14px auto 24px;
-      font-size:16px;
-      font-weight: 500;
-      line-height: 1.4;
-      box-sizing: border-box; /* Ensure padding doesn't break width */
+      border:2px solid var(--ink);
+      border-bottom: none; /* No border at bottom when fixed to screen bottom */
+      box-shadow: 0 -3px 8px rgba(27, 27, 27, 0.15); /* Shadow above, not below */
+      margin: 0;
+      font-size:18px;
+      font-weight: 600;
+      line-height: 1.5;
+      box-sizing: border-box;
       text-align: left;
+      /* Fixed to bottom on mobile, above keyboard */
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      min-height: 60px;
     }
-    #sticky-clue-bar .dir{ 
+    #sticky-clue-bar .dir{
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
     }
-    #sticky-clue-bar .clue-number{ font-weight:700; }
-    #sticky-clue-bar .clue-text{ flex: 1; }
+    #sticky-clue-bar .clue-number{
+      font-weight: 700;
+      font-size: 19px;
+    }
+    #sticky-clue-bar .clue-text{
+      flex: 1;
+      font-weight: 600;
+      font-size: 18px;
+    }
     #sticky-clue-bar .dir:empty,
     #sticky-clue-bar .clue-number:empty {
         display: none;
@@ -172,36 +190,70 @@
     .star-animate{ display:inline-block; opacity:0; transform:translateY(8px); animation:pop .45s forwards; }
     @keyframes pop{ to{ opacity:1; transform:translateY(0); } }
 
+    /* === MOBILE OPTIMIZATIONS === */
+    @media (max-width: 899px) {
+      body {
+        padding: 10px;
+        padding-bottom: 0; /* No bottom padding needed, clue bar is fixed */
+      }
+
+      .mm-header {
+        margin-bottom: 16px;
+      }
+
+      /* Clue bar stays fixed to bottom on mobile */
+      #sticky-clue-bar {
+        /* Keep fixed positioning from base styles */
+      }
+    }
+
     /* === FIX: DESKTOP 2-COLUMN LAYOUT === */
     @media (min-width: 900px) { /* Using 900px from LDD */
       #app {
         max-width: var(--app-max-width);
       }
-      
+
       .main-content-wrapper {
         display: flex;
         flex-direction: row;
         gap: 40px;
         justify-content: center;
       }
-      
+
       .grid-panel {
         flex-basis: var(--grid-panel-width);
         flex-shrink: 0; /* Don't shrink grid panel */
       }
-      
+
       .clues-panel {
         flex-basis: var(--clues-panel-width);
         flex-shrink: 0; /* Don't shrink clues panel */
         margin-top: 10px; /* Align tops */
       }
-      
+
       /* Adjust font sizes for desktop */
       .grid-cell input {
           font-size: 30px; /* 55px * 0.55 (from newsletter.html) */
       }
       .cell-number {
           font-size: 15px; /* 55px * 0.28 */
+      }
+
+      /* Desktop clue bar adjustments - use normal positioning in flow */
+      #sticky-clue-bar {
+        position: relative; /* Normal flow on desktop */
+        margin: 14px auto 24px;
+        border: 2px solid var(--ink); /* Restore full border on desktop */
+        border-bottom: 2px solid var(--ink);
+        box-shadow: 0 3px 8px rgba(27, 27, 27, 0.15); /* Shadow below on desktop */
+        left: auto;
+        right: auto;
+        bottom: auto;
+      }
+
+      /* Remove bottom padding on desktop since clue bar is in normal flow */
+      .grid-panel {
+        padding-bottom: 0;
       }
     }
   </style>
@@ -307,7 +359,7 @@
         this.resetClueBar();
       }
 
-      // FIX: resizeGrid now constrains itself on desktop
+      // FIX: resizeGrid now constrains itself on desktop and uses smaller size on mobile
       resizeGrid() {
         const p = this.currentPuzzleData;
         if (!p) return;
@@ -317,11 +369,17 @@
 
         // Get constraints
         const rootStyles = getComputedStyle(document.documentElement);
-        const maxGridPx = parseInt(rootStyles.getPropertyValue('--gridMax') || '560');
+        const isMobile = window.innerWidth < 900; // Match media query breakpoint
+
+        // Use smaller grid on mobile to ensure clue bar + grid + keyboard all fit
+        const maxGridPx = isMobile
+          ? parseInt(rootStyles.getPropertyValue('--gridMaxMobile') || '420')
+          : parseInt(rootStyles.getPropertyValue('--gridMax') || '560');
+
         const containerWidth = grid.parentElement.clientWidth;
-        
+
         // On desktop, parent width is constrained by CSS, but we still cap at --gridMax
-        // On mobile, parent width is screen width, so we cap at --gridMax
+        // On mobile, use smaller gridMaxMobile to leave room for clue bar and keyboard
         const targetWidth = Math.min(containerWidth, maxGridPx);
 
         // Use Math.floor() to guarantee an integer pixel value
@@ -332,10 +390,14 @@
         grid.style.width = `${finalGridWidth}px`;
         grid.style.height = `${finalGridWidth}px`;
 
-        // Also apply this width to the clue bar so they match.
+        // On desktop, match clue bar width to grid. On mobile, let it be full-width.
         const clueBar = document.getElementById('sticky-clue-bar');
         if (clueBar) {
-            clueBar.style.width = `${finalGridWidth}px`;
+            if (isMobile) {
+                clueBar.style.width = '100%'; // Full width on mobile (fixed to bottom)
+            } else {
+                clueBar.style.width = `${finalGridWidth}px`; // Match grid on desktop
+            }
         }
       }
 
