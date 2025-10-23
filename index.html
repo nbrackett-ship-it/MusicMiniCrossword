@@ -49,26 +49,30 @@
     /* Grid Panel (Left side on desktop) */
     .grid-panel {
       width: 100%;
+      /* Add bottom padding on mobile to prevent grid being hidden by fixed clue bar */
+      padding-bottom: 80px;
     }
 
-    /* Clue Bar (Sticky positioning for mobile) */
+    /* Clue Bar (Fixed to bottom on mobile, like NYT Mini) */
     #sticky-clue-bar{
       display:flex; align-items:center; gap:12px;
       padding:14px 18px;
       background: var(--paper);
       border:2px solid var(--ink);
-      box-shadow: 0 3px 8px rgba(27, 27, 27, 0.15);
-      margin: 0 auto 20px;
+      border-bottom: none; /* No border at bottom when fixed to screen bottom */
+      box-shadow: 0 -3px 8px rgba(27, 27, 27, 0.15); /* Shadow above, not below */
+      margin: 0;
       font-size:18px;
       font-weight: 600;
       line-height: 1.5;
       box-sizing: border-box;
       text-align: left;
-      /* Sticky positioning on mobile to stay visible */
-      position: sticky;
-      top: 0;
+      /* Fixed to bottom on mobile, above keyboard */
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
-      /* Ensure it doesn't get cut off */
       min-height: 60px;
     }
     #sticky-clue-bar .dir{
@@ -190,16 +194,16 @@
     @media (max-width: 899px) {
       body {
         padding: 10px;
+        padding-bottom: 0; /* No bottom padding needed, clue bar is fixed */
       }
 
       .mm-header {
         margin-bottom: 16px;
       }
 
-      /* Ensure sticky clue bar stays at top when scrolling */
+      /* Clue bar stays fixed to bottom on mobile */
       #sticky-clue-bar {
-        margin-top: 0;
-        margin-bottom: 16px;
+        /* Keep fixed positioning from base styles */
       }
     }
 
@@ -235,10 +239,21 @@
           font-size: 15px; /* 55px * 0.28 */
       }
 
-      /* Desktop clue bar adjustments - can use regular positioning */
+      /* Desktop clue bar adjustments - use normal positioning in flow */
       #sticky-clue-bar {
         position: relative; /* Normal flow on desktop */
         margin: 14px auto 24px;
+        border: 2px solid var(--ink); /* Restore full border on desktop */
+        border-bottom: 2px solid var(--ink);
+        box-shadow: 0 3px 8px rgba(27, 27, 27, 0.15); /* Shadow below on desktop */
+        left: auto;
+        right: auto;
+        bottom: auto;
+      }
+
+      /* Remove bottom padding on desktop since clue bar is in normal flow */
+      .grid-panel {
+        padding-bottom: 0;
       }
     }
   </style>
@@ -375,10 +390,14 @@
         grid.style.width = `${finalGridWidth}px`;
         grid.style.height = `${finalGridWidth}px`;
 
-        // Also apply this width to the clue bar so they match.
+        // On desktop, match clue bar width to grid. On mobile, let it be full-width.
         const clueBar = document.getElementById('sticky-clue-bar');
         if (clueBar) {
-            clueBar.style.width = `${finalGridWidth}px`;
+            if (isMobile) {
+                clueBar.style.width = '100%'; // Full width on mobile (fixed to bottom)
+            } else {
+                clueBar.style.width = `${finalGridWidth}px`; // Match grid on desktop
+            }
         }
       }
 
