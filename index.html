@@ -15,7 +15,7 @@
       --app-max-width: 960px;
       --grid-panel-width: 560px;
       --clues-panel-width: 340px;
-      --clue-bar-height: 80px; /* Reserve space for sticky clue bar */
+      /* --clue-bar-height: 80px; */ /* No longer needed */
     }
 
     html,body{ background:var(--paper); margin:0; padding:0; }
@@ -49,31 +49,28 @@
     /* Grid Panel (Left side on desktop) */
     .grid-panel {
       width: 100%;
-      /* Add bottom padding on mobile to prevent grid being hidden by fixed clue bar */
-      padding-bottom: 80px;
+      /* FIX: Removed bottom padding */
     }
 
-    /* Clue Bar (Fixed to bottom on mobile, like NYT Mini) */
+    /* Clue Bar (FIX: Now in-flow on all devices) */
     #sticky-clue-bar{
       display:flex; align-items:center; gap:12px;
       padding:14px 18px;
       background: var(--paper);
-      border:2px solid var(--ink);
-      border-bottom: none; /* No border at bottom when fixed to screen bottom */
-      box-shadow: 0 -3px 8px rgba(27, 27, 27, 0.15); /* Shadow above, not below */
-      margin: 0;
       font-size:18px;
       font-weight: 600;
       line-height: 1.5;
       box-sizing: border-box;
       text-align: left;
-      /* Fixed to bottom on mobile, above keyboard */
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
       min-height: 60px;
+      
+      /* FIX: Use relative positioning and margins on ALL devices */
+      position: relative;
+      margin: 14px auto 24px;
+      border: 2px solid var(--ink);
+      box-shadow: 0 3px 8px rgba(27, 27, 27, 0.15);
+      
+      /* FIX: Removed all position:fixed, bottom, left, right, z-index properties */
     }
     #sticky-clue-bar .dir{
       text-transform: uppercase;
@@ -194,17 +191,14 @@
     @media (max-width: 899px) {
       body {
         padding: 10px;
-        padding-bottom: 0; /* No bottom padding needed, clue bar is fixed */
+        /* FIX: Removed padding-bottom: 0; */
       }
 
       .mm-header {
         margin-bottom: 16px;
       }
-
-      /* Clue bar stays fixed to bottom on mobile */
-      #sticky-clue-bar {
-        /* Keep fixed positioning from base styles */
-      }
+      
+      /* FIX: Removed empty #sticky-clue-bar rule */
     }
 
     /* === FIX: DESKTOP 2-COLUMN LAYOUT === */
@@ -239,22 +233,9 @@
           font-size: 15px; /* 55px * 0.28 */
       }
 
-      /* Desktop clue bar adjustments - use normal positioning in flow */
-      #sticky-clue-bar {
-        position: relative; /* Normal flow on desktop */
-        margin: 14px auto 24px;
-        border: 2px solid var(--ink); /* Restore full border on desktop */
-        border-bottom: 2px solid var(--ink);
-        box-shadow: 0 3px 8px rgba(27, 27, 27, 0.15); /* Shadow below on desktop */
-        left: auto;
-        right: auto;
-        bottom: auto;
-      }
-
-      /* Remove bottom padding on desktop since clue bar is in normal flow */
-      .grid-panel {
-        padding-bottom: 0;
-      }
+      /* FIX: Removed desktop-specific #sticky-clue-bar rule (styles moved to base) */
+      
+      /* FIX: Removed desktop-specific .grid-panel rule */
     }
   </style>
 </head>
@@ -329,6 +310,8 @@
         const idx = this.puzzleIds.indexOf(puzzleIdFromUrl);
         this.currentPuzzleIndex = idx !== -1 ? idx : 0;
         await this.loadPuzzleById(this.puzzleIds[this.currentPuzzleIndex]);
+        
+        /* FIX: Removed document.body.classList.add('has-sticky'); (was already gone) */
       }
 
       getPuzzleIdFromUrl() {
@@ -390,14 +373,10 @@
         grid.style.width = `${finalGridWidth}px`;
         grid.style.height = `${finalGridWidth}px`;
 
-        // On desktop, match clue bar width to grid. On mobile, let it be full-width.
+        // FIX: The clue bar should ALWAYS match the grid width now.
         const clueBar = document.getElementById('sticky-clue-bar');
         if (clueBar) {
-            if (isMobile) {
-                clueBar.style.width = '100%'; // Full width on mobile (fixed to bottom)
-            } else {
-                clueBar.style.width = `${finalGridWidth}px`; // Match grid on desktop
-            }
+            clueBar.style.width = `${finalGridWidth}px`;
         }
       }
 
@@ -469,10 +448,10 @@
         grid.addEventListener('click', e => this.handleCellClick(e));
         grid.addEventListener('input', e => this.handleInput(e));
         grid.addEventListener('keydown', e => this.handleKeydown(e));
-        grid.addEventListener('focusin', e => {
-            if (this.isAutoAdvancing) return;
-            if (e.target.tagName === 'INPUT') this.handleCellClick(e);
-        });
+        
+        /* * FIX #2: Removed the 'focusin' event listener that caused the double-trigger bug.
+         */
+        
         document.addEventListener('visibilitychange', () => {
           if (document.hidden) this.stopTimer();
           else if (this.startTime && !this.checkIfComplete()) this.startTimer();
@@ -486,6 +465,9 @@
         if (e.target.tagName !== 'INPUT') return;
         const input = e.target;
         
+        /* * With the focusin listener gone, this logic will now work as intended
+         * and only fire ONCE per click.
+         */
         if (input === this.activeCell && input.dataset.across && input.dataset.down){
           this.direction = this.direction === 'across' ? 'down' : 'across';
         } 
