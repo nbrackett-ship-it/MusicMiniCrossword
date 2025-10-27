@@ -1,0 +1,34 @@
+{
+  "id": "major-dudes-2025-10-30",
+  "title": "Major Dudes",
+  "info": "10-30-2025 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "SCAB", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "COLON", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "AMTOO", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "TBONE", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "SNES", "number": 5, "direction": "across", "row": 4, "col": 1 },
+    { "word": "SCAT", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "COMBS", "number": 6, "direction": "down", "row": 0, "col": 1 },
+    { "word": "ALTON", "number": 7, "direction": "down", "row": 0, "col": 2 },
+    { "word": "BOONE", "number": 8, "direction": "down", "row": 0, "col": 3 },
+    { "word": "NOES", "number": 9, "direction": "down", "row": 1, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Picket-line crosser" },
+      { "number": 2, "text": "Salsa legend Willie" },
+      { "number": 3, "text": "Comeback to \"Are not!\"" },
+      { "number": 4, "text": "Burnett or Walker" },
+      { "number": 5, "text": "Early '90s game console" }
+    ],
+    "down": [
+      { "number": 1, "text": "E.g., \"Be bop be doo doo siggy bop\"" },
+      { "number": 6, "text": "Country megastar Luke" },
+      { "number": 7, "text": "\"Godfather of Rock Steady\" Ellis" },
+      { "number": 8, "text": "Mustachioed popster Benson" },
+      { "number": 9, "text": "Multiple negative statements" }
+    ]
+  }
+}
