@@ -1,7 +1,7 @@
 {
   "id": "major-dudes-2025-10-30",
   "title": "Major Dudes",
-  "info": "10-30-2025 • 5×5",
+  "info": "10-31-2025 • 5×5",
   "gridSize": { "rows": 5, "cols": 5 },
   "words": [
     { "word": "SCAB", "number": 1, "direction": "across", "row": 0, "col": 0 },
@@ -17,18 +17,18 @@
   ],
   "clues": {
     "across": [
-      { "number": 1, "text": "Picket-line crosser" },
+      { "number": 1, "text": "Perjorative term for picket-line crosser" },
       { "number": 2, "text": "Salsa legend Willie" },
-      { "number": 3, "text": "Comeback to \"Are not!\"" },
-      { "number": 4, "text": "Burnett or Walker" },
-      { "number": 5, "text": "Early '90s game console" }
+      { "number": 3, "text": "Childish comeback to \"No, you aren't!\"" },
+      { "number": 4, "text": "Producer Burnett or bluesman Walker" },
+      { "number": 5, "text": "Early '90s video game console (abbr.)" }
     ],
     "down": [
       { "number": 1, "text": "E.g., \"Be bop be doo doo siggy bop\"" },
-      { "number": 6, "text": "Country megastar Luke" },
+      { "number": 6, "text": "Diddy's family name" },
       { "number": 7, "text": "\"Godfather of Rock Steady\" Ellis" },
-      { "number": 8, "text": "Mustachioed popster Benson" },
-      { "number": 9, "text": "Multiple negative statements" }
+      { "number": 8, "text": "Mustachioed young popster Benson" },
+      { "number": 9, "text": "Multiple negatives" }
     ]
   }
 }
