@@ -1,0 +1,34 @@
+{
+  "id": "prog-rock-2025-11-07",
+  "title": "Prog, Rock",
+  "info": "11-07-2025 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "UPS", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "COURT", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "SONAR", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "FLUTE", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "PEE", "number": 5, "direction": "across", "row": 4, "col": 2 },
+    { "word": "UCSF", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "POOL", "number": 6, "direction": "down", "row": 0, "col": 1 },
+    { "word": "SUNUP", "number": 7, "direction": "down", "row": 0, "col": 2 },
+    { "word": "RATE", "number": 8, "direction": "down", "row": 1, "col": 3 },
+    { "word": "TREE", "number": 9, "direction": "down", "row": 1, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Brown delivery fleet" },
+      { "number": 2, "text": "'In the _____ of the Crimson King'" },
+      { "number": 3, "text": "Big Barcelona festival (or audio detection system)" },
+      { "number": 4, "text": "Ian Anderson's instrument of choice" },
+      { "number": 5, "text": "Bathroom break" }
+    ],
+    "down": [
+      { "number": 1, "text": "Bay Area state school (abbr)" },
+      { "number": 6, "text": "Swimming spot" },
+      { "number": 7, "text": "Dawn" },
+      { "number": 8, "text": "Evaluate, with a number or star" },
+      { "number": 9, "text": "U2's 'The Joshua ___'" }
+    ]
+  }
+}
