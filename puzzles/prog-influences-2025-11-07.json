@@ -1,5 +1,5 @@
 {
-  "id": "prog-rock-2025-11-07",
+  "id": "prog-influences-2025-11-07",
   "title": "Prog, Rock",
   "info": "11-07-2025 • 5×5",
   "gridSize": { "rows": 5, "cols": 5 },
@@ -18,16 +18,16 @@
   "clues": {
     "across": [
       { "number": 1, "text": "Brown delivery fleet" },
-      { "number": 2, "text": "'In the _____ of the Crimson King'" },
-      { "number": 3, "text": "Big Barcelona festival (or audio detection system)" },
+      { "number": 2, "text": "'In the _____ of the Crimson King' (album)" },
+      { "number": 3, "text": "Big Barcelona festival in June, or audio detection system" },
       { "number": 4, "text": "Ian Anderson's instrument of choice" },
       { "number": 5, "text": "Bathroom break" }
     ],
     "down": [
       { "number": 1, "text": "Bay Area state school (abbr)" },
-      { "number": 6, "text": "Swimming spot" },
+      { "number": 6, "text": "You can play it, or bet in one" },
       { "number": 7, "text": "Dawn" },
-      { "number": 8, "text": "Evaluate, with a number or star" },
+      { "number": 8, "text": "Evaluate with a number or star" },
       { "number": 9, "text": "U2's 'The Joshua ___'" }
     ]
   }
