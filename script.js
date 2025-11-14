@@ -1,6 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // This will be the entry point of our application
-    init('puzzle-001.json');
+    const urlParams = new URLSearchParams(window.location.search);
+    const puzzleSlug = urlParams.get('puzzle'); // Gets "punks-not-dead-2025-11-14" from the URL
+
+    if (puzzleSlug) {
+        // Assumes all puzzles are in a 'puzzles/' directory
+        const puzzleFile = `puzzles/${puzzleSlug}.json`; 
+        init(puzzleFile); // Calls init with the correct file path
+    } else {
+        // Fallback if no ?puzzle= parameter is found
+        console.error("No puzzle slug found in URL.");
+        const gridContainer = document.getElementById('grid-container');
+        if (gridContainer) {
+            gridContainer.innerHTML = '<p style="color: red;">Error: No puzzle selected.</p>';
+        }
+    }
 });
 
 let solution = {};
@@ -9,9 +22,21 @@ let currentDirection = 'across';
 
 function init(puzzleFile) {
     fetch(puzzleFile)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Puzzle file not found: ${puzzleFile}`);
+            }
+            return response.json();
+        })
         .then(puzzleData => {
             loadPuzzle(puzzleData);
+        })
+        .catch(error => {
+            console.error(error);
+            const gridContainer = document.getElementById('grid-container');
+            if (gridContainer) {
+                gridContainer.innerHTML = '<p style="text-align: center; color: #555;">Puzzle Not Found</p>';
+            }
         });
 }
 
