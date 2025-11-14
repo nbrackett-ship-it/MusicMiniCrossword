@@ -11,7 +11,7 @@
     { "word": "NEYO", "number": 5, "direction": "across", "row": 4, "col": 1 },
     { "word": "BLOT", "number": 1, "direction": "down", "row": 0, "col": 0 },
     { "word": "LYDON", "number": 6, "direction": "down", "row": 0, "col": 1 },
-    { "word": "ADELE", "number": 7, "direction": "down", "row": 1, "col": 2 },
+    { "word": "ADELE", "number": 7, "direction": "down", "row": 0, "col": 2 },
     { "word": "HILLY", "number": 8, "direction": "down", "row": 0, "col": 3 },
     { "word": "ALSO", "number": 9, "direction": "down", "row": 1, "col": 4 }
   ],
