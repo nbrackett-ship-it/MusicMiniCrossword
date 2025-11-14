@@ -1,0 +1,38 @@
+{
+  "title": "Punk's Not Dead",
+  "date": "2025-11-14",
+  "words": [
+    {"word": "BLAH", "row": 0, "col": 0, "direction": "across"},
+    {"word": "LYDIA", "row": 1, "col": 0, "direction": "across"},
+    {"word": "ODELL", "row": 2, "col": 0, "direction": "across"},
+    {"word": "TOLLS", "row": 3, "col": 0, "direction": "across"},
+    {"word": "NEYO", "row": 4, "col": 1, "direction": "across"},
+    {"word": "BLOT", "row": 0, "col": 0, "direction": "down"},
+    {"word": "LYDON", "row": 0, "col": 1, "direction": "down"},
+    {"word": "ADELE", "row": 1, "col": 2, "direction": "down"},
+    {"word": "HILLY", "row": 0, "col": 3, "direction": "down"},
+    {"word": "ALSO", "row": 1, "col": 4, "direction": "down"}
+  ],
+  "acrossClues": {
+    "1": "A cousin to \"meh\"",
+    "2": "___ Lunch, no wave provocateur",
+    "3": "NFL-er Beckham Jr.",
+    "4": "What the bell does in a Metallica classic",
+    "5": "R&B hitmaker who wrote for Beyoncé"
+  },
+  "downClues": {
+    "1": "___ on your record (blemish)",
+    "6": "Johnny Rotten's real surname",
+    "7": "UK vocal titan with one-word name",
+    "8": "CBGB founder ___ Kristal",
+    "9": "To boot"
+  },
+  "grid": [
+    ["B", "L", "A", "H", null],
+    ["L", "Y", "D", "I", "A"],
+    ["O", "D", "E", "L", "L"],
+    ["T", "O", "L", "L", "S"],
+    [null, "N", "E", "Y", "O"]
+  ],
+  "blackSquares": [[0, 4], [4, 0]]
+}
