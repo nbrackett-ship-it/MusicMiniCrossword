@@ -1,38 +1,34 @@
 {
+  "id": "punks-not-dead-2025-11-14",
   "title": "Punk's Not Dead",
-  "date": "2025-11-14",
+  "info": "11-14-2025 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
   "words": [
-    {"word": "BLAH", "row": 0, "col": 0, "direction": "across"},
-    {"word": "LYDIA", "row": 1, "col": 0, "direction": "across"},
-    {"word": "ODELL", "row": 2, "col": 0, "direction": "across"},
-    {"word": "TOLLS", "row": 3, "col": 0, "direction": "across"},
-    {"word": "NEYO", "row": 4, "col": 1, "direction": "across"},
-    {"word": "BLOT", "row": 0, "col": 0, "direction": "down"},
-    {"word": "LYDON", "row": 0, "col": 1, "direction": "down"},
-    {"word": "ADELE", "row": 1, "col": 2, "direction": "down"},
-    {"word": "HILLY", "row": 0, "col": 3, "direction": "down"},
-    {"word": "ALSO", "row": 1, "col": 4, "direction": "down"}
+    { "word": "BLAH", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "LYDIA", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "ODELL", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "TOLLS", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "NEYO", "number": 5, "direction": "across", "row": 4, "col": 1 },
+    { "word": "BLOT", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "LYDON", "number": 6, "direction": "down", "row": 0, "col": 1 },
+    { "word": "ADELE", "number": 7, "direction": "down", "row": 1, "col": 2 },
+    { "word": "HILLY", "number": 8, "direction": "down", "row": 0, "col": 3 },
+    { "word": "ALSO", "number": 9, "direction": "down", "row": 1, "col": 4 }
   ],
-  "acrossClues": {
-    "1": "A cousin to \"meh\"",
-    "2": "___ Lunch, no wave provocateur",
-    "3": "NFL-er Beckham Jr.",
-    "4": "What the bell does in a Metallica classic",
-    "5": "R&B hitmaker who wrote for Beyoncé"
-  },
-  "downClues": {
-    "1": "___ on your record (blemish)",
-    "6": "Johnny Rotten's real surname",
-    "7": "UK vocal titan with one-word name",
-    "8": "CBGB founder ___ Kristal",
-    "9": "To boot"
-  },
-  "grid": [
-    ["B", "L", "A", "H", null],
-    ["L", "Y", "D", "I", "A"],
-    ["O", "D", "E", "L", "L"],
-    ["T", "O", "L", "L", "S"],
-    [null, "N", "E", "Y", "O"]
-  ],
-  "blackSquares": [[0, 4], [4, 0]]
+  "clues": {
+    "across": [
+      { "number": 1, "text": "A cousin to \"meh\"" },
+      { "number": 2, "text": "___ Lunch, no wave provocateur" },
+      { "number": 3, "text": "NFL-er Beckham Jr." },
+      { "number": 4, "text": "What the bell does in a Metallica classic" },
+      { "number": 5, "text": "R&B hitmaker who wrote for Beyoncé" }
+    ],
+    "down": [
+      { "number": 1, "text": "___ on your record (blemish)" },
+      { "number": 6, "text": "Johnny Rotten's real surname" },
+      { "number": 7, "text": "UK vocal titan with one-word name" },
+      { "number": 8, "text": "CBGB founder ___ Kristal" },
+      { "number": 9, "text": "To boot" }
+    ]
+  }
 }
