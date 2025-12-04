@@ -1,0 +1,38 @@
+{
+  "id": "aughts-rock-2025-12-05",
+  "title": "Aughts Rock & Beyond",
+  "info": "Paramore, Weezer, and a dash of cricket.",
+  "gridSize": { "rows": 6, "cols": 6 },
+  "words": [
+    { "number": 1, "row": 0, "col": 1, "direction": "across", "word": "HOWL" },
+    { "number": 5, "row": 1, "col": 0, "direction": "across", "word": "SACHIN" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "HYAENA" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "OLSENS" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "WEEZER" },
+    { "number": 10, "row": 5, "col": 1, "direction": "across", "word": "YKEY" },
+    { "number": 1, "row": 0, "col": 1, "direction": "down", "word": "HAYLEY" },
+    { "number": 2, "row": 0, "col": 2, "direction": "down", "word": "OCASEK" },
+    { "number": 3, "row": 0, "col": 3, "direction": "down", "word": "WHEEZE" },
+    { "number": 4, "row": 0, "col": 4, "direction": "down", "word": "LINNEY" },
+    { "number": 5, "row": 1, "col": 0, "direction": "down", "word": "SHOW" },
+    { "number": 6, "row": 1, "col": 5, "direction": "down", "word": "NASR" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Allen Ginsberg opus" },
+      { "number": 5, "text": "__________ Tendulkar, India’s greatest cricketer" },
+      { "number": 7, "text": "Archaic spelling of doglike African hunter/scavenger" },
+      { "number": 8, "text": "Shorthand for Mary-Kate and Ashley" },
+      { "number": 9, "text": "They went from “Undone” to covering Toto" },
+      { "number": 10, "text": "To “redo,” press “⌘” plus this" }
+    ],
+    "down": [
+      { "number": 1, "text": "Paramore singer Williams" },
+      { "number": 2, "text": "He produced the first album by 9-Across" },
+      { "number": 3, "text": "Verb root of 9-Across?" },
+      { "number": 4, "text": "“Ozark” actor Laura" },
+      { "number": 5, "text": "Dude, it’s not a “concert”, it’s a _______" },
+      { "number": 6, "text": "Arabic for “victory”; often follows “Al-“ with soccer teams" }
+    ]
+  }
+}
