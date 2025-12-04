@@ -20,8 +20,8 @@
   "clues": {
     "across": [
       { "number": 1, "text": "Allen Ginsberg opus" },
-      { "number": 5, "text": "__________ Tendulkar, India’s greatest cricketer" },
-      { "number": 7, "text": "Archaic spelling of doglike African hunter/scavenger" },
+      { "number": 5, "text": "India’s greatest cricket player Tendulkar" },
+      { "number": 7, "text": "Archaic spelling of dog-like African scavenger; also Souixsie & the Banshees album" },
       { "number": 8, "text": "Shorthand for Mary-Kate and Ashley" },
       { "number": 9, "text": "They went from “Undone” to covering Toto" },
       { "number": 10, "text": "To “redo,” press “⌘” plus this" }
@@ -32,7 +32,7 @@
       { "number": 3, "text": "Verb root of 9-Across?" },
       { "number": 4, "text": "“Ozark” actor Laura" },
       { "number": 5, "text": "Dude, it’s not a “concert”, it’s a _______" },
-      { "number": 6, "text": "Arabic for “victory”; often follows “Al-“ with soccer teams" }
+      { "number": 6, "text": "Arabic for “victory”; often follows “Al-“ in the names of Middle Eastern soccer teams" }
     ]
   }
 }
