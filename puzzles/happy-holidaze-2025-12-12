@@ -1,0 +1,34 @@
+{
+  "id": "happy-holidaze-2025-12-12",
+  "title": "Happy Holidaze",
+  "info": "12-12-2025 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "CADS", "number": 1, "direction": "across", "row": 0, "col": 1 },
+    { "word": "CAROL", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "ORONO", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "LEONE", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "MYMY", "number": 5, "direction": "across", "row": 4, "col": 0 },
+    { "word": "COLM", "number": 2, "direction": "down", "row": 1, "col": 0 },
+    { "word": "CAREY", "number": 1, "direction": "down", "row": 0, "col": 1 },
+    { "word": "AROOM", "number": 6, "direction": "down", "row": 0, "col": 2 },
+    { "word": "DONNY", "number": 7, "direction": "down", "row": 0, "col": 3 },
+    { "word": "SLOE", "number": 8, "direction": "down", "row": 0, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Dishonorable dudes" },
+      { "number": 2, "text": "A seasonal song" },
+      { "number": 3, "text": "University of Maine hometown" },
+      { "number": 4, "text": "Ennio Morricone scored his Italian Westerns" },
+      { "number": 5, "text": "\"___ ___, Hey Hey\" (Young)" }
+    ],
+    "down": [
+      { "number": 1, "text": "Tried, and failed, to trademark the term \"Queen of Christmas\"" },
+      { "number": 2, "text": "\"Brooklyn\" author Toibin" },
+      { "number": 6, "text": "\"A ___ of One's Own\" (Woolf)" },
+      { "number": 7, "text": "First name of soul legend and \"This Christmas\" singer" },
+      { "number": 8, "text": "Syrupy type of gin" }
+    ]
+  }
+}
