@@ -1,0 +1,37 @@
+```json
+{
+  "id": "wintry-mix-2026-01-09",
+  "title": "Wintry Mix",
+  "info": "01-09-2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "IFFY", "number": 1, "direction": "across", "row": 0, "col": 1 },
+    { "word": "ECOLE", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "MIXUP", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "MEETS", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "ARSE", "number": 5, "direction": "across", "row": 4, "col": 0 },
+
+    { "word": "ICIER", "number": 1, "direction": "down", "row": 0, "col": 1 },
+    { "word": "EMMA", "number": 2, "direction": "down", "row": 1, "col": 0 },
+    { "word": "FOXES", "number": 6, "direction": "down", "row": 0, "col": 2 },
+    { "word": "FLUTE", "number": 7, "direction": "down", "row": 0, "col": 3 },
+    { "word": "YEPS", "number": 8, "direction": "down", "row": 0, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Not exactly a sure thing" },
+      { "number": 2, "text": "School, in France" },
+      { "number": 3, "text": "Beastie Boys instrumental album \"The ________\"" },
+      { "number": 4, "text": "Comes face to face with" },
+      { "number": 5, "text": "Butt, in Britain" }
+    ],
+    "down": [
+      { "number": 1, "text": "More frosty; less hospitable" },
+      { "number": 2, "text": "The first Bon Iver album was for her, forever ago" },
+      { "number": 6, "text": "A Fleet band for wintry 2000s nights" },
+      { "number": 7, "text": "Woodwind with a silver tone" },
+      { "number": 8, "text": "Casual yesses" }
+    ]
+  }
+}
+```
