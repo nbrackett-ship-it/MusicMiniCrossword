@@ -1,0 +1,34 @@
+{
+  "id": "rock-is-back-again-2026-01-16",
+  "title": "Rock is Back, Again",
+  "info": "01-16-2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "word": "STAG", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "HOOHA", "number": 6, "direction": "across", "row": 1, "col": 0 },
+    { "word": "AKRON", "number": 7, "direction": "across", "row": 2, "col": 0 },
+    { "word": "YETSO", "number": 8, "direction": "across", "row": 3, "col": 0 },
+    { "word": "NATS", "number": 9, "direction": "across", "row": 4, "col": 1 },
+    { "word": "SHAY", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "TOKEN", "number": 2, "direction": "down", "row": 0, "col": 1 },
+    { "word": "AORTA", "number": 3, "direction": "down", "row": 0, "col": 2 },
+    { "word": "GHOST", "number": 4, "direction": "down", "row": 0, "col": 3 },
+    { "word": "ANOS", "number": 5, "direction": "down", "row": 1, "col": 4 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "You're this if you don't have a date" },
+      { "number": 6, "text": "Goofy word for a big to-do" },
+      { "number": 7, "text": "Black Keys' hometown" },
+      { "number": 8, "text": "\"So close, and ______ far\"" },
+      { "number": 9, "text": "D.C.'s baseball team, for short" }
+    ],
+    "down": [
+      { "number": 1, "text": "Dan + _____ (country duo who first hit big in the 2010's)" },
+      { "number": 2, "text": "Sleep _____ (mask-wearing UK metalheads)" },
+      { "number": 3, "text": "Central artery" },
+      { "number": 4, "text": "The other theatrical hard rock band, with 2-Down, who made it to #1 in 2025" },
+      { "number": 5, "text": "Spanish for \"years\"" }
+    ]
+  }
+}
