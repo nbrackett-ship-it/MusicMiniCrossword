@@ -1,0 +1,149 @@
+{
+  "id": "grammy-week-2026-01-23",
+  "title": "Grammy Week",
+  "info": "Jan 23, 2026 • 6x6",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 1,
+      "direction": "across",
+      "word": "WORM"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "WILDER"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "OLIVIA"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "ROPING"
+    },
+    {
+      "number": 4,
+      "row": 0,
+      "col": 4,
+      "direction": "down",
+      "word": "MESSES"
+    },
+    {
+      "number": 5,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "SILOED"
+    },
+    {
+      "number": 5,
+      "row": 1,
+      "col": 0,
+      "direction": "down",
+      "word": "SCAR"
+    },
+    {
+      "number": 6,
+      "row": 1,
+      "col": 5,
+      "direction": "down",
+      "word": "DEED"
+    },
+    {
+      "number": 7,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "CLIPSE"
+    },
+    {
+      "number": 8,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "ADVISE"
+    },
+    {
+      "number": 9,
+      "row": 4,
+      "col": 0,
+      "direction": "across",
+      "word": "REINED"
+    },
+    {
+      "number": 10,
+      "row": 5,
+      "col": 1,
+      "direction": "across",
+      "word": "RAGS"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "Slang for a catchy hook, with “ear”"
+      },
+      {
+        "number": 5,
+        "text": "Isolated, in corporate speak"
+      },
+      {
+        "number": 7,
+        "text": "O.G. Virginia Beach duo nominated for 2026 Album of the Year"
+      },
+      {
+        "number": 8,
+        "text": "Counsel"
+      },
+      {
+        "number": 9,
+        "text": "Held back, with “in”"
+      },
+      {
+        "number": 10,
+        "text": "Slang for tabloids"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "Actor Gene (no relation to Jeremy Allen White)"
+      },
+      {
+        "number": 2,
+        "text": "2026 Best New Artist nominee Dean"
+      },
+      {
+        "number": 3,
+        "text": "Getting someone involved, with “in”"
+      },
+      {
+        "number": 4,
+        "text": "Chaotic situations"
+      },
+      {
+        "number": 5,
+        "text": "“____ Tissue” (2000 winner for Best Rock Song)"
+      },
+      {
+        "number": 6,
+        "text": "Title document"
+      }
+    ]
+  }
+}
