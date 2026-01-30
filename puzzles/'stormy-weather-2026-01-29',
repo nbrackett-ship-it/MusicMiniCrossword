@@ -1,0 +1,42 @@
+{
+  "id": "stormy-weather-2026-01-29",
+  "title": "Stormy Weather",
+  "info": "Jan 29, 2026 • 6x6",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "words": [
+    { "number": 1, "row": 0, "col": 1, "direction": "across", "word": "GOSH" },
+    { "number": 2, "row": 1, "col": 0, "direction": "across", "word": "BONHAM" },
+    { "number": 3, "row": 2, "col": 0, "direction": "across", "word": "ERHARD" },
+    { "number": 4, "row": 3, "col": 0, "direction": "across", "word": "ADIDAS" },
+    { "number": 5, "row": 4, "col": 0, "direction": "across", "word": "MOROSE" },
+    { "number": 6, "row": 5, "col": 1, "direction": "across", "word": "NEWS" },
+
+    { "number": 1, "row": 0, "col": 1, "direction": "down", "word": "GORDON" },
+    { "number": 2, "row": 1, "col": 0, "direction": "down", "word": "BEAM" },
+    { "number": 7, "row": 0, "col": 2, "direction": "down", "word": "ONHIRE" },
+    { "number": 8, "row": 0, "col": 3, "direction": "down", "word": "SHADOW" },
+    { "number": 9, "row": 0, "col": 4, "direction": "down", "word": "HARASS" },
+    { "number": 10, "row": 1, "col": 5, "direction": "down", "word": "MDSE" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Golly" },
+      { "number": 2, "text": "The heart of \"When the Levee Breaks\"" },
+      { "number": 3, "text": "est founder Werner" },
+      { "number": 4, "text": "Sneaker co. founded by the brother of the Puma guy" },
+      { "number": 5, "text": "Sullen" },
+      { "number": 6, "text": "\"Ain't that good ____?\"" }
+    ],
+    "down": [
+      { "number": 1, "text": "Lightfoot who wrecked it" },
+      { "number": 2, "text": "Goes with a rafter" },
+      { "number": 7, "text": "Available for rent or lease (UK)" },
+      { "number": 8, "text": "\"____ Dancing\" (1978 Andy Gibb hit)" },
+      { "number": 9, "text": "Apply aggressive pressure" },
+      { "number": 10, "text": "Another shorthand way to write \"merch\"" }
+    ]
+  }
+}
