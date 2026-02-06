@@ -1,0 +1,39 @@
+{
+  "id": "bowled-over-2026-01-06",
+  "title": "Bowled Over",
+  "info": "1/6/2026 • 6x6",
+  "gridSize": { "rows": 6, "cols": 6 },
+  "words": [
+    { "number": 1, "row": 0, "col": 2, "direction": "across", "word": "PLUS" },
+    { "number": 2, "row": 1, "col": 0, "direction": "across", "word": "SCRIBE" },
+    { "number": 4, "row": 2, "col": 0, "direction": "across", "word": "TAILOR" },
+    { "number": 5, "row": 3, "col": 0, "direction": "across", "word": "PUNJAB" },
+    { "number": 6, "row": 4, "col": 0, "direction": "across", "word": "ASCOTS" },
+    { "number": 7, "row": 5, "col": 0, "direction": "across", "word": "TEEN" },
+
+    { "number": 1, "row": 0, "col": 2, "direction": "down", "word": "PRINCE" },
+    { "number": 2, "row": 1, "col": 0, "direction": "down", "word": "STPAT" },
+    { "number": 3, "row": 1, "col": 1, "direction": "down", "word": "CAUSE" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "LILJON" },
+    { "number": 5, "row": 0, "col": 4, "direction": "down", "word": "UBOAT" },
+    { "number": 6, "row": 0, "col": 5, "direction": "down", "word": "SERBS" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Funky Four ___ One" },
+      { "number": 2, "text": "Antiquated word for writer" },
+      { "number": 4, "text": "Tinker, ____, Soldier, Spy" },
+      { "number": 5, "text": "Territory where many Sikhs hail from" },
+      { "number": 6, "text": "Multiple silk cravats" },
+      { "number": 7, "text": "___pop (songs for the high schoolers)" }
+    ],
+    "down": [
+      { "number": 1, "text": "Greatest halftime show performer ever?" },
+      { "number": 2, "text": "Patron saint of New England team? (abbr)" },
+      { "number": 3, "text": "Comes before “effect”" },
+      { "number": 4, "text": "Usher’s crunk halftime show guest" },
+      { "number": 5, "text": "German for sub" },
+      { "number": 6, "text": "Balkan ethnic group" }
+    ]
+  }
+}
