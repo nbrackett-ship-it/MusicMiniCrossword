@@ -1,0 +1,35 @@
+{
+  "id": "italian-disco-2026-02-13",
+  "title": "Italian Disco",
+  "info": "Feb 13, 2026 • 5x5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "LAMB" },
+    { "number": 2, "row": 1, "col": 0, "direction": "across", "word": "AMARA" },
+    { "number": 3, "row": 2, "col": 0, "direction": "across", "word": "LOMAN" },
+    { "number": 4, "row": 3, "col": 0, "direction": "across", "word": "ORBIT" },
+    { "number": 5, "row": 4, "col": 1, "direction": "across", "word": "EONS" },
+
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "LALO" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "AMORE" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "MAMBO" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "BRAIN" },
+    { "number": 5, "row": 1, "col": 4, "direction": "down", "word": "ANTS" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "One of these lies down on Broadway" },
+      { "number": 2, "text": "Italian for “bitter” (feminine)" },
+      { "number": 3, "text": "Arthur Miller salesman Willie" },
+      { "number": 4, "text": "Path of a celestial object" },
+      { "number": 5, "text": "A long time ago" }
+    ],
+    "down": [
+      { "number": 1, "text": "Film composer Schiffrin (from Italo-friendly country in South America)" },
+      { "number": 2, "text": "That’s what it is, when the moon hits your eye like a big pizza pie" },
+      { "number": 3, "text": "Latin American dance that got attached to “Italiano” by Rosemary Clooney" },
+      { "number": 4, "text": "Organ of soft nervous tissue" },
+      { "number": 5, "text": "Unlike Italy, these have lots of colonies" }
+    ]
+  }
+}
