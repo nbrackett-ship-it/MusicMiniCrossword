@@ -1,0 +1,35 @@
+{
+  "id": "boy-howdy-2026-02-20",
+  "title": "Boy Howdy!",
+  "info": "Feb 20, 2026 • 5x5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "EPRO" },
+    { "number": 5, "row": 1, "col": 0, "direction": "across", "word": "PEELS" },
+    { "number": 6, "row": 2, "col": 0, "direction": "across", "word": "IANDI" },
+    { "number": 7, "row": 3, "col": 0, "direction": "across", "word": "CREEM" },
+    { "number": 8, "row": 4, "col": 1, "direction": "across", "word": "LENS" },
+
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "EPIC" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "PEARL" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "RENEE" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "OLDEN" },
+    { "number": 5, "row": 1, "col": 4, "direction": "down", "word": "SIMS" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Beck single from Guero" },
+      { "number": 5, "text": "Removes the skin from (or: multiple legendary BBC deejays?)" },
+      { "number": 6, "text": "Rasta substitute for 'we'" },
+      { "number": 7, "text": "'70s rock mag" },
+      { "number": 8, "text": "It helps you focus" }
+    ],
+    "down": [
+      { "number": 1, "text": "Sony Music subsidiary (and complimentary adjective)" },
+      { "number": 2, "text": "Janis Joplin’s posthumous album" },
+      { "number": 3, "text": "'Walk Away ___' (The Left Banke)" },
+      { "number": 4, "text": "Like the days of yore" },
+      { "number": 5, "text": "Virtual life game (with 'The')" }
+    ]
+  }
+}
