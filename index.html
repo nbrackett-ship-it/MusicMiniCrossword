@@ -13,23 +13,29 @@
     TEMP REDIRECT (Newsletter Fix)
     Reason: Incorrect link in Stems crossword email
     Redirects: stormy-weather-2026-01-29 → bowled-over-2026-01-06
-    Safe to remove after: 2026-02-10
+Safe to remove after: 2026-02-10
+
   -->
-  <script>
-    (function () {
-      const EXPIRY = new Date("2026-02-10T00:00:00Z");
-      if (Date.now() > EXPIRY.getTime()) return;
+<script>
+  (function () {
+    const EXPIRY = new Date("2026-03-15T00:00:00Z"); // extended expiry
+    if (Date.now() > EXPIRY.getTime()) return;
 
-      const params = new URLSearchParams(window.location.search);
-      const puzzle = params.get("puzzle");
+    const redirects = {
+      "stormy-weather-2026-01-29": "bowled-over-2026-01-06",
+      "italian-disco-2026-2-13": "boy-howdy-2026-02-20"
+    };
 
-      if (puzzle === "stormy-weather-2026-01-29") {
-        const url = new URL(window.location.href);
-        url.searchParams.set("puzzle", "bowled-over-2026-01-06");
-        window.location.replace(url.toString());
-      }
-    })();
-  </script>
+    const params = new URLSearchParams(window.location.search);
+    const puzzle = params.get("puzzle");
+
+    if (puzzle && redirects[puzzle]) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("puzzle", redirects[puzzle]);
+      window.location.replace(url.toString());
+    }
+  })();
+</script>
 
   <style>
     :root{
