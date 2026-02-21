@@ -328,6 +328,7 @@ Safe to remove after: 2026-02-10
           this.loadProgress();
           this.resetTimer();
           this.updateBar(); // desktop: ensures a clue shows on first click
+          window.CrosswordAnalytics?.onPuzzleLoad(id);
         } catch(err){
           console.error(err);
           document.getElementById('puzzleTitle').textContent = 'Puzzle Not Found';
@@ -610,6 +611,7 @@ Safe to remove after: 2026-02-10
       checkWin(){
         if (!this.isComplete()) return;
         this.stopTimer();
+        window.CrosswordAnalytics?.onPuzzleComplete(this.elapsed);
         const [stars,text] = this.rank(this.elapsed);
         document.getElementById('v-msg').textContent = this.p.winMessage || "You did it!";
         document.getElementById('v-time').innerHTML =
