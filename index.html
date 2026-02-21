@@ -1,39 +1,634 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.1">
-  <style type="text/css">
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 19.0px 'Courier New'; color: #262626; -webkit-text-stroke: #262626}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.0px 'Courier New'; color: #434343; -webkit-text-stroke: #434343}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px 'Courier New'; color: #434343; -webkit-text-stroke: #434343}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Courier New'; color: #151515; -webkit-text-stroke: #151515; min-height: 16.0px}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px 'Courier New'; color: #151515; -webkit-text-stroke: #151515; min-height: 20.0px}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 17.0px 'Courier New'; color: #151515; -webkit-text-stroke: #151515}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 14.0px Menlo; color: #000000; color: rgba(0, 0, 0, 0.85); -webkit-text-stroke: rgba(0, 0, 0, 0.85); background-color: #ffffff}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 14.0px 'Courier New'; color: #000000; color: rgba(0, 0, 0, 0.85); -webkit-text-stroke: rgba(0, 0, 0, 0.85); background-color: #ffffff}
-    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; -webkit-text-stroke: #000000; background-color: #ffffff; min-height: 13.0px}
-    span.s1 {font-kerning: none}
-    span.s2 {font: 13.0px 'Courier New'; font-kerning: none; color: #434343; -webkit-text-stroke: 0px #434343}
-    span.s3 {font-kerning: none; background-color: rgba(255, 255, 255, 0.98)}
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+  />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Music Mini Crossword</title>
+
+  <!--
+    TEMP REDIRECT (Newsletter Fix)
+    Reason: Incorrect link in Stems crossword email
+    Redirects: stormy-weather-2026-01-29 → bowled-over-2026-01-06
+Safe to remove after: 2026-02-10
+
+  -->
+<script>
+  (function () {
+    const EXPIRY = new Date("2026-03-15T00:00:00Z"); // extended expiry
+    if (Date.now() > EXPIRY.getTime()) return;
+
+    const redirects = {
+      "stormy-weather-2026-01-29": "bowled-over-2026-01-06",
+      "italian-disco-2026-2-13": "boy-howdy-2026-02-20"
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const puzzle = params.get("puzzle");
+
+    if (puzzle && redirects[puzzle]) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("puzzle", redirects[puzzle]);
+      window.location.replace(url.toString());
+    }
+  })();
+</script>
+
+  <style>
+    :root{
+      --ink:#1B1B1B; --ink-2:#333; --ink-3:#555; --paper:#FFFFFF; --blue:#1877f2;
+      --gridMax:560px; --gridMaxMobile:420px;
+      --appMax: 960px;
+      --barPadY: 10px;
+      --barPadX: 14px;
+      --barBorder: 2px;
+    }
+
+    /* Page */
+    html, body { height:100%; margin:0; padding:0; background:var(--paper); color:var(--ink); }
+    body{
+      font-family:"Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
+      line-height:1.4; font-weight:500;
+      overflow:hidden; /* main scroll lives inside #stage so sticky works predictably */
+    }
+
+    /* Stage is the scroll container */
+    #stage{
+      height:100svh;		 /* safe viewport on mobile */
+      height:100dvh;		 /* dynamic viewport when available */
+      max-width:var(--appMax);
+      margin:0 auto;
+      padding:10px 10px calc(env(safe-area-inset-bottom) + 12px);
+      box-sizing:border-box;
+      overflow:auto;
+      overscroll-behavior:contain;
+    }
+
+    /* Header */
+    .mm-header{ text-align:center; margin:0 0 10px 0; }
+    .mm-title{ font-size:30px; font-weight:700; letter-spacing:-0.5px; margin:0; }
+    .mm-subtitle{ font-size:19px; color:var(--ink-2); margin:8px 0 5px 0; font-weight:600; }
+    .mm-meta{ font-size:15px; color:var(--ink-3); margin-bottom:5px; font-weight:500; }
+
+    /* Clue bar sits UNDER header, ABOVE grid, and sticks on top of the scrolling stage */
+    #sticky-clue-bar{
+      position: sticky;
+      top: 0; /* sticks to top inside #stage */
+      z-index: 10;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: saturate(1.1);
+      border: var(--barBorder) solid var(--ink);
+      box-shadow: 0 2px 8px rgba(27,27,27,0.12);
+      padding: var(--barPadY) var(--barPadX);
+      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      grid-column-gap: 10px;
+      align-items: center;
+    }
+    #sticky-clue-bar .dir{
+      text-transform: uppercase; letter-spacing: .08em; font-size: 14px; font-weight: 700;
+    }
+    #sticky-clue-bar .num{ font-weight:700; font-size:18px; }
+    /* Long clues: wrap naturally, no truncation */
+    #sticky-clue-bar .txt{
+      min-width: 0;
+      font-weight:600; font-size:17px; line-height:1.35;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    #sticky-clue-bar .actions{ display:flex; gap:8px; }
+    .btn{
+      border:2px solid var(--ink);
+      background:#fff; padding:6px 10px; font-weight:700; cursor:pointer;
+      font-family:inherit; font-size:14px;
+    }
+
+    /* Grid wrapper centers the grid */
+    #grid-wrap{ display:flex; justify-content:center; }
+    #crosswordGrid{
+      display:grid;
+      background:transparent;
+      border:2px solid var(--ink);
+      gap:0;
+      touch-action:manipulation;
+      user-select:none;
+      transition: width .12s ease, height .12s ease;
+    }
+
+    /* Cells are DIVs → no autofill */
+    .cell, .black{
+      position:relative;
+      width:100%; height:100%;
+      border:1px solid var(--ink);
+      margin:-0.5px;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700;
+      background:#fff;
+    }
+    .black{ background:var(--ink); }
+
+    .cell .glyph{
+      font-size: clamp(20px, 5.5vw, 30px);
+      text-transform:uppercase;
+      line-height:1;
+      pointer-events:none;
+    }
+
+    .cell-number{
+      position:absolute; top:2px; left:3px;
+      font-size:clamp(10px, 2.8vw, 14px);
+      font-weight:700; color:#444; pointer-events:none;
+    }
+
+    .cell.is-active{ outline:2px solid var(--blue); outline-offset:-2px; }
+    .cell.is-word { background:#e8e8e8; }
+    .cell.is-focus { background:#d8d8d8; }
+
+    @media (min-width:900px){
+      #stage{ padding:20px 20px 20px; }
+      #sticky-clue-bar { margin-bottom: 14px; }
+      .cell .glyph{ font-size: 30px; }
+      .cell-number{ font-size: 15px; }
+    }
+
+    /* Hidden IME input: summons keyboard without autofill widget */
+    #ime{
+      position:fixed; left:-9999px; top:-9999px;
+      opacity:0; width:1px; height:1px;
+    }
+
+    /* Victory overlay */
+    #victory {
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background:rgba(255,255,255,0.95); backdrop-filter:blur(5px); z-index:1200;
+    }
   </style>
 </head>
 <body>
-<h1 style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 30.0px 'Courier New'; color: #151515; -webkit-text-stroke: #151515"><span class="s1"><b>Music Mini</b></span></h1>
-<p class="p2"><span class="s1"><b>World Premiere</b></span></p>
-<p class="p3"><span class="s1">— • —</span></p>
-<p class="p4"><span class="s1"><a href="stats.html"><b>My Stats →</b><span class="s2"><b></b></span></a></span></p>
-<p class="p5"><span class="s1"><b></b></span><br></p>
-<p class="p6"><span class="s1"><b></b></span><br></p>
-<p class="p7"><span class="s3"><b>Tap a square to start</b><b></b></span></p>
-<p class="p8"><span class="s1"><b>◀︎</b><b></b></span></p>
-<p class="p8"><span class="s1"><b>▶︎</b><b></b></span></p>
-<p class="p9"><span class="s1"><b>↕</b></span></p>
-<p class="p10"><span class="s1"></span><br></p>
-<script src="config.js"></script>
-<script src="analytics.js"></script>
+  <div id="stage" aria-label="Crossword area">
+    <header class="mm-header">
+      <h1 class="mm-title">Music Mini</h1>
+      <div class="mm-subtitle" id="puzzleTitle">World Premiere</div>
+      <div class="mm-meta" id="puzzleInfo">— • —</div>
+    </header>
+
+    <div id="sticky-clue-bar" aria-live="polite">
+      <span class="dir" id="barDir"></span>
+      <span class="num" id="barNum"></span>
+      <div class="txt" id="barTxt">Tap a square to start</div>
+      <div class="actions">
+        <button class="btn" id="prevClue" aria-label="Previous clue">◀︎</button>
+        <button class="btn" id="nextClue" aria-label="Next clue">▶︎</button>
+        <button class="btn" id="flipDir" aria-label="Toggle direction">↕</button>
+      </div>
+    </div>
+
+    <div id="grid-wrap">
+      <div id="crosswordGrid" role="grid" aria-label="Crossword grid"></div>
+    </div>
+  </div>
+
+  <input id="ime" inputmode="text" autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="one-time-code" enterkeyhint="next" />
+
+  <div id="victory">
+    <div style="text-align:center">
+      <div style="font-size:60px;">&#9835;</div>
+      <div id="v-msg" style="font-size:26px;font-weight:700;margin:20px 0;">You did it!</div>
+      <div id="v-time" style="font-size:17px;color:#444;font-weight:600;"></div>
+    </div>
+  </div>
+
+  <script>
+  ;(() => {
+    class Crossword {
+      constructor() {
+        this.puzzleIds = [
+          'boy-howdy-2026-02-20',
+          'italian-disco-2026-02-13',
+          'bowled-over-2026-01-06',
+          'stormy-weather-2026-01-29',
+          'grammy-week-2026-01-23',
+          'rock-is-back-again-2026-01-16',
+          'wintry-mix-2026-01-09',
+          'happy-holidaze-2025-12-12',
+          'aughts-rock-2025-12-05',
+          'electric-feel-2025-11-21',
+          'punks-not-dead-2025-11-14',
+          'prog-influences-2025-11-07',
+          'major-dudes-2025-10-31',
+          'stone-classics-2025-10-25',
+          'on-deck-2025-10-17',
+          'just-super-2025-10-10',
+          'coachella-vibes-2025-10-03',
+          'world-premiere-2025-09-26',
+          'cycling-playlist-2025-07-19'
+        ];
+
+        // State
+        this.p = null;
+        this.dir = 'across';
+        this.active = null; // {r,c}
+        this.rows = 0; this.cols = 0;
+        this.timerId = null; this.startMs = null; this.elapsed = 0;
+
+        // DOM
+        this.stageEl = document.getElementById('stage');
+        this.gridEl  = document.getElementById('crosswordGrid');
+        this.barEl   = document.getElementById('sticky-clue-bar');
+        this.ime     = document.getElementById('ime');
+
+        // Bind
+        // Debounced resize handler now also ensures cell visibility *after* sizing
+        this.onResize = this.debounce(() => {
+          this.sizeGrid();
+          this.ensureActiveCellVisible();
+        }, 80);
+
+        this.init();
+      }
+
+      async init(){
+        // Viewport/resize listeners
+        window.addEventListener('resize', this.onResize, {passive:true});
+        if (window.visualViewport){
+          // Use debounced onResize for visualViewport as well
+          visualViewport.addEventListener('resize', this.onResize);
+        }
+
+        // Hidden IME input handling
+        this.ime.addEventListener('beforeinput', e => {
+          if (!this.active) return;
+          if (e.inputType === 'insertText' && e.data) {
+            const ch = e.data.toUpperCase().replace(/[^A-Z]/g,'');
+            if (ch) {
+              this.setCellGlyph(this.active.r, this.active.c, ch);
+              this.saveProgress();
+              this.startTimerIfNeeded();
+              this.move(1);
+              this.updateBar();
+              e.preventDefault();
+            }
+          }
+        });
+        this.ime.addEventListener('keydown', e => {
+          if (!this.active) return;
+          const k = e.key;
+          if (k === 'Backspace') {
+            const g = this.getCellGlyph(this.active.r, this.active.c);
+            if (g) {
+              this.setCellGlyph(this.active.r, this.active.c, '');
+            } else {
+              this.move(-1);
+              this.setCellGlyph(this.active.r, this.active.c, '');
+            }
+            this.saveProgress();
+            this.updateBar();
+            e.preventDefault();
+          } else if (k === 'ArrowLeft'){ this.dir='across'; this.step(-1,0); e.preventDefault(); }
+          else if (k === 'ArrowRight'){ this.dir='across'; this.step(1,0); e.preventDefault(); }
+          else if (k === 'ArrowUp'){ this.dir='down'; this.step(0,-1); e.preventDefault(); }
+          else if (k === 'ArrowDown'){ this.dir='down'; this.step(0,1); e.preventDefault(); }
+          else if (k === 'Tab'){ this.toggleDir(); e.preventDefault(); }
+          else if (k === 'Enter'){ this.nextClue(); e.preventDefault(); }
+        });
+
+        // Bar controls
+        document.getElementById('flipDir').addEventListener('click', () => { this.toggleDir(); });
+        document.getElementById('prevClue').addEventListener('click', () => { this.prevClue(); });
+        document.getElementById('nextClue').addEventListener('click', () => { this.nextClue(); });
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) this.stopTimer();
+          else if (this.startMs && !this.isComplete()) this.startTimer();
+        });
+
+        // --- THIS IS THE FIX ---
+        // This logic loads the puzzle from the URL if it exists,
+        // otherwise it loads the first puzzle in your list as the default.
+        const puzzleIdFromUrl = new URLSearchParams(location.search).get('puzzle');
+        const chosenPuzzle = puzzleIdFromUrl || this.puzzleIds[0];
+        await this.loadPuzzle(chosenPuzzle);
+        // --- END OF FIX ---
+      }
+
+      async loadPuzzle(id){
+        try{
+          // FIX: Removed leading slash and changed to backticks for template literal variable injection
+          const res = await fetch(`puzzles/${id}.json`, {cache:'no-store'});
+          if (!res.ok) throw new Error('Failed to load puzzle');
+          this.p = await res.json();
+          document.getElementById('puzzleTitle').textContent = this.p.title || '';
+          document.getElementById('puzzleInfo').textContent  = this.p.info || '— • —';
+          this.buildGrid();
+          this.sizeGrid();
+          this.loadProgress();
+          this.resetTimer();
+          this.updateBar(); // desktop: ensures a clue shows on first click
+        } catch(err){
+          console.error(err);
+          document.getElementById('puzzleTitle').textContent = 'Puzzle Not Found';
+        }
+      }
+
+      buildGrid(){
+        const { rows, cols } = this.p.gridSize;
+        this.rows = rows; this.cols = cols;
+        this.gridEl.innerHTML = '';
+        this.gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        this.gridEl.style.gridTemplateRows    = `repeat(${rows}, 1fr)`;
+
+        // Build matrix
+        const matrix = Array.from({length:rows}, () => Array(cols).fill(null));
+        this.p.words.forEach(w => {
+          let r=w.row, c=w.col;
+          for(let i=0;i<w.word.length;i++){
+            if (!matrix[r][c]) matrix[r][c] = { answer: '', across:null, down:null, number:null };
+            matrix[r][c].answer = w.word[i];
+            matrix[r][c][w.direction] = w.number;
+            if (i===0) matrix[r][c].number = w.number;
+            w.direction === 'across' ? c++ : r++;
+          }
+        });
+
+        for(let r=0;r<rows;r++){
+          for(let c=0;c<cols;c++){
+            const data = matrix[r][c];
+            if (!data){
+              const b = document.createElement('div');
+              b.className = 'black';
+              this.gridEl.appendChild(b);
+              continue;
+            }
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.row = r;
+            cell.dataset.col = c;
+            if (data.across) cell.dataset.across = data.across;
+            if (data.down)   cell.dataset.down   = data.down;
+            cell.dataset.answer = data.answer;
+
+            const glyph = document.createElement('div');
+            glyph.className = 'glyph';
+            cell.appendChild(glyph);
+
+            if (data.number){
+              const num = document.createElement('span');
+              num.className = 'cell-number'; num.textContent = data.number;
+              cell.appendChild(num);
+            }
+
+            cell.addEventListener('click', () => this.onCellTap(r,c));
+            this.gridEl.appendChild(cell);
+          }
+        }
+      }
+
+      // Size grid to fit available width/height. On mobile, when keyboard is open,
+      // visualViewport.height shrinks; we use that to ensure the clue stays visible.
+      sizeGrid(){
+        if (!this.p) return;
+        const cols = this.cols;
+
+        // Available width inside stage
+        const stageRect = this.stageEl.getBoundingClientRect();
+        const availableWidth = Math.floor(stageRect.width - 20); // padding fudge
+
+        // Available height: viewport minus header+clue bar and padding
+        const vpH = window.visualViewport ? Math.floor(window.visualViewport.height) : window.innerHeight;
+        const stageTop = stageRect.top; // already at 0 in most cases, but safe
+        const barRect = this.barEl.getBoundingClientRect();
+        const barH = Math.ceil(barRect.height);
+
+        // Give the grid a comfortable margin below bar
+        const verticalPad = 24;
+
+        // How tall could the square grid be without getting under the keyboard/clue
+        const availableHeight = Math.max(0, vpH - stageTop - barH - verticalPad - 8);
+
+        // Cap grid by configured max widths
+        const maxGridPx = (window.innerWidth < 900)
+          ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gridMaxMobile') || '420', 10)
+          : parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gridMax') || '560', 10);
+
+        // Compute cell size from width constraint and height constraint, then choose the smaller
+        const cellFromWidth  = Math.floor(Math.min(availableWidth, maxGridPx) / cols);
+        const cellFromHeight = Math.floor(availableHeight / this.rows);
+        const cell = Math.max(16, Math.min(cellFromWidth, cellFromHeight)); // never microscopic
+
+        const finalWidth = cell * cols;
+        const finalHeight = cell * this.rows;
+        this.gridEl.style.width = `${finalWidth}px`;
+        this.gridEl.style.height = `${finalHeight}px`;
+      }
+
+      onCellTap(r,c){
+        // Toggle direction on repeat taps at intersections
+        if (this.active && this.active.r===r && this.active.c===c){
+          const el = this.getCellEl(r,c);
+          if (el.dataset.across && el.dataset.down){
+            this.dir = (this.dir === 'across') ? 'down' : 'across';
+          }
+        } else {
+          const el = this.getCellEl(r,c);
+          if (!el.dataset[this.dir]){
+            this.dir = el.dataset.across ? 'across' : 'down';
+          }
+        }
+        this.setActive(r,c);
+        this.focusIME();
+        this.updateBar();
+      }
+
+      setActive(r,c){
+        this.active = {r,c};
+        this.gridEl.querySelectorAll('.cell').forEach(el => el.classList.remove('is-active','is-word','is-focus'));
+        const el = this.getCellEl(r,c);
+        const clueNum = el.dataset[this.dir];
+        if (clueNum){
+          this.gridEl.querySelectorAll(`.cell[data-${this.dir}='${clueNum}']`).forEach(x => x.classList.add('is-word'));
+        }
+        el.classList.add('is-active','is-focus');
+
+        // Centralized scrolling logic
+        this.ensureActiveCellVisible();
+      }
+
+      // Centralizes all scrolling logic
+      ensureActiveCellVisible(){
+        if (!this.active) return;
+        const el = this.getCellEl(this.active.r, this.active.c);
+        if (!el) return;
+
+        const barBottom = this.barEl.getBoundingClientRect().bottom;
+        const cellBox = el.getBoundingClientRect();
+        const vpHeight = window.visualViewport ? visualViewport.height : window.innerHeight;
+
+        // Check if cell is obscured by sticky bar OR off the bottom of the *visual* viewport
+        if (cellBox.top < barBottom + 8 || cellBox.bottom > vpHeight - 8) { // 8px buffer
+          // Use 'nearest' to avoid jarring 'center' scrolls
+          el.scrollIntoView({block:'nearest', inline:'center', behavior:'instant'});
+        }
+      }
+
+      move(step){
+        if (!this.active) return;
+        let {r,c} = this.active;
+        if (this.dir==='across') c += step; else r += step;
+        const next = this.getCellEl(r,c);
+        if (next && next.classList.contains('cell')){
+          this.setActive(r,c);
+        }
+        this.checkWin();
+      }
+
+      step(dx,dy){
+        if (!this.active) return;
+        const r = this.active.r + dy;
+        const c = this.active.c + dx;
+        const next = this.getCellEl(r,c);
+        if (next){
+          this.setActive(r,c);
+          this.updateBar();
+        }
+      }
+
+      toggleDir(){
+        if (!this.active) return;
+        const el = this.getCellEl(this.active.r, this.active.c);
+        if (el.dataset.across && el.dataset.down){
+          this.dir = this.dir === 'across' ? 'down' : 'across';
+          this.setActive(this.active.r, this.active.c);
+          this.updateBar();
+        }
+      }
+
+      getCellEl(r,c){ return this.gridEl.querySelector(`.cell[data-row='${r}'][data-col='${c}']`); }
+      getCellGlyph(r,c){ const el=this.getCellEl(r,c); return el ? (el.querySelector('.glyph').textContent || '') : ''; }
+      setCellGlyph(r,c,ch){ const el=this.getCellEl(r,c); if (el) el.querySelector('.glyph').textContent = ch; }
+
+      updateBar(){
+        const bDir = document.getElementById('barDir');
+        const bNum = document.getElementById('barNum');
+        const bTxt = document.getElementById('barTxt');
+
+        if (!this.active){
+          bDir.textContent = '';
+          bNum.textContent = '';
+          bTxt.textContent = 'Tap a square to start';
+          return;
+        }
+        const el = this.getCellEl(this.active.r, this.active.c);
+        const clueNo = el.dataset[this.dir];
+        if (!clueNo){
+          bDir.textContent = '';
+          bNum.textContent = '';
+          bTxt.textContent = 'Tap a square to start';
+          return;
+        }
+        const clue = this.p.clues[this.dir].find(c => c.number == clueNo);
+        bDir.textContent = this.dir;
+        bNum.textContent = `${clue.number}.`;
+        bTxt.textContent = clue.text;
+      }
+
+      nextClue(){ this.shiftClue(1); }
+      prevClue(){ this.shiftClue(-1); }
+      shiftClue(step){
+        const list = this.p.clues[this.dir];
+        if (!list || !list.length) return;
+
+        let currentNo = null;
+        if (this.active){
+          const el = this.getCellEl(this.active.r, this.active.c);
+          currentNo = el.dataset[this.dir] ? Number(el.dataset[this.dir]) : null;
+        }
+        let idx = list.findIndex(c => c.number == currentNo);
+        if (idx === -1) idx = 0;
+        idx = (idx + step + list.length) % list.length;
+
+        const targetNo = list[idx].number;
+        const targetCell = this.gridEl.querySelector(`.cell[data-${this.dir}='${targetNo}']`);
+        if (targetCell){
+          const r = Number(targetCell.dataset.row);
+          const c = Number(targetCell.dataset.col);
+          this.setActive(r,c);
+          this.focusIME();
+          this.updateBar();
+        }
+      }
+
+      focusIME(){
+        this.ime.value = '';
+        this.ime.focus({preventScroll:true});
+      }
+
+      /* Timing */
+      startTimerIfNeeded(){ if (!this.timerId){ this.startTimer(); } }
+      startTimer(){ if (!this.startMs) this.startMs = Date.now() - this.elapsed*1000;
+        this.timerId = setInterval(() => { this.elapsed = Math.floor((Date.now()-this.startMs)/1000); }, 1000);
+      }
+      stopTimer(){ if (this.timerId){ clearInterval(this.timerId); this.timerId=null; } }
+      resetTimer(){ this.stopTimer(); this.startMs=null; this.elapsed=0; }
+      fmt(s){ const m=Math.floor(s/60), ss=String(s%60).padStart(2,'0'); return `${m}:${ss}`; }
+      rank(s){ if (s<=30) return ["★★★★★","Instant Classic"]; if (s<=60) return ["★★★★☆","Truly Great"]; if (s<=90) return ["★★★★","Excellent"]; if (s<=120) return ["★★★☆","Damn Good"]; if (s<=240) return ["★★★","Good"]; return ["★★","Decent Effort"]; }
+
+      /* Persistence */
+      storageKey(){ return `mm-progress:${this.p.id}`; }
+      saveProgress(){
+        const cells=[...this.gridEl.querySelectorAll('.cell')].map(el => ({
+          r:el.dataset.row, c:el.dataset.col, v:el.querySelector('.glyph').textContent||''
+        }));
+        localStorage.setItem(this.storageKey(), JSON.stringify({data:cells, t:this.elapsed}));
+      }
+      loadProgress(){
+        const blob = localStorage.getItem(this.storageKey());
+        if (!blob) return;
+        try{
+          const {data,t} = JSON.parse(blob);
+          if (Array.isArray(data)){
+            data.forEach(d => this.setCellGlyph(Number(d.r), Number(d.c), (d.v||'').toUpperCase()));
+          }
+          if (Number.isFinite(t) && t>0){ this.elapsed=t; this.startTimer(); }
+          this.checkWin();
+        } catch(_){}
+      }
+
+      /* Completion */
+      isComplete(){
+        const cells = this.gridEl.querySelectorAll('.cell');
+        for (const el of cells){
+          const a = el.dataset.answer;
+          const v = el.querySelector('.glyph').textContent.toUpperCase();
+          if (a !== v) return false;
+        }
+        return true;
+      }
+      checkWin(){
+        if (!this.isComplete()) return;
+        this.stopTimer();
+        const [stars,text] = this.rank(this.elapsed);
+        document.getElementById('v-msg').textContent = this.p.winMessage || "You did it!";
+        document.getElementById('v-time').innerHTML =
+          `<div style="font-size:36px;letter-spacing:4px;margin:10px 0;">${stars}</div>
+           <div style="font-size:22px;font-weight:700;margin-bottom:10px;">${text}</div>
+           <div>Your Time: ${this.fmt(this.elapsed)}</div>`;
+        const v = document.getElementById('victory');
+        v.style.display='flex';
+        v.addEventListener('click', () => v.style.display='none', {once:true});
+      }
+
+      /* Utils */
+      debounce(fn,ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => new Crossword());
+  })();
+  </script>
+  <script src="config.js"></script>
+  <script src="analytics.js"></script>
 </body>
 </html>
