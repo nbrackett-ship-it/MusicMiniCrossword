@@ -412,38 +412,26 @@ async function loadUserStats() {
     }
 
     const streaks = deriveStreaks(completedRows);
-    const badge = deriveBadge(fasterPercent);
+    const mostRecent = completedRows[0] || null;
+    const { fasterPercent: recentFaster, sampleSize } = mostRecent
+      ? await calcPercentile(mostRecent.puzzle_id, mostRecent.solve_time)
+      : { fasterPercent: 0, sampleSize: 0 };
 
-    const stats = {
+    return {
       totalSolved,
       personalBest,
-      averageTime,
-      rolling5Avg,
+      avgTime: averageTime,
+      rolling5: rolling5Avg,
       currentStreak: streaks.currentStreak,
       longestStreak: streaks.longestStreak,
-      percentDisplay: badge.percentDisplay,
-      badge: badge.badge,
+      mostRecentPuzzle: mostRecent?.puzzle_id || null,
+      mostRecentTime: mostRecent?.solve_time || null,
+      recentPercentile: sampleSize >= 3 ? Math.round(recentFaster * 100) : null,
     };
-
-    renderUserStats(stats);
-
-    // Hook up nickname entry
-    const form = document.getElementById("nickname-form");
-    if (form) {
-      const input = document.getElementById("nickname-input");
-      if (input) input.value = localStorage.getItem(STORAGE_NICKNAME) || "";
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const val = input.value.trim();
-        if (val) localStorage.setItem(STORAGE_NICKNAME, val);
-        else localStorage.removeItem(STORAGE_NICKNAME);
-        renderUserStats(stats);
-      });
-    }
   } catch (err) {
     dbg("[analytics] loadUserStats failed", { err });
     console.warn("[analytics] loadUserStats failed:", err);
+    return null;
   }
 }
 
