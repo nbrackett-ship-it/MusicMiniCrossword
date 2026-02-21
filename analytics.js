@@ -402,15 +402,6 @@ async function loadUserStats() {
       }
     }
 
-    // Percentile logic: for dashboard, compute percentile based on most recent puzzle time if available
-    let fasterPercent = 0;
-    if (completedRows.length) {
-      // use most recent completed row to compute percentile
-      const mostRecent = completedRows[0];
-      const perc = await calcPercentile(mostRecent.puzzle_id, mostRecent.solve_time);
-      fasterPercent = perc.fasterPercent || 0;
-    }
-
     const streaks = deriveStreaks(completedRows);
     const mostRecent = completedRows[0] || null;
     const { fasterPercent: recentFaster, sampleSize } = mostRecent
