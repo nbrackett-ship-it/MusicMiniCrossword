@@ -29,11 +29,12 @@ function generateUUID() {
 // Minimal Supabase REST client (no npm required — works in plain HTML)
 // ---------------------------------------------------------------------------
 const sb = {
-  async _req(method, path, body) {
+  async _req(method, path, body, extraHeaders) {
     const headers = {
       "Content-Type": "application/json",
       apikey: SUPABASE_KEY,
       Authorization: `Bearer ${SUPABASE_KEY}`,
+      ...extraHeaders,
     };
 
     const opts = { method, headers };
@@ -76,18 +77,15 @@ const sb = {
   },
 
   insert(table, rows, { upsert = false, returning = "representation" } = {}) {
-    const params = new URLSearchParams({
-      return: returning,
-    });
-    if (upsert) params.set("upsert", "true");
-    return sb._req("POST", `/rest/v1/${table}?${params.toString()}`, rows);
+    let prefer = `return=${returning}`;
+    if (upsert) prefer += ", resolution=merge-duplicates";
+    return sb._req("POST", `/rest/v1/${table}`, rows, { Prefer: prefer });
   },
 
   update(table, query, patch, { returning = "representation" } = {}) {
-    const params = new URLSearchParams({
-      return: returning,
+    return sb._req("PATCH", `/rest/v1/${table}?${query}`, patch, {
+      Prefer: `return=${returning}`,
     });
-    return sb._req("PATCH", `/rest/v1/${table}?${query}&${params.toString()}`, patch);
   },
 };
 
