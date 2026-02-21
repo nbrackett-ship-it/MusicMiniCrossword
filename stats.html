@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>My Stats — Music Mini</title>
+  <style>
+    :root {
+      --ink: #1B1B1B;
+      --ink-2: #333;
+      --ink-3: #555;
+      --paper: #FFFFFF;
+      --rule: #ddd;
+      --appMax: 600px;
+    }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--paper); color: var(--ink);
+      font-family: "Courier New", Courier, ui-monospace, Menlo, Consolas, monospace;
+      line-height: 1.5; font-weight: 500;
+    }
+
+    #stage {
+      max-width: var(--appMax);
+      margin: 0 auto;
+      padding: 24px 18px calc(env(safe-area-inset-bottom) + 32px);
+      box-sizing: border-box;
+    }
+
+    /* Header */
+    .stats-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .stats-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 4px;
+      letter-spacing: -0.5px;
+    }
+    .stats-header .back {
+      font-size: 13px;
+      color: var(--ink-3);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink-3);
+      font-weight: 600;
+    }
+    .stats-header .back:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* Stat grid */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      border: 2px solid var(--ink);
+      padding: 14px 16px;
+      background: #fff;
+    }
+    .stat-card .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-3);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .stat-card .value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .stat-card .sub {
+      font-size: 12px;
+      color: var(--ink-3);
+      margin-top: 2px;
+    }
+
+    /* Percentile spotlight */
+    .percentile-block {
+      border: 2px solid var(--ink);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .percentile-block .emoji {
+      font-size: 40px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .percentile-block .headline {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .percentile-block .sub {
+      font-size: 14px;
+      color: var(--ink-3);
+    }
+
+    /* No data / loading */
+    .status-msg {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--ink-3);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .divider {
+      border: none;
+      border-top: 2px solid var(--rule);
+      margin: 24px 0;
+    }
+
+    .section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--ink-3);
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--ink-3);
+    }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <div class="stats-header">
+      <h1>My Stats</h1>
+      <a href="index.html" class="back">← Back to Puzzle</a>
+    </div>
+
+    <div id="stats-content">
+      <div class="status-msg" id="loading-msg">Loading your stats…</div>
+    </div>
+
+    <footer>Music Mini Crossword</footer>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="analytics.js"></script>
+  <script>
+  ;(async () => {
+    const container = document.getElementById('stats-content');
+
+    function fmt(s) {
+      if (s === null || s === undefined || s === Infinity) return '—';
+      const m = Math.floor(s / 60);
+      const ss = String(s % 60).padStart(2, '0');
+      return `${m}:${ss}`;
+    }
+
+    function percentileEmoji(pct) {
+      if (pct >= 90) return '🚀';
+      if (pct >= 80) return '🔥';
+      return '⚡';
+    }
+
+    function renderStats(stats) {
+      if (!stats) {
+        container.innerHTML = `
+          <div class="status-msg">
+            No completed puzzles yet.<br>
+            <a href="index.html" style="color:inherit;font-weight:700;">Solve one to get started →</a>
+          </div>`;
+        return;
+      }
+
+      const {
+        totalSolved,
+        personalBest,
+        avgTime,
+        rolling5,
+        currentStreak,
+        longestStreak,
+        mostRecentPuzzle,
+        mostRecentTime,
+        recentPercentile,
+      } = stats;
+
+      // Percentile block (only if N >= 3)
+      let percentileHTML = '';
+      if (recentPercentile !== null) {
+        const emoji = percentileEmoji(recentPercentile);
+        const puzzleLabel = mostRecentPuzzle
+          .replace(/-\d{4}-\d{2}-\d{2}$/, '')   // strip date suffix
+          .replace(/-/g, ' ')
+          .replace(/\b\w/g, l => l.toUpperCase());
+        percentileHTML = `
+          <div class="percentile-block">
+            <div class="emoji">${emoji}</div>
+            <div class="headline">You are faster than ${recentPercentile}% of solvers.</div>
+            <div class="sub">Most recent: ${puzzleLabel} — ${fmt(mostRecentTime)}</div>
+          </div>`;
+      }
+
+      container.innerHTML = `
+        ${percentileHTML}
+
+        <div class="section-title">Your Numbers</div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="label">Puzzles Solved</div>
+            <div class="value">${totalSolved}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Personal Best</div>
+            <div class="value">${fmt(personalBest)}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Average Time</div>
+            <div class="value">${fmt(avgTime)}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Last 5 Avg</div>
+            <div class="value">${fmt(rolling5)}</div>
+            <div class="sub">rolling 5-puzzle avg</div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="section-title">Streaks</div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="label">Current Streak</div>
+            <div class="value">${currentStreak}</div>
+            <div class="sub">day${currentStreak !== 1 ? 's' : ''}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Longest Streak</div>
+            <div class="value">${longestStreak}</div>
+            <div class="sub">day${longestStreak !== 1 ? 's' : ''}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    try {
+      const stats = await CrosswordAnalytics.loadUserStats();
+      renderStats(stats);
+    } catch (err) {
+      console.error('[stats]', err);
+      container.innerHTML = `
+        <div class="status-msg">
+          Couldn't load stats right now.<br>
+          <small style="font-size:12px;color:#888;">${err.message || 'Unknown error'}</small>
+        </div>`;
+    }
+  })();
+  </script>
+</body>
+</html>
