@@ -127,7 +127,7 @@ function resolvePuzzleIdFromUrl() {
 }
 
 async function ensurePuzzleSolveStarted(puzzleId) {
-  // Check for existing in-progress solve (resume if page reloaded)
+  // Check for any existing solve row for this user+puzzle (completed or not)
   const res = await sb.select(
     "solves",
     `user_id=eq.${_userId}&puzzle_id=eq.${encodeURIComponent(
@@ -137,6 +137,13 @@ async function ensurePuzzleSolveStarted(puzzleId) {
 
   const latest = Array.isArray(res.data) ? res.data[0] : null;
 
+  // If already completed, reuse that row — don't create a new one
+  if (latest && latest.completed === true) {
+    _solveId = latest.id;
+    return;
+  }
+
+  // If in-progress, resume it
   if (latest && latest.completed === false) {
     _solveId = latest.id;
     return;
