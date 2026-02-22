@@ -126,6 +126,29 @@ function resolvePuzzleIdFromUrl() {
   return puzzleId || window.location.pathname.replace(/^\//, "") || "index";
 }
 
+// ---------------------------------------------------------------------------
+// Email capture from Beehiiv newsletter URL param (?email={{email}})
+// ---------------------------------------------------------------------------
+function getEmailFromUrl() {
+  const raw = new URLSearchParams(window.location.search).get("email");
+  if (!raw || raw.includes("{{") || raw.includes("}}")) return null;
+  const trimmed = raw.trim();
+  // Basic sanity check — must contain @ and a dot after it
+  if (!trimmed.includes("@") || !trimmed.split("@")[1]?.includes(".")) return null;
+  return trimmed.toLowerCase();
+}
+
+async function captureEmailIfPresent(userId) {
+  const email = getEmailFromUrl();
+  if (!email) return;
+  try {
+    await sb.update("users", `id=eq.${userId}`, { email });
+    dbg("[analytics] email captured", email);
+  } catch (err) {
+    dbg("[analytics] email capture failed", { err });
+  }
+}
+
 async function ensurePuzzleSolveStarted(puzzleId) {
   // Check for any existing solve row for this user+puzzle (completed or not)
   const res = await sb.select(
@@ -323,6 +346,7 @@ async function onPuzzleLoad(puzzleId) {
   try {
     _puzzleId = puzzleId || resolvePuzzleIdFromUrl();
     _userId = await getOrCreateUser();
+    captureEmailIfPresent(_userId); // fire-and-forget, non-blocking
     await ensurePuzzleSolveStarted(_puzzleId);
   } catch (err) {
     dbg("[analytics] onPuzzleLoad failed", { err, puzzleId: _puzzleId });
