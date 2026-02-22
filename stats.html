@@ -201,8 +201,8 @@
         percentileHTML = `
           <div class="percentile-block">
             <div class="emoji">${emoji}</div>
-            <div class="headline">You are faster than ${recentPercentile}% of solvers.</div>
-            <div class="sub">Most recent: ${puzzleLabel} — ${fmt(mostRecentTime)}</div>
+            <div class="headline">Faster than ${recentPercentile}% of solvers</div>
+            <div class="sub">on your most recent puzzle: ${puzzleLabel} (${fmt(mostRecentTime)})</div>
           </div>`;
       }
 
@@ -220,8 +220,8 @@
             <div class="value">${fmt(personalBest)}</div>
           </div>
           <div class="stat-card">
-            <div class="label">Average Time</div>
-            <div class="value">${fmt(avgTime)}</div>
+            <div class="label">Last Puzzle</div>
+            <div class="value">${fmt(mostRecentTime)}</div>
           </div>
           <div class="stat-card">
             <div class="label">Last 5 Avg</div>
