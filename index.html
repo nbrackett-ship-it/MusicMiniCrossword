@@ -614,7 +614,10 @@ Safe to remove after: 2026-02-10
       checkWin(){
         if (!this.isComplete()) return;
         this.stopTimer();
-        window.CrosswordAnalytics?.onPuzzleComplete(this.elapsed);
+        if (!this.won) {
+          this.won = true;
+          window.CrosswordAnalytics?.onPuzzleComplete(this.elapsed);
+        }
         const [stars,text] = this.rank(this.elapsed);
         document.getElementById('v-msg').textContent = this.p.winMessage || "You did it!";
         document.getElementById('v-time').innerHTML =
