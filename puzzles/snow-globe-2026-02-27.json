@@ -1,0 +1,39 @@
+{
+  "id": “snow-globe-2026-02-27",
+  "title": “Snow Globe",
+  "info": "February 27, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    { "number": 1, "row": 0, "col": 2, "direction": "across", "word": "BPM" },
+    { "number": 2, "row": 1, "col": 0, "direction": "across", "word": "BJORK" },
+    { "number": 3, "row": 2, "col": 0, "direction": "across", "word": "APNEA" },
+    { "number": 4, "row": 3, "col": 0, "direction": "across", "word": "JEEZY" },
+    { "number": 5, "row": 4, "col": 0, "direction": "across", "word": "AGT" },
+
+    { "number": 1, "row": 0, "col": 2, "direction": "down", "word": "BONET" },
+    { "number": 2, "row": 1, "col": 0, "direction": "down", "word": "BAJA" },
+    { "number": 6, "row": 1, "col": 1, "direction": "down", "word": "JPEG" },
+    { "number": 7, "row": 0, "col": 3, "direction": "down", "word": "PREZ" },
+    { "number": 8, "row": 0, "col": 4, "direction": "down", "word": "MKAY" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": “DJ tempo measure" },
+      { "number": 2, "text": “Art-pop icon from island with chilly name" },
+      { "number": 3, "text": "Sleep disorder causing breathing interruptions" },
+      { "number": 4, "text": "ATL trap icon known for snow" },
+      { "number": 5, "text": "NBC talent competition (abbr.)" }
+    ],
+    "down": [
+      { "number": 1, "text": "Zoë Kravitz’s mom" },
+      { "number": 2, "text": "Peninsula below California" },
+      { "number": 6, "text": "Common image file format" },
+      { "number": 7, "text": "Lester Young’s nickname" },
+      { "number": 8, "text": "Ironic way to say 'OK'" }
+    ]
+  }
+}
+
