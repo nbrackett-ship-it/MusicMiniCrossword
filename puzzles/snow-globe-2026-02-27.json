@@ -1,6 +1,6 @@
 {
-  "id": “snow-globe-2026-02-27",
-  "title": “Snow Globe",
+  "id": "snow-globe-2026-02-27",
+  "title": "Snow Globe",
   "info": "February 27, 2026 • 5×5",
   "gridSize": {
     "rows": 5,
@@ -21,8 +21,8 @@
   ],
   "clues": {
     "across": [
-      { "number": 1, "text": “DJ tempo measure" },
-      { "number": 2, "text": “Art-pop icon from island with chilly name" },
+      { "number": 1, "text": "DJ tempo measure" },
+      { "number": 2, "text": "Art-pop icon from island with chilly name" },
       { "number": 3, "text": "Sleep disorder causing breathing interruptions" },
       { "number": 4, "text": "ATL trap icon known for snow" },
       { "number": 5, "text": "NBC talent competition (abbr.)" }
