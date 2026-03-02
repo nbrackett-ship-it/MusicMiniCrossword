@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Stems Crossword Compendium</title>
+    <title>Stems // The 2025 Crossword Compendium</title>
     <style>
         /* STEMS CONTEMPORARY TECH-BRUTALIST SYSTEM */
         :root {
@@ -32,12 +32,22 @@
             padding: 80px 24px;
         }
 
-        /* HEADER: BOLD & HEAVY */
+        /* HEADER */
         header {
             text-align: left;
             border-left: 8px solid var(--text);
             padding-left: 24px;
             margin-bottom: 60px;
+        }
+
+        .slug {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
         }
 
         h1 {
@@ -47,24 +57,6 @@
             letter-spacing: -1px;
             margin: 0;
             line-height: 1;
-        }
-
-        .tagline {
-            display: block;
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #444;
-        }
-
-        /* INTRO TEXT */
-        .intro-copy {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--text);
-            padding-bottom: 20px;
         }
 
         /* THE VAULT GRID */
@@ -82,7 +74,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             text-decoration: none;
             color: var(--text);
@@ -91,112 +83,52 @@
             position: relative;
         }
 
-        .puzzle-card:not(.locked):hover {
+        .puzzle-card:hover {
             background: var(--text);
             color: var(--white);
             transform: translate(-4px, -4px);
             box-shadow: 6px 6px 0px var(--gray);
         }
 
+        /* INCREASED FONT SIZE FOR LEGIBILITY */
         .puzzle-title {
-            font-size: 12px;
+            font-size: 15px; 
             font-weight: 900;
             text-transform: uppercase;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
-        .puzzle-card.locked {
+        /* EXCLUSIVE BADGE */
+        .exclusive {
+            position: absolute;
+            top: 0;
+            right: 0;
             background: var(--text);
             color: var(--white);
-            cursor: default;
-        }
-
-        .puzzle-card.locked .puzzle-title {
-            font-size: 24px;
-            opacity: 0.3;
-        }
-
-        /* FEATURES LIST */
-        .features-list {
-            margin: 60px 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .feature-row {
-            border-top: 1px solid #ddd;
-            padding: 16px 0;
-            display: flex;
-            align-items: flex-start;
-            font-size: 15px;
-        }
-
-        .feature-row:last-child { border-bottom: 1px solid #ddd; }
-
-        .feature-row b {
-            min-width: 40px;
-            color: #888;
-        }
-
-        /* INSTRUCTIONS / ACCESS PROTOCOL */
-        .instruction-section {
-            margin-top: 80px;
-            text-align: left;
-        }
-
-        .slug {
-            font-size: 11px;
+            font-size: 8px;
+            padding: 2px 5px;
             font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: block;
-            margin-bottom: 8px;
-            color: #666;
-        }
-
-        .instruction-headline {
-            font-size: 24px;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin: 0 0 24px 0;
-        }
-
-        .step {
-            margin-bottom: 20px;
-            font-size: 15px;
-        }
-
-        .step b {
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 4px;
         }
 
         /* REFERRAL WIDGET */
-        .referral-widget {
+        .share-widget {
             background: var(--gray);
             border: var(--border-width) solid var(--text);
             padding: 40px;
-            margin-top: 40px;
+            margin-top: 80px;
         }
 
         .widget-header {
             font-size: 12px;
             font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             letter-spacing: 2px;
-            display: flex;
-            align-items: center;
         }
 
-        .widget-header::before {
-            content: "";
-            width: 10px;
-            height: 10px;
-            background: #ff0000;
-            margin-right: 10px;
-            border-radius: 50%;
+        .widget-copy {
+            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         .link-container {
@@ -228,25 +160,19 @@
             cursor: pointer;
         }
 
-        .widget-footer {
-            margin-top: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
         footer {
             margin-top: 80px;
             font-size: 10px;
             text-transform: uppercase;
             opacity: 0.5;
             letter-spacing: 1px;
+            text-align: center;
         }
 
         @media (max-width: 550px) {
             .vault-grid { grid-template-columns: repeat(2, 1fr); }
             h1 { font-size: 24px; }
-            .container { padding: 40px 16px; }
+            .puzzle-title { font-size: 13px; }
         }
     </style>
 </head>
@@ -254,53 +180,20 @@
 
     <div class="container">
         <header>
+            <span class="slug">Access Granted</span>
             <h1>The Stems Crossword Compendium</h1>
-            <span class="tagline">Unlock the Puzzle Vault of Music Champions</span>
         </header>
-
-        <section class="intro-copy">
-            Refer just one friend to Stems and unlock the puzzle vault from our first year.
-        </section>
 
         <div id="vaultGrid" class="vault-grid">
             </div>
 
-        <section class="features-list">
-            <div class="feature-row">
-                <b>01</b> <span>All 10 puzzles from 2025, PLUS one exclusive, never-released puzzle, "Born to Ride"!</span>
-            </div>
-            <div class="feature-row">
-                <b>02</b> <span>As always, featuring brain-melting clues and lightning-fast Stems crossword interface.</span>
-            </div>
-        </section>
-
-        <section class="instruction-section">
-            <span class="slug">Access Protocol</span>
-            <h2 class="instruction-headline">How to Unlock the Vault</h2>
-            
-            <div class="step">
-                <b>Copy Your Link:</b>
-                Hit the button in the box below to copy the unique referral link.
-            </div>
-            
-            <div class="step">
-                <b>Share It:</b>
-                Send it to a discerning colleague or friend who will thank you later for getting them to subscribe to Stems.
-            </div>
-            
-            <div class="step">
-                <b>Instant Unlock:</b>
-                As soon as they confirm their subscription, Beehiiv will automatically email you the Access Key to the full 2025 Compendium.
-            </div>
-        </section>
-
-        <section class="referral-widget">
-            <div class="widget-header">Connection Established</div>
+        <section class="share-widget">
+            <div class="widget-header">Keep Sharing the Signal</div>
+            <p class="widget-copy">Enjoying the Compendium? Help us find more music heavyweights by sharing Stems with your network.</p>
             <div class="link-container">
                 <input type="text" value="https://stems.media/subscribe?ref=YOUR_ID" id="refLink" readonly>
                 <button class="btn-copy" onclick="copyLink()">Copy</button>
             </div>
-            <p class="widget-footer">One referral unlocks the Compendium instantly.</p>
         </section>
 
         <footer>
@@ -312,29 +205,38 @@
         const BASE_URL = "https://crossword.stems.media/?puzzle=";
 
         const PUZZLES = [
-            { title: "Born To<br>Ride", slug: "born-to-ride-2025-09-17", locked: false },
-            { title: "World<br>Premiere", slug: "world-premiere-2025-09-26", locked: false },
-            { title: "Coachella<br>Vibes", slug: "coachella-vibes-2025-10-03", locked: false },
-            { title: "Just<br>Super", slug: "just-super-2025-10-10", locked: false },
-            { title: "On<br>Deck", slug: "on-deck-2025-10-17", locked: false },
-            { title: "Stone<br>Classics", slug: "stone-classics-2025-10-25", locked: false },
-            { title: "Prog<br>Influences", slug: "prog-influences-2025-11-07", locked: false },
-            { title: "Punks<br>Not Dead", slug: "punks-not-dead-2025-11-14", locked: false },
-            { title: "Electric<br>Feel", slug: "electric-feel-2025-11-21", locked: false },
-            { title: "Aughts<br>Rock", slug: "aughts-rock-2025-12-05", locked: false },
-            { title: "Happy<br>Holidaze", slug: "happy-holidaze-2025-12-12", locked: false }
+            { title: "Born To<br>Ride", slug: "born-to-ride-2025-09-17", exclusive: true },
+            { title: "World<br>Premiere", slug: "world-premiere-2025-09-26", exclusive: false },
+            { title: "Coachella<br>Vibes", slug: "coachella-vibes-2025-10-03", exclusive: false },
+            { title: "Just<br>Super", slug: "just-super-2025-10-10", exclusive: false },
+            { title: "On<br>Deck", slug: "on-deck-2025-10-17", exclusive: false },
+            { title: "Stone<br>Classics", slug: "stone-classics-2025-10-25", exclusive: false },
+            { title: "Prog<br>Influences", slug: "prog-influences-2025-11-07", exclusive: false },
+            { title: "Punks<br>Not Dead", slug: "punks-not-dead-2025-11-14", exclusive: false },
+            { title: "Electric<br>Feel", slug: "electric-feel-2025-11-21", exclusive: false },
+            { title: "Aughts<br>Rock", slug: "aughts-rock-2025-12-05", exclusive: false },
+            { title: "Happy<br>Holidaze", slug: "happy-holidaze-2025-12-12", exclusive: false }
         ];
 
         function renderVault() {
             const grid = document.getElementById('vaultGrid');
             grid.innerHTML = '';
             PUZZLES.forEach(puzzle => {
-                const element = document.createElement(puzzle.locked ? 'div' : 'a');
-                if (!puzzle.locked) element.href = BASE_URL + puzzle.slug;
-                element.className = puzzle.locked ? 'puzzle-card locked' : 'puzzle-card';
+                const element = document.createElement('a');
+                element.href = BASE_URL + puzzle.slug;
+                element.className = 'puzzle-card';
+                
+                if (puzzle.exclusive) {
+                    const badge = document.createElement('span');
+                    badge.className = 'exclusive';
+                    badge.innerText = 'EXCLUSIVE';
+                    element.appendChild(badge);
+                }
+
                 const titleSpan = document.createElement('span');
                 titleSpan.className = 'puzzle-title';
                 titleSpan.innerHTML = puzzle.title;
+                
                 element.appendChild(titleSpan);
                 grid.appendChild(element);
             });
