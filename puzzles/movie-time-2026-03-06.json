@@ -1,0 +1,38 @@
+{
+  "id": "movie-time-2026-03-06",
+  "title": "Movie Time",
+  "info": "March 6, 2026 • 6×6",
+  "gridSize": { "rows": 6, "cols": 6 },
+  "words": [
+    { "word": "PORING", "number": 1, "direction": "across", "row": 0, "col": 0 },
+    { "word": "ONETOA", "number": 2, "direction": "across", "row": 1, "col": 0 },
+    { "word": "LEDGER", "number": 3, "direction": "across", "row": 2, "col": 0 },
+    { "word": "IAMOLD", "number": 4, "direction": "across", "row": 3, "col": 0 },
+    { "word": "STEELE", "number": 5, "direction": "across", "row": 4, "col": 0 },
+    { "word": "HANSEN", "number": 6, "direction": "across", "row": 5, "col": 0 },
+    { "word": "POLISH", "number": 1, "direction": "down", "row": 0, "col": 0 },
+    { "word": "ONEATA", "number": 2, "direction": "down", "row": 0, "col": 1 },
+    { "word": "REDMEN", "number": 3, "direction": "down", "row": 0, "col": 2 },
+    { "word": "ITGOES", "number": 4, "direction": "down", "row": 0, "col": 3 },
+    { "word": "NOELLE", "number": 5, "direction": "down", "row": 0, "col": 4 },
+    { "word": "GARDEN", "number": 6, "direction": "down", "row": 0, "col": 5 }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Deep in the fine print (with \"over\")" },
+      { "number": 2, "text": "\"___ customer\" (supermarket sample rule)" },
+      { "number": 3, "text": "Late great Aussie actor" },
+      { "number": 4, "text": "Father's self-assessment in \"Father and Son\" (but he's happy)" },
+      { "number": 5, "text": "'50s British pop idol Tommy, or Black conservative Shelby" },
+      { "number": 6, "text": "Beck's last name" }
+    ],
+    "down": [
+      { "number": 1, "text": "Sometimes demos need a bit of this" },
+      { "number": 2, "text": "\"___ time\" (individually, in succession)" },
+      { "number": 3, "text": "Clone a New Jersey MC who teamed up with Method Man in \"How High,\" and you might get this" },
+      { "number": 4, "text": "\"And so ______\" (Billy Joel song + doc)" },
+      { "number": 5, "text": "Forgettable Anna Kendrick / Bill Hader holiday movie (2019)" },
+      { "number": 6, "text": "The Shins changed lives in the \"___ State\" soundtrack" }
+    ]
+  }
+}
