@@ -1,0 +1,127 @@
+{
+  "id": "outer-boroughs-1994-2026-03-12",
+  "title": "Outer Boroughs, 1994",
+  "info": "March 12, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "across",
+      "word": "BACON"
+    },
+    {
+      "number": 2,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "OMEGA"
+    },
+    {
+      "number": 3,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "READS"
+    },
+    {
+      "number": 4,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "INSET"
+    },
+    {
+      "number": 5,
+      "row": 4,
+      "col": 0,
+      "direction": "across",
+      "word": "STENY"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "down",
+      "word": "BORIS"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "AMENT"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "CEASE"
+    },
+    {
+      "number": 4,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "OGDEN"
+    },
+    {
+      "number": 5,
+      "row": 0,
+      "col": 4,
+      "direction": "down",
+      "word": "NASTY"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "Breakfast staple"
+      },
+      {
+        "number": 2,
+        "text": "Last Greek letter"
+      },
+      {
+        "number": 3,
+        "text": "Studies"
+      },
+      {
+        "number": 4,
+        "text": "Map detail box"
+      },
+      {
+        "number": 5,
+        "text": "Rep. Hoyer, longtime House Democrat"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "Tennis player Becker, or grandmaster Spassky"
+      },
+      {
+        "number": 2,
+        "text": "Pearl Jam bassist Jeff"
+      },
+      {
+        "number": 3,
+        "text": "Lil' ___, Junior M.A.F.I.A. soldier and Biggie sidekick"
+      },
+      {
+        "number": 4,
+        "text": "Town in Utah, or poet Nash (not Graham)"
+      },
+      {
+        "number": 5,
+        "text": "Before he shortened his stage name, the Illmatic MC had this before it"
+      }
+    ]
+  }
+}
