@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Music — Plain Language Explainer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#f5f0e8;
+  --paper:#ece6d8;
+  --ink:#1a1510;
+  --ink2:#3d3528;
+  --muted:#8a7e6e;
+  --rule:#d4c9b0;
+  --teal:#0e8c7a;
+  --teal-light:#e0f5f2;
+  --orange:#d4520a;
+  --orange-light:#fdf0e8;
+  --red:#c0392b;
+  --red-light:#fdf0ef;
+  --gold:#c8960a;
+  --gold-light:#fdf8e8;
+  --serif:'Fraunces',serif;
+  --sans:'DM Sans',sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* ── HERO ── */
+.hero{
+  background:var(--ink);
+  color:var(--cream);
+  padding:70px 40px 60px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-inner{max-width:1000px;margin:0 auto;position:relative;z-index:2}
+.kicker{
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:20px;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(38px,6vw,80px);
+  font-weight:900;
+  line-height:1.0;
+  margin-bottom:24px;
+}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-deck{
+  font-size:17px;
+  color:#c8c0b0;
+  max-width:540px;
+  line-height:1.7;
+  margin-bottom:36px;
+}
+.hero-nav{display:flex;gap:12px;flex-wrap:wrap}
+.hnav-btn{
+  background:transparent;
+  border:1px solid rgba(255,255,255,.2);
+  color:#ddd;
+  font-family:var(--sans);
+  font-size:13px;
+  font-weight:400;
+  padding:10px 20px;
+  border-radius:2px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.hnav-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4);color:#fff}
+
+/* animated music notes background */
+.notes-bg{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.note{
+  position:absolute;
+  font-size:24px;
+  opacity:0.06;
+  animation:floatNote 8s ease-in-out infinite;
+}
+@keyframes floatNote{
+  0%{transform:translateY(0) rotate(0deg);opacity:.04}
+  50%{opacity:.1}
+  100%{transform:translateY(-60px) rotate(15deg);opacity:.02}
+}
+
+/* ── SECTION SHELLS ── */
+section{padding:72px 40px;border-bottom:1px solid var(--rule)}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-label{
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(28px,4vw,46px);
+  font-weight:900;
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.section-intro{
+  font-size:16px;
+  color:var(--ink2);
+  max-width:640px;
+  line-height:1.75;
+  margin-bottom:52px;
+}
+
+/* ── PIPELINE VISUAL ── */
+.pipeline-visual{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:0;
+  margin-bottom:40px;
+  position:relative;
+}
+.pipeline-visual::before{
+  content:'';
+  position:absolute;
+  top:40px;
+  left:10%;
+  right:10%;
+  height:2px;
+  background:linear-gradient(to right,var(--teal),var(--gold),var(--orange));
+  z-index:0;
+}
+.pipe-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  position:relative;
+  z-index:1;
+  padding:0 8px;
+  transition:transform .2s;
+}
+.pipe-step:hover{transform:translateY(-4px)}
+.pipe-icon{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:var(--paper);
+  border:2px solid var(--rule);
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;
+  transition:all .25s;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.pipe-step.active .pipe-icon,
+.pipe-step:hover .pipe-icon{
+  background:var(--teal);
+  border-color:var(--teal);
+  box-shadow:0 4px 20px rgba(14,140,122,.3);
+}
+.pipe-label{
+  font-size:12px;
+  font-weight:500;
+  text-align:center;
+  color:var(--ink2);
+  line-height:1.3;
+}
+.pipe-step.active .pipe-label{color:var(--teal);font-weight:500}
+
+.pipe-detail-box{
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:4px;
+  padding:32px 36px;
+  display:none;
+  animation:fadeUp .3s ease;
+}
+.pipe-detail-box.visible{display:block}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.pipe-detail-grid{
+  display:grid;
+  grid-template-columns:1fr 280px;
+  gap:40px;
+  align-items:start;
+}
+.pipe-detail-grid h3{
+  font-family:var(--serif);
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+.pipe-detail-grid p{
+  font-size:15px;
+  color:var(--ink2);
+  line-height:1.75;
+  margin-bottom:12px;
+}
+.plain-card{
+  background:var(--teal-light);
+  border-left:3px solid var(--teal);
+  padding:16px 18px;
+  border-radius:0 4px 4px 0;
+}
+.plain-card strong{
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--teal);
+  font-weight:500;
+  display:block;
+  margin-bottom:6px;
+}
+.plain-card p{
+  font-size:14px!important;
+  color:var(--ink)!important;
+  margin:0!important;
+}
+
+/* ── SVG DIAGRAM AREA ── */
+.diagram-wrap{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:4px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:180px;
+}
+.diagram-wrap svg{width:100%;height:auto;max-width:240px}
+
+/* ── OBJECTIONS ── */
+.obj-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+}
+.obj-card{
+  background:#fff;
+  border:1px solid var(--rule);
+  cursor:pointer;
+  transition:border-color .2s;
+}
+.obj-card:hover{border-color:#bbb}
+.obj-card.open{border-color:var(--orange)}
+.obj-top{
+  display:grid;
+  grid-template-columns:56px 1fr 28px;
+  align-items:center;
+  gap:0;
+  padding:22px 24px;
+}
+.obj-emoji{font-size:26px;text-align:center}
+.obj-card-title{
+  font-family:var(--serif);
+  font-size:17px;
+  font-weight:700;
+  line-height:1.25;
+}
+.obj-card-sub{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+.obj-chevron{color:var(--muted);font-size:16px;transition:transform .25s;text-align:right}
+.obj-card.open .obj-chevron{transform:rotate(180deg);color:var(--orange)}
+.obj-body{
+  display:none;
+  padding:0 24px 24px 80px;
+  font-size:14px;
+  color:var(--ink2);
+  line-height:1.75;
+  border-top:1px solid var(--rule);
+  animation:fadeUp .25s ease;
+}
+.obj-card.open .obj-body{display:block;padding-top:20px}
+.obj-body p{margin-bottom:10px}
+.obj-body p:last-child{margin-bottom:0}
+
+/* visual metaphor inside obj */
+.metaphor-box{
+  background:var(--orange-light);
+  border-left:3px solid var(--orange);
+  padding:12px 16px;
+  margin:14px 0;
+  font-size:13px;
+  color:var(--ink);
+  border-radius:0 4px 4px 0;
+}
+.metaphor-box strong{
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--orange);
+  font-weight:500;
+  display:block;
+  margin-bottom:5px;
+}
+
+/* ── SCALES DIAGRAM ── */
+.scales-section{background:var(--ink);color:var(--cream)}
+.scales-section .section-label{color:rgba(255,255,255,.4)}
+.scales-section .section-title{color:var(--cream)}
+.scales-section .section-intro{color:#c8c0b0}
+
+.scales-wrap{
+  display:grid;
+  grid-template-columns:1fr 80px 1fr;
+  gap:0;
+  align-items:start;
+}
+.scale-col{padding:0 20px}
+.scale-col h3{
+  font-family:var(--serif);
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:20px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.scale-pro h3{color:var(--teal)}
+.scale-con h3{color:var(--orange)}
+.scale-mid{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding-top:10px;
+}
+.scale-vs{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:32px;
+  color:rgba(255,255,255,.2);
+}
+.arg-item{
+  display:flex;
+  gap:12px;
+  margin-bottom:16px;
+  align-items:flex-start;
+}
+.arg-bullet{
+  width:6px;height:6px;
+  border-radius:50%;
+  margin-top:7px;
+  flex-shrink:0;
+}
+.scale-pro .arg-bullet{background:var(--teal)}
+.scale-con .arg-bullet{background:var(--orange)}
+.arg-text{font-size:14px;color:#c8c0b0;line-height:1.65}
+.arg-text strong{color:#fff;font-weight:500}
+
+/* ── TIMELINE ── */
+.tl-track{
+  position:relative;
+  padding-left:28px;
+  margin-top:8px;
+}
+.tl-track::before{
+  content:'';
+  position:absolute;
+  left:5px;top:8px;bottom:0;
+  width:2px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+}
+.tl-item{
+  position:relative;
+  margin-bottom:32px;
+}
+.tl-item::before{
+  content:'';
+  position:absolute;
+  left:-23px;top:7px;
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--gold);
+  border:2px solid var(--cream);
+}
+.tl-date{
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:4px;
+}
+.tl-title{
+  font-family:var(--serif);
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.tl-desc{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ── STATUS BADGE ── */
+.status-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:var(--gold-light);
+  border:1px solid rgba(200,150,10,.25);
+  border-radius:3px;
+  padding:12px 18px;
+  margin-bottom:40px;
+  font-size:13px;
+  color:var(--ink);
+}
+.status-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--gold);
+  animation:pulse2 1.8s infinite;
+  flex-shrink:0;
+}
+@keyframes pulse2{
+  0%,100%{box-shadow:0 0 0 0 rgba(200,150,10,.5)}
+  50%{box-shadow:0 0 0 6px rgba(200,150,10,0)}
+}
+
+/* ── PROGRESS BAR FOR PIPELINE ── */
+.step-progress{
+  display:flex;
+  gap:4px;
+  margin-bottom:24px;
+}
+.step-pip{
+  height:3px;
+  flex:1;
+  background:var(--rule);
+  border-radius:2px;
+  cursor:pointer;
+  transition:background .2s;
+}
+.step-pip.done{background:var(--teal)}
+
+/* ── BIG STAT CARDS ── */
+.stat-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  margin-bottom:52px;
+}
+.stat-card{
+  background:#fff;
+  border:1px solid var(--rule);
+  padding:28px 24px;
+}
+.stat-num{
+  font-family:var(--serif);
+  font-size:42px;
+  font-weight:900;
+  line-height:1;
+  margin-bottom:8px;
+}
+.stat-label{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* ── RESPONSIVE ── */
+@media(max-width:740px){
+  section{padding:48px 20px}
+  .pipeline-visual{grid-template-columns:repeat(3,1fr);gap:16px}
+  .pipeline-visual::before{display:none}
+  .pipe-detail-grid{grid-template-columns:1fr}
+  .obj-grid{grid-template-columns:1fr}
+  .scales-wrap{grid-template-columns:1fr}
+  .scale-mid{display:none}
+  .stat-row{grid-template-columns:1fr 1fr}
+  .hero{padding:48px 20px 40px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ HERO ══════ -->
+<div class="hero">
+  <div class="notes-bg" id="notesBg"></div>
+  <div class="hero-inner">
+    <div class="kicker">Plain-Language Explainer · AI &amp; Music</div>
+    <h1>When AI Learns<br>to Make <em>Music</em> —<br>Who Pays?</h1>
+    <p class="hero-deck">AI companies trained their music generators on millions of songs. The musicians who made those songs didn't consent, weren't paid, and are now competing with the result. Here's how it works — and why it matters.</p>
+    <div class="hero-nav">
+      <button class="hnav-btn" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How It's Built →</button>
+      <button class="hnav-btn" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">Why Artists Object →</button>
+      <button class="hnav-btn" onclick="document.getElementById('law').scrollIntoView({behavior:'smooth'})">The Legal Fight →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ HOW IT WORKS ══════ -->
+<section id="how">
+<div class="section-inner">
+  <div class="section-label">Part One</div>
+  <div class="section-title">How Does an AI<br>Learn to Make Music?</div>
+  <p class="section-intro">Building an AI music generator works like teaching a student — but instead of years of practice, it means feeding a computer millions of songs and letting it absorb the patterns. Click each stage to see what's actually happening.</p>
+
+  <!-- progress pips -->
+  <div class="step-progress" id="pipRow"></div>
+
+  <!-- icon pipeline -->
+  <div class="pipeline-visual" id="pipelineViz">
+    <div class="pipe-step active" data-step="0" onclick="showStep(0)">
+      <div class="pipe-icon">🎵</div>
+      <div class="pipe-label">Gather millions of songs</div>
+    </div>
+    <div class="pipe-step" data-step="1" onclick="showStep(1)">
+      <div class="pipe-icon">📊</div>
+      <div class="pipe-label">Break sound into patterns</div>
+    </div>
+    <div class="pipe-step" data-step="2" onclick="showStep(2)">
+      <div class="pipe-icon">🧠</div>
+      <div class="pipe-label">AI studies the patterns</div>
+    </div>
+    <div class="pipe-step" data-step="3" onclick="showStep(3)">
+      <div class="pipe-icon">🎛️</div>
+      <div class="pipe-label">Teach it to follow instructions</div>
+    </div>
+    <div class="pipe-step" data-step="4" onclick="showStep(4)">
+      <div class="pipe-icon">🔊</div>
+      <div class="pipe-label">User gets a new song</div>
+    </div>
+  </div>
+
+  <!-- detail boxes -->
+  <div id="stepDetails">
+
+    <div class="pipe-detail-box visible" id="sd0">
+      <div class="pipe-detail-grid">
+        <div>
+          <h3>Step 1 — The Library</h3>
+          <p>Before an AI can make music, it needs to hear an enormous amount of it. Companies collect millions of recordings — from streaming platforms, YouTube, music licensing sites, and other online sources. We're talking about more music than any person could listen to in several lifetimes.</p>
+          <p>Here's the problem: most of those songs were taken without asking the artists. The companies argue this is no different from a musician listening to records for inspiration. Artists disagree — and that disagreement is at the heart of every lawsuit in this space.</p>
+          <div class="plain-card">
+            <strong>Plain English</strong>
+            <p>Imagine a cooking school that secretly recorded every great chef's recipes without permission, and then used those recipes to train a robot chef that could now compete with the original chefs for work.</p>
+          </div>
+        </div>
+        <div class="diagram-wrap">
+          <!-- SVG: Many records flowing into a server -->
+          <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Records / music notes flowing in -->
+            <g opacity=".7">
+              <text x="10" y="30" font-size="20">🎵</text>
+              <text x="40" y="18" font-size="14">🎶</text>
+              <text x="5" y="60" font-size="16">🎸</text>
+              <text x="30" y="75" font-size="12">🥁</text>
+              <text x="10" y="100" font-size="18">🎹</text>
+              <text x="45" y="110" font-size="13">🎤</text>
+              <text x="8" y="140" font-size="15">🎺</text>
+              <text x="42" y="155" font-size="11">🎷</text>
+            </g>
+            <!-- Arrows -->
+            <g stroke="#0e8c7a" stroke-width="1.5" fill="none" stroke-dasharray="4 3" opacity=".6">
+              <path d="M65 30 Q100 30 120 70"/>
+              <path d="M65 60 Q100 55 120 75"/>
+              <path d="M65 100 Q100 90 120 85"/>
+              <path d="M65 140 Q100 115 120 95"/>
+            </g>
+            <!-- Server box -->
+            <rect x="120" y="55" width="85" height="90" rx="6" fill="#e0f5f2" stroke="#0e8c7a" stroke-width="1.5"/>
+            <rect x="130" y="65" width="65" height="8" rx="2" fill="#0e8c7a" opacity=".4"/>
+            <rect x="130" y="78" width="65" height="8" rx="2" fill="#0e8c7a" opacity=".3"/>
+            <rect x="130" y="91" width="65" height="8" rx="2" fill="#0e8c7a" opacity=".2"/>
+            <rect x="130" y="104" width="65" height="8" rx="2" fill="#0e8c7a" opacity=".15"/>
+            <text x="162" y="135" font-size="9" fill="#0e8c7a" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="500">TRAINING</text>
+            <text x="162" y="145" font-size="9" fill="#0e8c7a" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="500">DATA</text>
+            <!-- count label -->
+            <text x="162" y="170" font-size="10" fill="#8a7e6e" text-anchor="middle" font-family="DM Sans,sans-serif">millions of tracks</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-detail-box" id="sd1">
+      <div class="pipe-detail-grid">
+        <div>
+          <h3>Step 2 — Turning Sound into Numbers</h3>
+          <p>Computers can't process audio the way our ears do. So every song gets converted into a kind of visual map — showing which frequencies are playing at which moments. Think of it like a very detailed sheet music, but instead of notes on a staff, it's a grid of numbers.</p>
+          <p>This is how the AI "reads" music. A three-minute song becomes millions of tiny data points. The computer doesn't hear a melody — it sees a pattern of numbers, and it gets extremely good at recognizing which number tends to follow which.</p>
+          <div class="plain-card">
+            <strong>Plain English</strong>
+            <p>It's like converting a painting into a massive spreadsheet of color values. You lose the feeling, but you can analyze the patterns mathematically.</p>
+          </div>
+        </div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Waveform on left -->
+            <text x="10" y="15" font-size="9" fill="#8a7e6e" font-family="DM Sans,sans-serif">Audio wave</text>
+            <polyline points="10,90 20,65 28,105 36,55 44,95 52,70 60,100 68,60 76,88 84,75" 
+              fill="none" stroke="#1a1510" stroke-width="2"/>
+            <!-- Arrow -->
+            <line x1="94" y1="82" x2="112" y2="82" stroke="#0e8c7a" stroke-width="1.5"/>
+            <polygon points="112,78 120,82 112,86" fill="#0e8c7a"/>
+            <!-- Grid of numbers -->
+            <text x="125" y="15" font-size="9" fill="#8a7e6e" font-family="DM Sans,sans-serif">Number grid</text>
+            <g font-family="monospace" font-size="8" fill="#0e8c7a">
+              <text x="125" y="32">412 87 203</text>
+              <text x="125" y="44">056 990 034</text>
+              <text x="125" y="56">177 623 891</text>
+              <text x="125" y="68">340 012 756</text>
+              <text x="125" y="80">098 445 312</text>
+              <text x="125" y="92">881 224 067</text>
+              <text x="125" y="104">533 791 148</text>
+              <text x="125" y="116">209 356 634</text>
+            </g>
+            <!-- Label -->
+            <rect x="125" y="128" width="80" height="18" rx="3" fill="#e0f5f2"/>
+            <text x="165" y="140" font-size="9" fill="#0e8c7a" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="500">Every ~13ms of audio</text>
+            <text x="165" y="158" font-size="8.5" fill="#8a7e6e" text-anchor="middle" font-family="DM Sans,sans-serif">= one number in the sequence</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-detail-box" id="sd2">
+      <div class="pipe-detail-grid">
+        <div>
+          <h3>Step 3 — Learning the Patterns</h3>
+          <p>Here's where the actual "learning" happens. The AI is shown billions of these number sequences and asked to guess: "given everything before this moment, what comes next?" Every time it's wrong, it adjusts. Every time it's right, it reinforces that approach.</p>
+          <p>After enough repetitions — across millions of songs — the AI develops an incredibly detailed internal model of how music works. It learns that a certain chord tends to resolve a certain way, that a hip-hop beat has a different rhythmic feel than jazz, that some vocal timbre usually appears with certain production aesthetics.</p>
+          <div class="plain-card">
+            <strong>Plain English</strong>
+            <p>It's like learning a language by reading billions of sentences. You didn't memorize them — but you absorbed the grammar, the vocabulary, the rhythm of how words flow together. Now you can write new sentences in any style.</p>
+          </div>
+        </div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Brain / neural net metaphor -->
+            <!-- Input nodes -->
+            <g fill="#d4c9b0" stroke="#8a7e6e" stroke-width="1">
+              <circle cx="28" cy="40" r="10"/>
+              <circle cx="28" cy="70" r="10"/>
+              <circle cx="28" cy="100" r="10"/>
+              <circle cx="28" cy="130" r="10"/>
+            </g>
+            <!-- Hidden nodes -->
+            <g fill="#e0f5f2" stroke="#0e8c7a" stroke-width="1.5">
+              <circle cx="95" cy="30" r="12"/>
+              <circle cx="95" cy="65" r="12"/>
+              <circle cx="95" cy="100" r="12"/>
+              <circle cx="95" cy="135" r="12"/>
+            </g>
+            <g fill="#e0f5f2" stroke="#0e8c7a" stroke-width="1.5">
+              <circle cx="155" cy="50" r="12"/>
+              <circle cx="155" cy="90" r="12"/>
+              <circle cx="155" cy="130" r="12"/>
+            </g>
+            <!-- Output -->
+            <circle cx="205" cy="85" r="14" fill="#fdf8e8" stroke="#c8960a" stroke-width="2"/>
+            <text x="205" y="89" font-size="12" text-anchor="middle" fill="#c8960a">♪</text>
+            <!-- Connections - input to hidden -->
+            <g stroke="#0e8c7a" stroke-width=".6" opacity=".4">
+              <line x1="38" y1="40" x2="83" y2="32"/>
+              <line x1="38" y1="40" x2="83" y2="66"/>
+              <line x1="38" y1="70" x2="83" y2="32"/>
+              <line x1="38" y1="70" x2="83" y2="100"/>
+              <line x1="38" y1="100" x2="83" y2="66"/>
+              <line x1="38" y1="100" x2="83" y2="135"/>
+              <line x1="38" y1="130" x2="83" y2="100"/>
+              <line x1="38" y1="130" x2="83" y2="135"/>
+            </g>
+            <!-- hidden to hidden -->
+            <g stroke="#0e8c7a" stroke-width=".6" opacity=".4">
+              <line x1="107" y1="33" x2="143" y2="52"/>
+              <line x1="107" y1="68" x2="143" y2="52"/>
+              <line x1="107" y1="68" x2="143" y2="91"/>
+              <line x1="107" y1="103" x2="143" y2="91"/>
+              <line x1="107" y1="103" x2="143" y2="131"/>
+              <line x1="107" y1="138" x2="143" y2="131"/>
+            </g>
+            <!-- hidden to output -->
+            <g stroke="#c8960a" stroke-width=".8" opacity=".5">
+              <line x1="167" y1="52" x2="191" y2="82"/>
+              <line x1="167" y1="91" x2="191" y2="86"/>
+              <line x1="167" y1="131" x2="191" y2="90"/>
+            </g>
+            <text x="110" y="170" font-size="9" fill="#8a7e6e" text-anchor="middle" font-family="DM Sans,sans-serif">Billions of adjustments over weeks of training</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-detail-box" id="sd3">
+      <div class="pipe-detail-grid">
+        <div>
+          <h3>Step 4 — Taking Orders</h3>
+          <p>A raw AI model that just predicts "what comes next" isn't very useful for a consumer product. So companies add a second layer of training: teaching the model to follow text descriptions. You type "lo-fi hip-hop, rainy afternoon" and it should generate exactly that.</p>
+          <p>This is done by pairing thousands of songs with written descriptions, and training the model to connect the language to the sound. Human reviewers also rate the outputs and the model learns to produce results that sound better to human ears.</p>
+          <div class="plain-card">
+            <strong>Plain English</strong>
+            <p>Think of it like training a skilled musician who already knows a hundred genres, to take requests from anyone — even people who can't describe music very precisely.</p>
+          </div>
+        </div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Text prompt box -->
+            <rect x="10" y="20" width="110" height="40" rx="5" fill="#fff" stroke="#d4c9b0" stroke-width="1.5"/>
+            <text x="20" y="36" font-size="9" fill="#1a1510" font-family="DM Sans,sans-serif">"upbeat 70s funk,</text>
+            <text x="20" y="48" font-size="9" fill="#1a1510" font-family="DM Sans,sans-serif">female vocals"</text>
+            <text x="65" y="72" font-size="9" fill="#8a7e6e" text-anchor="middle" font-family="DM Sans,sans-serif">user types this</text>
+            <!-- Arrow down -->
+            <line x1="65" y1="78" x2="65" y2="98" stroke="#c8960a" stroke-width="1.5"/>
+            <polygon points="60,96 65,106 70,96" fill="#c8960a"/>
+            <!-- AI box -->
+            <rect x="22" y="108" width="86" height="32" rx="4" fill="#fdf8e8" stroke="#c8960a" stroke-width="1.5"/>
+            <text x="65" y="128" font-size="10" fill="#c8960a" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="500">AI INTERPRETS</text>
+            <!-- Arrow right -->
+            <line x1="112" y1="124" x2="132" y2="124" stroke="#c8960a" stroke-width="1.5"/>
+            <polygon points="130,119 140,124 130,129" fill="#c8960a"/>
+            <!-- Output waveform -->
+            <rect x="140" y="108" width="68" height="32" rx="4" fill="#e0f5f2" stroke="#0e8c7a" stroke-width="1.5"/>
+            <polyline points="148,124 153,116 158,130 163,118 168,126 173,120 178,128 183,122 188,124 194,119 199,124"
+              fill="none" stroke="#0e8c7a" stroke-width="1.5"/>
+            <text x="174" y="152" font-size="9" fill="#8a7e6e" text-anchor="middle" font-family="DM Sans,sans-serif">new audio generated</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-detail-box" id="sd4">
+      <div class="pipe-detail-grid">
+        <div>
+          <h3>Step 5 — The Output</h3>
+          <p>When you type a prompt into Suno, Udio, or a similar tool, you get back a brand-new audio file. The AI isn't playing back any specific song from its training data — it's generating something new, built from the patterns it absorbed across millions of recordings.</p>
+          <p>This is the key technical claim companies make in their legal defense: the model doesn't store or reproduce songs; it learned from them. Critics counter: the capability was built on those songs without permission, and the output competes directly with the people who made them.</p>
+          <div class="plain-card">
+            <strong>The core tension</strong>
+            <p>The output is genuinely new. But is "new" the same as "fair"? That's the question courts are now deciding.</p>
+          </div>
+        </div>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Funnel: many songs in, one song out -->
+            <!-- Input records -->
+            <g opacity=".65" font-size="14">
+              <text x="5" y="30">🎵</text>
+              <text x="5" y="55">🎶</text>
+              <text x="5" y="80">🎸</text>
+              <text x="5" y="105">🥁</text>
+              <text x="5" y="130">🎹</text>
+            </g>
+            <!-- Funnel shape -->
+            <path d="M35,10 L85,80 L85,140 L65,160 L65,140 L55,80 Z" fill="#e0f5f2" stroke="#0e8c7a" stroke-width="1.5" opacity=".5"/>
+            <!-- Arrows into funnel -->
+            <g stroke="#0e8c7a" stroke-width="1" fill="none" opacity=".5">
+              <path d="M28,26 Q50,26 54,50"/>
+              <path d="M28,52 Q50,52 54,68"/>
+              <path d="M28,78 Q50,78 54,86"/>
+              <path d="M28,103 Q50,103 57,104"/>
+              <path d="M28,128 Q50,128 57,120"/>
+            </g>
+            <!-- Arrow out of funnel -->
+            <line x1="70" y1="162" x2="70" y2="178" stroke="#c8960a" stroke-width="2"/>
+            <polygon points="65,176 70,186 75,176" fill="#c8960a"/>
+            <!-- Output label -->
+            <text x="120" y="175" font-size="11" fill="#c8960a" font-family="DM Sans,sans-serif" font-weight="500">1 new song</text>
+            <!-- Millions label -->
+            <text x="95" y="50" font-size="10" fill="#0e8c7a" font-family="DM Sans,sans-serif">millions</text>
+            <text x="95" y="64" font-size="10" fill="#0e8c7a" font-family="DM Sans,sans-serif">of songs</text>
+            <text x="95" y="78" font-size="10" fill="#0e8c7a" font-family="DM Sans,sans-serif">absorbed</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /stepDetails -->
+</div>
+</section>
+
+<!-- ══════ WHY ARTISTS OBJECT ══════ -->
+<section id="why" style="background:var(--paper)">
+<div class="section-inner">
+  <div class="section-label">Part Two</div>
+  <div class="section-title">Why Are Musicians<br>Upset About This?</div>
+  <p class="section-intro">The objections aren't just about money — though that's part of it. They cover fairness, identity, and what kind of creative ecosystem we want to exist. Click each to read more.</p>
+
+  <!-- stat cards -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--orange)">$0</div>
+      <div class="stat-label">Paid to artists whose music was used for training — by most AI music companies</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--teal)">$2.45B</div>
+      <div class="stat-label">Suno's valuation as of November 2025 — raised while still facing active copyright lawsuits. The company also hit $200M in annual revenue the same month.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--red)">3 majors</div>
+      <div class="stat-label">Sony, Universal, and Warner all filed copyright lawsuits against AI music companies in 2024</div>
+    </div>
+  </div>
+
+  <div class="obj-grid">
+
+    <div class="obj-card" id="oc1">
+      <div class="obj-top" onclick="toggleObjCard('oc1')">
+        <div class="obj-emoji">💸</div>
+        <div>
+          <div class="obj-card-title">They used our work — and didn't pay</div>
+          <div class="obj-card-sub">The economic argument</div>
+        </div>
+        <div class="obj-chevron">▾</div>
+      </div>
+      <div class="obj-body">
+        <p>Songs are commercial products. Musicians, songwriters, and labels invest real money and time making them. When an AI company vacuums up millions of those songs to train a product it then sells to consumers, it's extracting value without paying for it.</p>
+        <p>Compare it to any other business: if a company needed steel to build a factory, it couldn't just take steel from other businesses without paying. AI companies, in effect, took the raw material of music — recordings — and used them to build a competing product.</p>
+        <div class="metaphor-box">
+          <strong>Think of it this way</strong>
+          A food delivery app secretly collected every restaurant's recipes, trained its own AI chef on them, and now sells that chef's cooking at half the price. The original restaurants never agreed to this — and now they have a new competitor built entirely on their work.
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-card" id="oc2">
+      <div class="obj-top" onclick="toggleObjCard('oc2')">
+        <div class="obj-emoji">🎭</div>
+        <div>
+          <div class="obj-card-title">Anyone can now copy my sound</div>
+          <div class="obj-card-sub">The identity argument</div>
+        </div>
+        <div class="obj-chevron">▾</div>
+      </div>
+      <div class="obj-body">
+        <p>Copyright law protects specific recordings — but not a musician's style. That means anyone can type "make music in the style of [artist name]" and get something that sounds remarkably like them. The artist has no legal say in this, and earns nothing from it.</p>
+        <p>For many artists, their sound is the product of decades of development. It's their most valuable creative asset. Having it turned into a free menu option — available to anyone — feels like a fundamental violation, even if technically legal.</p>
+        <div class="metaphor-box">
+          <strong>Think of it this way</strong>
+          Imagine if someone could create an AI that writes in your voice, uses your mannerisms, and sells essays that sound exactly like you — without your permission and with no credit or payment to you.
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-card" id="oc3">
+      <div class="obj-top" onclick="toggleObjCard('oc3')">
+        <div class="obj-emoji">📉</div>
+        <div>
+          <div class="obj-card-title">It's taking away real jobs</div>
+          <div class="obj-card-sub">The labor argument</div>
+        </div>
+        <div class="obj-chevron">▾</div>
+      </div>
+      <div class="obj-body">
+        <p>There are whole categories of music work that are now under direct competitive pressure from AI: background music for videos, podcasts, apps, and retail spaces; theme music for small productions; custom jingles; stock music libraries. These were steady income sources for working musicians.</p>
+        <p>These aren't the famous artists — these are the session players, the composers, the freelancers who make a living from the music industry's less glamorous work. They're the ones being displaced first and most severely.</p>
+        <div class="metaphor-box">
+          <strong>Think of it this way</strong>
+          It's not that AI is replacing Taylor Swift. It's replacing the person who composed the hold music for your dentist's office, the background track for a YouTube cooking video, or the score for a local theater production.
+        </div>
+      </div>
+    </div>
+
+    <div class="obj-card" id="oc4">
+      <div class="obj-top" onclick="toggleObjCard('oc4')">
+        <div class="obj-emoji">🙈</div>
+        <div>
+          <div class="obj-card-title">We weren't asked. We didn't consent.</div>
+          <div class="obj-card-sub">The fairness argument</div>
+        </div>
+        <div class="obj-chevron">▾</div>
+      </div>
+      <div class="obj-body">
+        <p>Most musicians have no idea whether their music was used in AI training data. There was no announcement, no opt-in, no consent form. The companies just took what they needed, built their products, and are now worth billions of dollars.</p>
+        <p>Some AI companies now offer "opt-out" lists — artists can apply to have their music excluded. But critics say this gets the ethical burden exactly backward. You shouldn't have to opt out of something you never agreed to join in the first place.</p>
+        <div class="metaphor-box">
+          <strong>Think of it this way</strong>
+          Imagine someone used your photo in their advertisement without asking, then, when called out, offered you the option to "opt out" of future ads. The original wrong — using it without permission — remains unaddressed.
+        </div>
+        <p>And even when labels do reach settlements with AI companies, independent artists are often left out. Irving Azoff, the legendary manager who founded the Music Artists Coalition, put it plainly after the first wave of label deals: "We've seen this before — everyone talks about 'partnership,' but artists end up on the sidelines with scraps." Artists, he argued, must have creative control, fair compensation, and clarity about deals being done based on their catalogs.</p>
+      </div>
+    </div>
+
+    <div class="obj-card" id="oc5" style="grid-column:1/-1">
+      <div class="obj-top" onclick="toggleObjCard('oc5')">
+        <div class="obj-emoji">🌊</div>
+        <div>
+          <div class="obj-card-title">It could make all music sound the same</div>
+          <div class="obj-card-sub">The cultural argument</div>
+        </div>
+        <div class="obj-chevron">▾</div>
+      </div>
+      <div class="obj-body" style="padding-left:80px">
+        <p>AI models are trained on what already exists. By definition, they can only recombine patterns from the past — they can't have genuine new experiences, can't be heartbroken for the first time, can't grow up in a specific neighborhood with a specific cultural identity. The fear is that flooding the market with AI music will push human musicians to compete on price rather than originality — and the music that benefits culturally from risk-taking will become harder to fund.</p>
+        <p>There's also a specific concern about cultural appropriation at scale. Genres like blues, cumbia, Afrobeat, and flamenco were developed by specific communities over generations. AI can extract those patterns and offer them as free menu options — without any of the licensing or royalty flows that have historically (imperfectly) returned some value to those communities.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ══════ LEGAL SCALES ══════ -->
+<section id="law" class="scales-section">
+<div class="section-inner">
+  <div class="section-label">Part Three</div>
+  <div class="section-title">Who's Right,<br>Legally?</div>
+  <p class="section-intro">The honest answer: nobody knows yet. Courts are only beginning to rule on this. Here are the two main arguments being made.</p>
+
+  <div class="scales-wrap">
+    <div class="scale-col scale-pro">
+      <h3>The Tech Companies Say:</h3>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>Learning isn't copying.</strong> The AI didn't make copies of songs to sell — it studied them, the way a music student studies recordings. No individual song is stored inside the model.</div>
+      </div>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>The output is genuinely new.</strong> Every song the AI generates is an original creation — it isn't playing back any training track.</div>
+      </div>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>This is how all creative learning works.</strong> Human musicians also learn by listening to lots of music. Copyright law has never required musicians to get permission before being influenced.</div>
+      </div>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>"Fair use" covers transformative work.</strong> American copyright law allows some uses of protected work when the result is transformative — courts have accepted this argument for search engines and other technologies.</div>
+      </div>
+    </div>
+
+    <div class="scale-mid">
+      <div class="scale-vs">vs</div>
+      <!-- SVG scales icon -->
+      <svg viewBox="0 0 80 80" width="60" style="margin-top:16px;opacity:.3">
+        <line x1="40" y1="10" x2="40" y2="60" stroke="white" stroke-width="2"/>
+        <line x1="10" y1="28" x2="70" y2="28" stroke="white" stroke-width="2"/>
+        <circle cx="40" cy="10" r="4" fill="white"/>
+        <path d="M10,28 Q20,42 30,28" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M50,28 Q60,42 70,28" fill="none" stroke="white" stroke-width="1.5"/>
+        <line x1="30" y1="60" x2="50" y2="60" stroke="white" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="scale-col scale-con">
+      <h3>The Artists &amp; Labels Say:</h3>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>Training is a commercial act, not study.</strong> A student isn't building a product they'll sell for billions of dollars. The scale and commercial purpose changes everything.</div>
+      </div>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>"New" doesn't mean "fair."</strong> The AI's entire capability was built on copyrighted work. The creators of that work see no benefit while a competitor profits directly from it.</div>
+      </div>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>AI can reproduce songs too closely.</strong> Tests have shown AI models can generate audio that sounds nearly identical to specific training tracks — suggesting the material is closer to stored than simply "learned from."</div>
+      </div>
+      <div class="arg-item">
+        <div class="arg-bullet"></div>
+        <div class="arg-text"><strong>The legal pressure is already working.</strong> Suno agreed to phase out its current AI models entirely and replace them with fully licensed ones as part of its Warner settlement — a meaningful concession that wouldn't have happened without the threat of massive damages.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div style="margin-top:72px">
+    <div class="section-label" style="color:rgba(255,255,255,.4)">What's Happened So Far</div>
+    <div class="section-title" style="font-size:32px;margin-bottom:32px">The Fight in Court</div>
+
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      <span>Some labels are settling — but not all, and independent artists have now filed their own suits. The legal picture is shifting fast, with no court ruling yet on the core question.</span>
+    </div>
+
+    <div class="tl-track">
+      <div class="tl-item">
+        <div class="tl-date">2023</div>
+        <div class="tl-title">The record labels start sounding the alarm</div>
+        <div class="tl-desc" style="color:#c8c0b0">Sony, Universal, and Warner — the three biggest labels in the world — begin lobbying Congress and preparing legal strategy, arguing that AI music companies are effectively stealing their catalogs.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">June 2024</div>
+        <div class="tl-title">The major labels file lawsuits</div>
+        <div class="tl-desc" style="color:#c8c0b0">All three majors sue both Suno and Udio in federal court, alleging copyright infringement at a scale of potentially hundreds of thousands of recordings. The potential damages — up to $150,000 per violation — are enormous.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">October – November 2025</div>
+        <div class="tl-title">Udio settles with Universal and Warner</div>
+        <div class="tl-desc" style="color:#c8c0b0">Universal Music Group settles with Udio first, announcing a plan for a new jointly built "licensed and protected" service to launch in 2026. Warner follows with its own Udio deal shortly after. Both settlements mean Udio users can no longer download their creations — a change that sparks user backlash.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">November 19, 2025</div>
+        <div class="tl-title">Suno raises $250M — valued at $2.45 billion</div>
+        <div class="tl-desc" style="color:#c8c0b0">Despite the active lawsuits, investors led by Menlo Ventures and Nvidia's venture arm pour $250 million into Suno at a $2.45 billion valuation. Suno simultaneously announces $200 million in annual revenue. The message from the investment community is clear: they're betting the legal fights will resolve through licensing deals, not shut the company down.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">November 25, 2025</div>
+        <div class="tl-title">Warner settles with Suno — and becomes a partner</div>
+        <div class="tl-desc" style="color:#c8c0b0">Warner Music Group drops its lawsuit against Suno and announces a full partnership to build "next-generation licensed AI music." As part of the deal, Suno commits to phasing out its current AI models in 2026 and replacing them with new, fully licensed ones. Suno also acquires Songkick — the concert discovery platform — from WMG. Sony and Universal are still in litigation with Suno.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025 — ongoing</div>
+        <div class="tl-title">Independent artists fight back on their own</div>
+        <div class="tl-desc" style="color:#c8c0b0">The major label deals don't speak for everyone. Country artist Anthony Justice files suit against both Suno and Udio on behalf of a group of independent musicians, alleging their recordings were used without permission. A second class action, led by musician David Woulard, follows in October. These cases — focused on independent artists rather than major label catalogs — are in early stages as of early 2026.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026 and beyond</div>
+        <div class="tl-title">Congress considers new rules — no law yet</div>
+        <div class="tl-desc" style="color:#c8c0b0">Lawmakers are weighing legislation that would protect artists from AI-generated voice and likeness replication. No comprehensive AI music law has passed. Courts haven't ruled on the core "fair use" question yet. The legal architecture of AI-generated music remains genuinely unsettled.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<div style="background:var(--ink);color:rgba(255,255,255,.35);padding:32px 40px;font-size:12px;font-family:var(--sans);text-align:center;line-height:1.7">
+  This explainer covers events through March 2026. Legal cases and valuations described are active and subject to change.
+</div>
+
+<script>
+// ── Notes background
+const notesBg = document.getElementById('notesBg');
+const noteSymbols = ['♩','♪','♫','♬','𝄞','𝄢'];
+for(let i=0;i<18;i++){
+  const n = document.createElement('span');
+  n.className='note';
+  n.textContent = noteSymbols[Math.floor(Math.random()*noteSymbols.length)];
+  n.style.left = (Math.random()*100)+'%';
+  n.style.top = (10+Math.random()*80)+'%';
+  n.style.animationDelay = (Math.random()*6)+'s';
+  n.style.animationDuration = (6+Math.random()*5)+'s';
+  n.style.fontSize = (16+Math.random()*24)+'px';
+  notesBg.appendChild(n);
+}
+
+// ── Progress pips
+const pipRow = document.getElementById('pipRow');
+for(let i=0;i<5;i++){
+  const pip = document.createElement('div');
+  pip.className = 'step-pip'+(i===0?' done':'');
+  pip.setAttribute('data-pip',i);
+  pip.onclick = ()=>showStep(i);
+  pipRow.appendChild(pip);
+}
+
+// ── Pipeline interaction
+let currentStep = 0;
+function showStep(n){
+  // deactivate all
+  document.querySelectorAll('.pipe-step').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.pipe-detail-box').forEach(b=>b.classList.remove('visible'));
+  document.querySelectorAll('.step-pip').forEach((p,i)=>{
+    p.classList.toggle('done', i<=n);
+  });
+  // activate selected
+  document.querySelector('[data-step="'+n+'"]').classList.add('active');
+  document.getElementById('sd'+n).classList.add('visible');
+  currentStep=n;
+}
+
+// ── Objections
+function toggleObjCard(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
