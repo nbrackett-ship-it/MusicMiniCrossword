@@ -1,0 +1,546 @@
+{
+  "id": "cross-fest-2026-03-20",
+  "title": "Cross Fest",
+  "info": "March 20, 2026 • 11×11",
+  "gridSize": {
+    "rows": 11,
+    "cols": 11
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "across",
+      "word": "GRASS"
+    },
+    {
+      "number": 6,
+      "row": 0,
+      "col": 6,
+      "direction": "across",
+      "word": "CLASP"
+    },
+    {
+      "number": 11,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "AETNA"
+    },
+    {
+      "number": 12,
+      "row": 1,
+      "col": 6,
+      "direction": "across",
+      "word": "OASIS"
+    },
+    {
+      "number": 13,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "GLASTONBURY"
+    },
+    {
+      "number": 15,
+      "row": 3,
+      "col": 4,
+      "direction": "across",
+      "word": "IND"
+    },
+    {
+      "number": 16,
+      "row": 4,
+      "col": 0,
+      "direction": "across",
+      "word": "MEESE"
+    },
+    {
+      "number": 20,
+      "row": 4,
+      "col": 6,
+      "direction": "across",
+      "word": "ECARD"
+    },
+    {
+      "number": 25,
+      "row": 5,
+      "col": 0,
+      "direction": "across",
+      "word": "MDMA"
+    },
+    {
+      "number": 26,
+      "row": 5,
+      "col": 7,
+      "direction": "across",
+      "word": "OLAY"
+    },
+    {
+      "number": 27,
+      "row": 6,
+      "col": 0,
+      "direction": "across",
+      "word": "ASSTS"
+    },
+    {
+      "number": 29,
+      "row": 6,
+      "col": 6,
+      "direction": "across",
+      "word": "GETME"
+    },
+    {
+      "number": 30,
+      "row": 7,
+      "col": 4,
+      "direction": "across",
+      "word": "CTR"
+    },
+    {
+      "number": 32,
+      "row": 8,
+      "col": 0,
+      "direction": "across",
+      "word": "INDIOVALLEY"
+    },
+    {
+      "number": 40,
+      "row": 9,
+      "col": 0,
+      "direction": "across",
+      "word": "ODELL"
+    },
+    {
+      "number": 41,
+      "row": 9,
+      "col": 6,
+      "direction": "across",
+      "word": "POSSE"
+    },
+    {
+      "number": 42,
+      "row": 10,
+      "col": 0,
+      "direction": "across",
+      "word": "SAEED"
+    },
+    {
+      "number": 43,
+      "row": 10,
+      "col": 6,
+      "direction": "across",
+      "word": "ENDER"
+    },
+
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "down",
+      "word": "GAG"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "REL"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "ATA"
+    },
+    {
+      "number": 4,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "SNS"
+    },
+    {
+      "number": 5,
+      "row": 0,
+      "col": 4,
+      "direction": "down",
+      "word": "SATIE"
+    },
+    {
+      "number": 6,
+      "row": 0,
+      "col": 6,
+      "direction": "down",
+      "word": "CONDE"
+    },
+    {
+      "number": 7,
+      "row": 0,
+      "col": 7,
+      "direction": "down",
+      "word": "LAB"
+    },
+    {
+      "number": 8,
+      "row": 0,
+      "col": 8,
+      "direction": "down",
+      "word": "ASU"
+    },
+    {
+      "number": 9,
+      "row": 0,
+      "col": 9,
+      "direction": "down",
+      "word": "SIR"
+    },
+    {
+      "number": 10,
+      "row": 0,
+      "col": 10,
+      "direction": "down",
+      "word": "PSY"
+    },
+    {
+      "number": 14,
+      "row": 2,
+      "col": 5,
+      "direction": "down",
+      "word": "ON"
+    },
+    {
+      "number": 16,
+      "row": 4,
+      "col": 0,
+      "direction": "down",
+      "word": "MMA"
+    },
+    {
+      "number": 17,
+      "row": 4,
+      "col": 1,
+      "direction": "down",
+      "word": "EDS"
+    },
+    {
+      "number": 18,
+      "row": 4,
+      "col": 2,
+      "direction": "down",
+      "word": "EMS"
+    },
+    {
+      "number": 19,
+      "row": 4,
+      "col": 3,
+      "direction": "down",
+      "word": "SAT"
+    },
+    {
+      "number": 21,
+      "row": 4,
+      "col": 7,
+      "direction": "down",
+      "word": "COE"
+    },
+    {
+      "number": 22,
+      "row": 4,
+      "col": 8,
+      "direction": "down",
+      "word": "ALT"
+    },
+    {
+      "number": 23,
+      "row": 4,
+      "col": 9,
+      "direction": "down",
+      "word": "RAM"
+    },
+    {
+      "number": 24,
+      "row": 4,
+      "col": 10,
+      "direction": "down",
+      "word": "DYE"
+    },
+    {
+      "number": 28,
+      "row": 6,
+      "col": 4,
+      "direction": "down",
+      "word": "SCOLD"
+    },
+    {
+      "number": 29,
+      "row": 6,
+      "col": 6,
+      "direction": "down",
+      "word": "GRAPE"
+    },
+    {
+      "number": 31,
+      "row": 7,
+      "col": 5,
+      "direction": "down",
+      "word": "TV"
+    },
+    {
+      "number": 32,
+      "row": 8,
+      "col": 0,
+      "direction": "down",
+      "word": "IOS"
+    },
+    {
+      "number": 33,
+      "row": 8,
+      "col": 1,
+      "direction": "down",
+      "word": "NDA"
+    },
+    {
+      "number": 34,
+      "row": 8,
+      "col": 2,
+      "direction": "down",
+      "word": "DEE"
+    },
+    {
+      "number": 35,
+      "row": 8,
+      "col": 3,
+      "direction": "down",
+      "word": "ILE"
+    },
+    {
+      "number": 36,
+      "row": 8,
+      "col": 7,
+      "direction": "down",
+      "word": "LON"
+    },
+    {
+      "number": 37,
+      "row": 8,
+      "col": 8,
+      "direction": "down",
+      "word": "LSD"
+    },
+    {
+      "number": 38,
+      "row": 8,
+      "col": 9,
+      "direction": "down",
+      "word": "ESE"
+    },
+    {
+      "number": 39,
+      "row": 8,
+      "col": 10,
+      "direction": "down",
+      "word": "YER"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "’60s term for weed"
+      },
+      {
+        "number": 6,
+        "text": "What a wristband does around your arm"
+      },
+      {
+        "number": 11,
+        "text": "Sicilian volcano (and insurance company)"
+      },
+      {
+        "number": 12,
+        "text": "2025’s biggest rock tour"
+      },
+      {
+        "number": 13,
+        "text": "Infamously muddy UK fest"
+      },
+      {
+        "number": 15,
+        "text": "Abbrev. for label outside the majors system"
+      },
+      {
+        "number": 16,
+        "text": "Elder George Bush Attorney General (not plural for mouse)"
+      },
+      {
+        "number": 20,
+        "text": "Digital invite?"
+      },
+      {
+        "number": 25,
+        "text": "Molly"
+      },
+      {
+        "number": 26,
+        "text": "Oil of …"
+      },
+      {
+        "number": 27,
+        "text": "Exec helpers, for short"
+      },
+      {
+        "number": 29,
+        "text": "“I feel understood by you — you ______”"
+      },
+      {
+        "number": 30,
+        "text": "Ad-performance metric (abbreviation)"
+      },
+      {
+        "number": 32,
+        "text": "Coachella’s geographic setting"
+      },
+      {
+        "number": 40,
+        "text": "UK singer-songwriter Tom of “Another Love”"
+      },
+      {
+        "number": 41,
+        "text": "Entourage in classic hip-hop"
+      },
+      {
+        "number": 42,
+        "text": "Arabic name meaning “happy” or “fortunate”"
+      },
+      {
+        "number": 43,
+        "text": "Colloquial for finale, as in “season ____”"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "A joke, or minor choke"
+      },
+      {
+        "number": 2,
+        "text": "Abbr. for something connected"
+      },
+      {
+        "number": 3,
+        "text": "More precise than estimated time of arrival (abbr.)"
+      },
+      {
+        "number": 4,
+        "text": "Online platform where users create profiles, connect with others (abbreviations)"
+      },
+      {
+        "number": 5,
+        "text": "Composer Eric"
+      },
+      {
+        "number": 6,
+        "text": "Publisher Nast"
+      },
+      {
+        "number": 7,
+        "text": "A place you go back to, scientist-style"
+      },
+      {
+        "number": 8,
+        "text": "Arizona school (abbr)"
+      },
+      {
+        "number": 9,
+        "text": "Honorific before “Paul”"
+      },
+      {
+        "number": 10,
+        "text": "“Gangnam Style” star"
+      },
+      {
+        "number": 14,
+        "text": "Performing, as in “___ stage”"
+      },
+      {
+        "number": 16,
+        "text": "Violent sport (abbr)"
+      },
+      {
+        "number": 17,
+        "text": "Multiple Edwards?"
+      },
+      {
+        "number": 18,
+        "text": "Medics"
+      },
+      {
+        "number": 19,
+        "text": "Settle into a chair, past tense"
+      },
+      {
+        "number": 21,
+        "text": "“You Never Even Called Me By My Name” singer"
+      },
+      {
+        "number": 22,
+        "text": "A type of rock (early Coachella specialty)"
+      },
+      {
+        "number": 23,
+        "text": "’70s McCartney album"
+      },
+      {
+        "number": 24,
+        "text": "What a hippie shirt is soaked in"
+      },
+      {
+        "number": 28,
+        "text": "Finger-wagger"
+      },
+      {
+        "number": 29,
+        "text": "Fruit of the vine"
+      },
+      {
+        "number": 31,
+        "text": "Preceded by “Peak” thanks to shows like “The Wire”"
+      },
+      {
+        "number": 32,
+        "text": "Runs most people’s phone software"
+      },
+      {
+        "number": 33,
+        "text": "Sign one and be quiet"
+      },
+      {
+        "number": 34,
+        "text": "Twisted Sister frontman's first name"
+      },
+      {
+        "number": 35,
+        "text": "“... de la Cité” (Paris)"
+      },
+      {
+        "number": 36,
+        "text": "Goes with latitude (abbr.)"
+      },
+      {
+        "number": 37,
+        "text": "Classic rock fest mind-opener"
+      },
+      {
+        "number": 38,
+        "text": "Chicano slang for dude"
+      },
+      {
+        "number": 39,
+        "text": "Scrappy way to say “your”"
+      }
+    ]
+  }
+}
