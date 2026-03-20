@@ -139,11 +139,11 @@ Safe to remove after: 2026-02-10
     }
 
     .cell-number{
-      position:absolute; top:2px; left:3px;
-      font-size:clamp(10px, 2.8vw, 14px);
-      font-weight:700; color:#444; pointer-events:none;
+    position:absolute; top:2px; left:3px;
+    font-size:var(--cell-number-size, clamp(10px, 2.8vw, 14px));
+    font-weight:700; color:#444; pointer-events:none;
     }
-
+    
     .cell.is-active{ outline:2px solid var(--blue); outline-offset:-2px; }
     .cell.is-word { background:#e8e8e8; }
     .cell.is-focus { background:#d8d8d8; }
@@ -152,8 +152,6 @@ Safe to remove after: 2026-02-10
       #stage{ padding:20px 20px 20px; }
       #sticky-clue-bar { margin-bottom: 14px; }
       .cell .glyph{ font-size: 30px; }
-      .cell-number{ font-size: 15px; }
-    }
 
     /* Hidden IME input: summons keyboard without autofill widget */
     #ime{
@@ -398,41 +396,49 @@ Safe to remove after: 2026-02-10
       // Size grid to fit available width/height. On mobile, when keyboard is open,
       // visualViewport.height shrinks; we use that to ensure the clue stays visible.
       sizeGrid(){
-        if (!this.p) return;
-        const cols = this.cols;
+      if (!this.p) return;
+      const cols = this.cols;
 
-        // Available width inside stage
-        const stageRect = this.stageEl.getBoundingClientRect();
-        const availableWidth = Math.floor(stageRect.width - 20); // padding fudge
+      // Available width inside stage
+      const stageRect = this.stageEl.getBoundingClientRect();
+      const availableWidth = Math.floor(stageRect.width - 20); // padding fudge
 
-        // Available height: viewport minus header+clue bar and padding
-        const vpH = window.visualViewport ? Math.floor(window.visualViewport.height) : window.innerHeight;
-        const stageTop = stageRect.top; // already at 0 in most cases, but safe
-        const barRect = this.barEl.getBoundingClientRect();
-        const barH = Math.ceil(barRect.height);
+      // Available height: viewport minus header+clue bar and padding
+      const vpH = window.visualViewport ? Math.floor(window.visualViewport.height) : window.innerHeight;
+      const stageTop = stageRect.top; // already at 0 in most cases, but safe
+      const barRect = this.barEl.getBoundingClientRect();
+      const barH = Math.ceil(barRect.height);
 
-        // Give the grid a comfortable margin below bar
-        const verticalPad = 24;
+      // Give the grid a comfortable margin below bar
+      const verticalPad = 24;
 
-        // How tall could the square grid be without getting under the keyboard/clue
-        const availableHeight = Math.max(0, vpH - stageTop - barH - verticalPad - 8);
+      // How tall could the square grid be without getting under the keyboard/clue
+      const availableHeight = Math.max(0, vpH - stageTop - barH - verticalPad - 8);
 
-        // Cap grid by configured max widths
-        const maxGridPx = (window.innerWidth < 900)
-          ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gridMaxMobile') || '420', 10)
-          : parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gridMax') || '560', 10);
+      // Cap grid by configured max widths
+      const maxGridPx = (window.innerWidth < 900)
+        ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gridMaxMobile') || '420', 10)
+        : parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gridMax') || '560', 10);
 
-        // Compute cell size from width constraint and height constraint, then choose the smaller
-        const cellFromWidth  = Math.floor(Math.min(availableWidth, maxGridPx) / cols);
-        const cellFromHeight = Math.floor(availableHeight / this.rows);
-        const cell = Math.max(16, Math.min(cellFromWidth, cellFromHeight)); // never microscopic
+      // Compute cell size from width constraint and height constraint, then choose the smaller
+      const cellFromWidth  = Math.floor(Math.min(availableWidth, maxGridPx) / cols);
+      const cellFromHeight = Math.floor(availableHeight / this.rows);
+      const cell = Math.max(16, Math.min(cellFromWidth, cellFromHeight)); // never microscopic
 
-        const finalWidth = cell * cols;
-        const finalHeight = cell * this.rows;
-        this.gridEl.style.width = `${finalWidth}px`;
-        this.gridEl.style.height = `${finalHeight}px`;
-      }
+      // Make clue numbers smaller on denser grids like 11x11,
+      // while leaving smaller minis essentially unchanged.
+      const isDenseGrid = this.rows >= 11 || this.cols >= 11;
+      const numberSize = isDenseGrid
+        ? Math.max(7, Math.floor(cell * 0.18))
+        : Math.max(10, Math.floor(cell * 0.28));
 
+  document.documentElement.style.setProperty('--cell-number-size', `${numberSize}px`);
+
+  const finalWidth = cell * cols;
+  const finalHeight = cell * this.rows;
+  this.gridEl.style.width = `${finalWidth}px`;
+  this.gridEl.style.height = `${finalHeight}px`;
+}
       onCellTap(r,c){
         // Toggle direction on repeat taps at intersections
         if (this.active && this.active.r===r && this.active.c===c){
@@ -582,8 +588,26 @@ Safe to remove after: 2026-02-10
       stopTimer(){ if (this.timerId){ clearInterval(this.timerId); this.timerId=null; } }
       resetTimer(){ this.stopTimer(); this.startMs=null; this.elapsed=0; }
       fmt(s){ const m=Math.floor(s/60), ss=String(s%60).padStart(2,'0'); return `${m}:${ss}`; }
-      rank(s){ if (s<=30) return ["★★★★★","Instant Classic"]; if (s<=60) return ["★★★★☆","Truly Great"]; if (s<=90) return ["★★★★","Excellent"]; if (s<=120) return ["★★★☆","Damn Good"]; if (s<=240) return ["★★★","Good"]; return ["★★","Decent Effort"]; }
+      
+      rank(s){
+        const isLargeGrid = this.rows >= 11 || this.cols >= 11;
 
+        if (isLargeGrid) {
+        if (s <= 90)  return ["★★★★★","Instant Classic"];
+        if (s <= 180) return ["★★★★☆","Truly Great"];
+        if (s <= 300) return ["★★★★","Excellent"];
+        if (s <= 420) return ["★★★☆","Damn Good"];
+        if (s <= 720) return ["★★★","Good"];
+        return ["★★","Decent Effort"];
+      }
+
+        if (s <= 30)  return ["★★★★★","Instant Classic"];
+        if (s <= 60)  return ["★★★★☆","Truly Great"];
+        if (s <= 90)  return ["★★★★","Excellent"];
+        if (s <= 120) return ["★★★☆","Damn Good"];
+        if (s <= 240) return ["★★★","Good"];
+        return ["★★","Decent Effort"];
+      }
       /* Persistence */
       storageKey(){ return `mm-progress:${this.p.id}`; }
       saveProgress(){
