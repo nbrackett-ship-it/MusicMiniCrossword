@@ -1,0 +1,149 @@
+{
+  "id": "blog-era-rap-2026-03-27",
+  "title": "Blog Era Rap",
+  "info": "March 27, 2026 • 6×6",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "across",
+      "word": "CUDI"
+    },
+    {
+      "number": 5,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "OPENS"
+    },
+    {
+      "number": 7,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "LEBRON"
+    },
+    {
+      "number": 9,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "ENROBE"
+    },
+    {
+      "number": 10,
+      "row": 4,
+      "col": 1,
+      "direction": "across",
+      "word": "DIMER"
+    },
+    {
+      "number": 11,
+      "row": 5,
+      "col": 2,
+      "direction": "across",
+      "word": "SERF"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "down",
+      "word": "COLE"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "UPEND"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "DEBRIS"
+    },
+    {
+      "number": 4,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "INRO"
+    },
+    {
+      "number": 6,
+      "row": 1,
+      "col": 4,
+      "direction": "down",
+      "word": "SOBER"
+    },
+    {
+      "number": 8,
+      "row": 2,
+      "col": 5,
+      "direction": "down",
+      "word": "NERF"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "'Man on the Moon' rapper, first name Scott"
+      },
+      {
+        "number": 5,
+        "text": "Gets the show going"
+      },
+      {
+        "number": 7,
+        "text": "Blog-era NBA great on first-name basis with world"
+      },
+      {
+        "number": 9,
+        "text": "Dress elaborately, like a king in a vestment"
+      },
+      {
+        "number": 10,
+        "text": "Hoops slang for accurate pass (twice as good as a nickler)"
+      },
+      {
+        "number": 11,
+        "text": "Medieval laborer, bound to the land"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "Dreamville founder; first name J."
+      },
+      {
+        "number": 2,
+        "text": "Turn on its head"
+      },
+      {
+        "number": 3,
+        "text": "Rubble"
+      },
+      {
+        "number": 4,
+        "text": "When in ___ (act like a local)"
+      },
+      {
+        "number": 6,
+        "text": "A type of reflection (not drunk)"
+      },
+      {
+        "number": 8,
+        "text": "Weaken, in gamer slang (like a foam dart)"
+      }
+    ]
+  }
+}
