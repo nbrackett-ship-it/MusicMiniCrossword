@@ -1,0 +1,34 @@
+{
+  "id": "music-city-2026-04-10",
+  "title": "Music City",
+  "info": "April 10, 2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "HANK" },
+    { "number": 5, "row": 1, "col": 0, "direction": "across", "word": "ARIEL" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "RETIE" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "TARTT" },
+    { "number": 9, "row": 4, "col": 1, "direction": "across", "word": "SOHO" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "HART" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "AREAS" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "NITRO" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "KEITH" },
+    { "number": 6, "row": 1, "col": 4, "direction": "down", "word": "LETO" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "In Nashville, you only need the first name, plus Sr. or Jr." },
+      { "number": 5, "text": "L.A. indie eccentric Pink, or Disney mermaid" },
+      { "number": 7, "text": "Do up again" },
+      { "number": 8, "text": "'Goldfinch' author" },
+      { "number": 9, "text": "London neighborhood, gave NYC hood its name" }
+    ],
+    "down": [
+      { "number": 1, "text": "'80s pop guy Corey" },
+      { "number": 2, "text": "Parts of a town, country or the world" },
+      { "number": 3, "text": "Type of cold brew" },
+      { "number": 4, "text": "Urban legend?" },
+      { "number": 6, "text": "30 Seconds to Mars dude" }
+    ]
+  }
+}
