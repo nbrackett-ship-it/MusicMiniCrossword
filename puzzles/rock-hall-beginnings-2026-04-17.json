@@ -1,0 +1,37 @@
+{
+  "id": "rock-hall-beginnings-2026-04-17",
+  "title": "Rock Hall Beginnings",
+  "info": "April 17, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "ECIG" },
+    { "number": 5, "row": 1, "col": 0, "direction": "across", "word": "AHMET" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "RUPEE" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "SCENE" },
+    { "number": 9, "row": 4, "col": 1, "direction": "across", "word": "KIAS" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "EARS" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "CHUCK" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "IMPEI" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "GEENA" },
+    { "number": 6, "row": 1, "col": 4, "direction": "down", "word": "TEES" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Casual term for vaping device" },
+      { "number": 5, "text": "Atlantic Records and Rock Hall co-founder Ertegun" },
+      { "number": 7, "text": "Delhi denomination" },
+      { "number": 8, "text": "Where it's happening" },
+      { "number": 9, "text": "Multiple cars from one Korean brand" }
+    ],
+    "down": [
+      { "number": 1, "text": "Every A&R person claims to have these" },
+      { "number": 2, "text": "First name of 1950s giant in first Rock Hall class" },
+      { "number": 3, "text": "Architect of Rock Hall's Cleveland digs" },
+      { "number": 4, "text": "Thelma & Louise Davis" },
+      { "number": 6, "text": "Golf starting points" }
+    ]
+  }
+}
