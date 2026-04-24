@@ -1,0 +1,37 @@
+{
+  "id": "venues-2026-04-24",
+  "title": "Venues",
+  "info": "April 24, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "MSG" },
+    { "number": 4, "row": 1, "col": 0, "direction": "across", "word": "SALVO" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "GREEK" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "TANIA" },
+    { "number": 9, "row": 4, "col": 2, "direction": "across", "word": "SLY" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down",   "word": "MSGT" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down",   "word": "SARA" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down",   "word": "GLENS" },
+    { "number": 5, "row": 1, "col": 3, "direction": "down",   "word": "VEIL" },
+    { "number": 6, "row": 1, "col": 4, "direction": "down",   "word": "OKAY" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Home of Billy Joel's epic residency (just watch out for the cameras)" },
+      { "number": 4, "text": "Opening broadside" },
+      { "number": 7, "text": "LA hillside amphitheater in Griffith Park" },
+      { "number": 8, "text": "Brazilian jazz singer, last name Maria" },
+      { "number": 9, "text": "Soul/funk legend (and former SF DJ)" }
+    ],
+    "down": [
+      { "number": 1, "text": "Master Sgt. (abbr.)" },
+      { "number": 2, "text": "First name of \"Love Song\" singer and Girls5Eva actress" },
+      { "number": 3, "text": "Scottish highland valleys" },
+      { "number": 5, "text": "Bridal accessory, or what a good mix buries the vocals behind" },
+      { "number": 6, "text": "Thumbs up" }
+    ]
+  }
+}
