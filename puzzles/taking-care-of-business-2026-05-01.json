@@ -1,0 +1,34 @@
+{
+  "id": "taking-care-of-business-2026-05-01",
+  "title": "Taking Care of Business",
+  "info": "May 1, 2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 2, "direction": "across", "word": "BTO" },
+    { "number": 4, "row": 1, "col": 0, "direction": "across", "word": "ACORN" },
+    { "number": 6, "row": 2, "col": 0, "direction": "across", "word": "MONEY" },
+    { "number": 7, "row": 3, "col": 0, "direction": "across", "word": "FEDEX" },
+    { "number": 8, "row": 4, "col": 0, "direction": "across", "word": "MDS" },
+    { "number": 1, "row": 0, "col": 2, "direction": "down", "word": "BONDS" },
+    { "number": 2, "row": 0, "col": 3, "direction": "down", "word": "TREE" },
+    { "number": 3, "row": 0, "col": 4, "direction": "down", "word": "ONYX" },
+    { "number": 4, "row": 1, "col": 0, "direction": "down", "word": "AMFM" },
+    { "number": 5, "row": 1, "col": 1, "direction": "down", "word": "COED" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "\"Takin' Care of Business\" band (abbr.)" },
+      { "number": 4, "text": "Squirrel asset" },
+      { "number": 6, "text": "Pink Floyd song with cash register intro" },
+      { "number": 7, "text": "UPS competitor" },
+      { "number": 8, "text": "Hospital workers (abbr.)" }
+    ],
+    "down": [
+      { "number": 1, "text": "Fixed-income financial instruments" },
+      { "number": 2, "text": "Steve Miller wants to shake this in \"The Joker\"" },
+      { "number": 3, "text": "\"Slam\" hip-hop group" },
+      { "number": 4, "text": "Both radio dials" },
+      { "number": 5, "text": "Old-fashioned term for both genders allowed" }
+    ]
+  }
+}
