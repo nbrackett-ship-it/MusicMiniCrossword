@@ -1,0 +1,164 @@
+name: Publish Puzzle
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Display title (e.g. "Taking Care of Business")'
+        required: true
+        type: string
+      theme:
+        description: 'Theme label (e.g. "Money & Business")'
+        required: true
+        type: string
+      date:
+        description: 'Puzzle date (YYYY-MM-DD)'
+        required: true
+        type: string
+      teaser:
+        description: '1-2 sentence teaser copy for the newsletter'
+        required: true
+        type: string
+      puzzle_json:
+        description: 'Full JSON content of the puzzle'
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      # ── Step 1: Derive and validate slug ───────────────────────────────────
+      - name: Derive slug from puzzle JSON
+        id: slug
+        env:
+          PUZZLE_JSON: ${{ inputs.puzzle_json }}
+        run: |
+          SLUG=$(echo "$PUZZLE_JSON" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['id'])")
+          if [ -z "$SLUG" ]; then
+            echo "::error::Could not extract 'id' field from puzzle_json."
+            exit 1
+          fi
+          if ! echo "$SLUG" | grep -qE '^[a-z0-9-]+-[0-9]{4}-[0-9]{2}-[0-9]{2}$'; then
+            echo "::error::Slug '$SLUG' does not match required pattern [a-z0-9-]+-YYYY-MM-DD"
+            exit 1
+          fi
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "Slug: $SLUG"
+
+      # ── Step 2: Checkout repo ───────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # ── Step 3: Write puzzle JSON file ─────────────────────────────────────
+      - name: Write puzzle JSON
+        env:
+          PUZZLE_JSON: ${{ inputs.puzzle_json }}
+          SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          mkdir -p puzzles
+          printf '%s' "$PUZZLE_JSON" > "puzzles/${SLUG}.json"
+          git add "puzzles/${SLUG}.json"
+          git diff --cached --quiet && echo "No changes to puzzle JSON" || git commit -m "Add puzzle: ${SLUG}"
+
+      # ── Step 4: Update index.html (idempotent) ─────────────────────────────
+      - name: Update puzzle index
+        env:
+          SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          if grep -qF "'${SLUG}'" index.html; then
+            echo "Slug already present in index.html — skipping."
+          else
+            # Insert slug on a new line immediately after `this.puzzleIds = [`
+            sed -i "s|this\.puzzleIds = \[|this.puzzleIds = [\n            '${SLUG}',|" index.html
+            git add index.html
+            git commit -m "Add ${SLUG} to puzzle index"
+          fi
+
+      # ── Step 5: Push accumulated commits ───────────────────────────────────
+      - name: Push commits
+        run: git push
+
+      # ── Step 6: Wait for GitHub Pages to deploy ────────────────────────────
+      - name: Wait for Pages deployment
+        run: |
+          echo "Sleeping 45 seconds for GitHub Pages to deploy..."
+          sleep 45
+
+      # ── Step 7: Screenshot via Screenshotone API ───────────────────────────
+      - name: Screenshot puzzle
+        env:
+          SCREENSHOTONE_KEY: ${{ secrets.SCREENSHOTONE_KEY }}
+          SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          URL="https://api.screenshotone.com/take"
+          TARGET="https://crossword.stems.media/?puzzle=${SLUG}&v=1"
+          mkdir -p images
+          HTTP_CODE=$(curl -s -o "images/${SLUG}.png" -w "%{http_code}" \
+            "${URL}?access_key=${SCREENSHOTONE_KEY}&url=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$TARGET")&viewport_width=800&viewport_height=600&full_page=false&format=png&block_ads=true&block_cookie_banners=true")
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::Screenshotone API returned HTTP $HTTP_CODE"
+            cat "images/${SLUG}.png"
+            exit 1
+          fi
+          echo "Screenshot saved: images/${SLUG}.png (HTTP $HTTP_CODE)"
+          git add "images/${SLUG}.png"
+          git commit -m "Add screenshot: ${SLUG}"
+          git push
+
+      # ── Step 8: Generate Beehiiv HTML snippet ──────────────────────────────
+      - name: Generate Beehiiv snippet
+        uses: actions/github-script@v7
+        env:
+          SLUG: ${{ steps.slug.outputs.slug }}
+        with:
+          script: |
+            const slug   = process.env.SLUG;
+            const title  = `${{ inputs.title }}`;
+            const theme  = `${{ inputs.theme }}`;
+            const teaser = `${{ inputs.teaser }}`;
+            const dateStr = `${{ inputs.date }}`;  // YYYY-MM-DD
+
+            // Format date as "Month D, YYYY"
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const monthName = new Date(year, month - 1, 1)
+              .toLocaleString('en-US', { month: 'long' });
+            const formattedDate = `${monthName} ${day}, ${year}`;
+
+            const repoOwner = context.repo.owner;
+            const repoName  = context.repo.repo;
+
+            const html = `<div style="border:1px solid #D8D2C6;background:#FFFDF8;padding:22px 24px;"><p style="font-family:'Courier New',Courier,monospace;font-size:22px;font-weight:700;line-height:1.15;color:#111111;margin:0 0 6px 0;">${title}</p><p style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#777777;margin:0 0 18px 0;">${theme} • ${formattedDate} • 5x5</p><table width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td width="48%" valign="top" style="padding-right:16px;"><img src="https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/images/${slug}.png" width="260" style="width:100%;display:block;border:2px solid #1B1B1B;" alt="Crossword grid"></td><td width="52%" valign="middle" style="padding-left:4px;"><p style="font-family:Inter,Arial,sans-serif;font-size:15px;line-height:1.6;color:#1B1B1B;margin:0 0 20px 0;">${teaser}</p><a href="https://crossword.stems.media/?email={{email}}&puzzle=${slug}" style="display:inline-block;background:#0F2E57;color:#ffffff;font-family:'Courier New',Courier,monospace;font-weight:700;font-size:13px;letter-spacing:.04em;text-decoration:none;padding:11px 18px;">PLAY NOW</a></td></tr></tbody></table></div>`;
+
+            // Write to output file
+            const fs = require('fs');
+            fs.mkdirSync('output', { recursive: true });
+            fs.writeFileSync(`output/${slug}-beehiiv.html`, html, 'utf8');
+
+            // Write job summary
+            await core.summary
+              .addHeading(`Beehiiv snippet: ${slug}`, 2)
+              .addRaw('<details><summary>Copy HTML</summary>\n\n```html\n' + html + '\n```\n\n</details>\n\n')
+              .addRaw('<hr>\n\n<b>Preview:</b>\n\n')
+              .addRaw(html)
+              .write();
+
+            core.setOutput('html', html);
+
+      - name: Commit Beehiiv snippet
+        env:
+          SLUG: ${{ steps.slug.outputs.slug }}
+        run: |
+          git add "output/${SLUG}-beehiiv.html"
+          git diff --cached --quiet && echo "No changes" || git commit -m "Add Beehiiv snippet: ${SLUG}"
+          git push

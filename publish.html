@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publish Puzzle — Stems</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #1B1B1B;
+      --surface:   #262626;
+      --surface-2: #2E2E2E;
+      --border:    #404040;
+      --border-focus: #B8860B;
+      --gold:      #C9920C;
+      --gold-dim:  #9A6E09;
+      --text:      #F0ECE4;
+      --text-2:    #B8B4AC;
+      --muted:     #7A7870;
+      --mono:      'Courier New', Courier, monospace;
+      --sans:      Inter, Arial, sans-serif;
+      --radius:    3px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 96px;
+    }
+
+    /* ── Header ── */
+    header {
+      width: 100%;
+      max-width: 620px;
+      margin-bottom: 32px;
+    }
+
+    header .wordmark {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.01em;
+      line-height: 1.15;
+    }
+
+    header p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-top: 8px;
+      line-height: 1.55;
+    }
+
+    .divider {
+      width: 100%;
+      max-width: 620px;
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 32px;
+    }
+
+    /* ── Form layout ── */
+    form {
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-bottom: 32px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 24px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-heading span {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Fields ── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: .01em;
+    }
+
+    input, textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      padding: 11px 13px;
+      width: 100%;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--muted);
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(184,134,11,.15);
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(.6) sepia(1) saturate(2) hue-rotate(10deg);
+      cursor: pointer;
+      opacity: .7;
+    }
+
+    textarea.mono {
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .hint code {
+      font-family: var(--mono);
+      font-size: 11px;
+      background: var(--surface-2);
+      color: var(--text-2);
+      padding: 1px 5px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+    }
+
+    .error-inline {
+      font-size: 13px;
+      color: #E06060;
+      font-family: var(--mono);
+      display: none;
+    }
+
+    .error-inline.visible {
+      display: block;
+    }
+
+    /* ── Submit button ── */
+    button[type="submit"] {
+      background: var(--gold);
+      color: #0F0F0F;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: background .15s, opacity .15s;
+      align-self: flex-start;
+    }
+
+    button[type="submit"]:hover { background: #DDA820; }
+    button[type="submit"]:disabled { opacity: .35; cursor: not-allowed; }
+
+    /* ── Success state ── */
+    #success {
+      display: none;
+      width: 100%;
+      max-width: 620px;
+      background: var(--surface);
+      border: 1px solid var(--gold-dim);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+    }
+
+    #success.visible { display: block; }
+
+    #success h2 {
+      font-family: var(--mono);
+      font-size: 18px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    #success p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-bottom: 8px;
+    }
+
+    #success a {
+      color: var(--gold);
+      text-decoration: underline;
+    }
+
+    #countdown {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── API error ── */
+    #api-error {
+      display: none;
+      background: #2E1A1A;
+      border: 1px solid #6A3030;
+      border-left: 4px solid #E06060;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: #E88080;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    #api-error.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark">Stems × Crossword</div>
+  <h1>Publish Puzzle</h1>
+  <p>Triggers the GitHub Actions workflow to publish, screenshot, and generate the newsletter snippet.</p>
+</header>
+
+<div class="divider"></div>
+
+<form id="publish-form" novalidate>
+
+  <!-- Puzzle content -->
+  <div class="section">
+    <div class="section-heading"><span>Puzzle</span></div>
+
+    <div class="row-2">
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" type="text" placeholder="Taking Care of Business" required />
+      </div>
+      <div class="field">
+        <label for="theme">Theme</label>
+        <input id="theme" type="text" placeholder="Money & Business" required />
+      </div>
+    </div>
+
+    <div class="field" style="max-width:220px">
+      <label for="date">Date</label>
+      <input id="date" type="date" required />
+    </div>
+
+    <div class="field">
+      <label for="teaser">Teaser Copy</label>
+      <textarea id="teaser" rows="2" placeholder="A short 1-2 sentence teaser for the newsletter." required></textarea>
+    </div>
+
+    <div class="field">
+      <label for="puzzle-json">Puzzle JSON</label>
+      <textarea id="puzzle-json" class="mono" rows="8" placeholder='{"id":"my-puzzle-2026-05-08","title":...}' required></textarea>
+      <span class="error-inline" id="json-error"></span>
+      <span class="hint">The <code>id</code> field will be used as the slug.</span>
+    </div>
+  </div>
+
+  <!-- GitHub config -->
+  <div class="section">
+    <div class="section-heading"><span>GitHub</span></div>
+
+    <div class="row-2">
+      <div class="field">
+        <label for="gh-owner">Repo Owner</label>
+        <input id="gh-owner" type="text" placeholder="nbrackett-ship-it" required />
+      </div>
+      <div class="field">
+        <label for="gh-repo">Repo Name</label>
+        <input id="gh-repo" type="text" placeholder="MusicMiniCrossword" required />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="gh-token">Personal Access Token</label>
+      <input id="gh-token" type="password" placeholder="github_pat_…" required autocomplete="off" />
+      <span class="hint">Stored locally in your browser. Never sent anywhere except the GitHub API.</span>
+    </div>
+  </div>
+
+  <div id="api-error"></div>
+
+  <button type="submit" id="submit-btn">Publish Puzzle</button>
+
+</form>
+
+<div id="success">
+  <h2>Puzzle dispatched!</h2>
+  <p id="success-slug"></p>
+  <p><a id="actions-link" href="#" target="_blank" rel="noopener">View Actions run →</a></p>
+  <div id="countdown"></div>
+</div>
+
+<script>
+  // ── LocalStorage persistence ────────────────────────────────────────────
+  const LS_TOKEN = 'stems_gh_token';
+  const LS_OWNER = 'stems_gh_owner';
+  const LS_REPO  = 'stems_gh_repo';
+
+  const $token = document.getElementById('gh-token');
+  const $owner = document.getElementById('gh-owner');
+  const $repo  = document.getElementById('gh-repo');
+
+  if (localStorage.getItem(LS_TOKEN)) $token.value = localStorage.getItem(LS_TOKEN);
+  if (localStorage.getItem(LS_OWNER)) $owner.value = localStorage.getItem(LS_OWNER);
+  if (localStorage.getItem(LS_REPO))  $repo.value  = localStorage.getItem(LS_REPO);
+
+  // ── Default date to next Thursday ──────────────────────────────────────
+  function nextThursday() {
+    const d = new Date();
+    const day = d.getDay(); // 0=Sun … 4=Thu
+    const daysUntil = (4 - day + 7) % 7 || 7;
+    d.setDate(d.getDate() + daysUntil);
+    return d.toISOString().slice(0, 10);
+  }
+
+  const $date = document.getElementById('date');
+  if (!$date.value) $date.value = nextThursday();
+
+  // ── Form submit ─────────────────────────────────────────────────────────
+  const form       = document.getElementById('publish-form');
+  const $submitBtn = document.getElementById('submit-btn');
+  const $jsonError = document.getElementById('json-error');
+  const $apiError  = document.getElementById('api-error');
+  const $success   = document.getElementById('success');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Clear previous errors
+    $jsonError.classList.remove('visible');
+    $apiError.classList.remove('visible');
+    $apiError.textContent = '';
+
+    const title     = document.getElementById('title').value.trim();
+    const theme     = document.getElementById('theme').value.trim();
+    const date      = $date.value.trim();
+    const teaser    = document.getElementById('teaser').value.trim();
+    const rawJson   = document.getElementById('puzzle-json').value.trim();
+    const token     = $token.value.trim();
+    const owner     = $owner.value.trim();
+    const repo      = $repo.value.trim();
+
+    // Basic required check
+    if (!title || !theme || !date || !teaser || !rawJson || !token || !owner || !repo) {
+      $apiError.textContent = 'All fields are required.';
+      $apiError.classList.add('visible');
+      return;
+    }
+
+    // Validate JSON
+    let parsed;
+    try {
+      parsed = JSON.parse(rawJson);
+    } catch (err) {
+      $jsonError.textContent = 'Invalid JSON: ' + err.message;
+      $jsonError.classList.add('visible');
+      return;
+    }
+
+    const slug = parsed.id;
+    if (!slug || !/^[a-z0-9-]+-\d{4}-\d{2}-\d{2}$/.test(slug)) {
+      $jsonError.textContent = 'The JSON "id" field must match: my-puzzle-YYYY-MM-DD';
+      $jsonError.classList.add('visible');
+      return;
+    }
+
+    // Persist to localStorage
+    localStorage.setItem(LS_TOKEN, token);
+    localStorage.setItem(LS_OWNER, owner);
+    localStorage.setItem(LS_REPO, repo);
+
+    $submitBtn.disabled = true;
+    $submitBtn.textContent = 'Publishing…';
+
+    try {
+      const endpoint = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/publish-puzzle.yml/dispatches`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Accept':        'application/vnd.github+json',
+          'Authorization': `Bearer ${token}`,
+          'X-GitHub-Api-Version': '2022-11-28',
+          'Content-Type':  'application/json',
+        },
+        body: JSON.stringify({
+          ref: 'main',
+          inputs: { title, theme, date, teaser, puzzle_json: rawJson },
+        }),
+      });
+
+      if (!res.ok) {
+        let msg = `GitHub API error ${res.status}`;
+        try {
+          const body = await res.json();
+          msg += ': ' + (body.message || JSON.stringify(body));
+        } catch (_) {}
+        throw new Error(msg);
+      }
+
+      // Success — show state
+      form.style.display = 'none';
+      $success.classList.add('visible');
+
+      document.getElementById('success-slug').textContent = `Slug: ${slug}`;
+      document.getElementById('actions-link').href =
+        `https://github.com/${owner}/${repo}/actions`;
+
+      // Countdown
+      let secs = 120;
+      const $cd = document.getElementById('countdown');
+      function tick() {
+        if (secs <= 0) {
+          $cd.textContent = 'HTML snippet should be ready in the Actions run summary.';
+          return;
+        }
+        const m = Math.floor(secs / 60);
+        const s = secs % 60;
+        $cd.textContent = `Snippet ready in ~${m}:${String(s).padStart(2,'0')} — check the Actions run summary.`;
+        secs--;
+        setTimeout(tick, 1000);
+      }
+      tick();
+
+    } catch (err) {
+      $apiError.textContent = err.message;
+      $apiError.classList.add('visible');
+      $submitBtn.disabled = false;
+      $submitBtn.textContent = 'Publish Puzzle';
+    }
+  });
+</script>
+</body>
+</html>
