@@ -1,0 +1,34 @@
+{
+  "id": "the-magic-number-2026-05-08",
+  "title": "The Magic Number",
+  "info": "May 8, 2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 1, "direction": "across", "word": "UMG" },
+    { "number": 4, "row": 1, "col": 0, "direction": "across", "word": "ASYET" },
+    { "number": 6, "row": 2, "col": 0, "direction": "across", "word": "PENNE" },
+    { "number": 7, "row": 3, "col": 0, "direction": "across", "word": "TRAIL" },
+    { "number": 8, "row": 4, "col": 1, "direction": "across", "word": "SHE" },
+    { "number": 1, "row": 0, "col": 1, "direction": "down", "word": "USERS" },
+    { "number": 2, "row": 0, "col": 2, "direction": "down", "word": "MYNAH" },
+    { "number": 3, "row": 0, "col": 3, "direction": "down", "word": "GENIE" },
+    { "number": 4, "row": 1, "col": 0, "direction": "down", "word": "APT" },
+    { "number": 5, "row": 1, "col": 4, "direction": "down", "word": "TEL" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Home to both Kendrick and Drake" },
+      { "number": 4, "text": "Up to now" },
+      { "number": 6, "text": "Sometimes served alla vodka" },
+      { "number": 7, "text": "___ of Dead (shortened name of '90s Austin band)" },
+      { "number": 8, "text": "Gram Parsons ballad" }
+    ],
+    "down": [
+      { "number": 1, "text": "The \"U\" in MAU (tech)" },
+      { "number": 2, "text": "With \"Birds,\" the Canadian band that got Neil Young and Rick James together" },
+      { "number": 3, "text": "First word of Christina Aguilera's first single" },
+      { "number": 4, "text": "ROSÉ and Bruno Mars tune" },
+      { "number": 5, "text": "Put this abbreviation in front of your number" }
+    ]
+  }
+}
