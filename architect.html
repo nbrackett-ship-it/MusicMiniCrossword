@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+  />
+  <title>Crossword Architect</title>
+  <style>
+    :root {
+      --ink: #171717;
+      --ink-soft: #4a4a4a;
+      --paper: #fbf7ef;
+      --panel: rgba(255, 255, 255, 0.88);
+      --line: rgba(23, 23, 23, 0.16);
+      --accent: #0e6d65;
+      --accent-deep: #094c47;
+      --warn: #b04d14;
+      --shadow: 0 18px 50px rgba(23, 23, 23, 0.1);
+      --grid-size: min(70vw, 440px);
+      --cell-gap: 1px;
+      --radius: 20px;
+      --mono: "IBM Plex Mono", "Courier New", Courier, ui-monospace, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(14, 109, 101, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(176, 77, 20, 0.14), transparent 24%),
+        linear-gradient(180deg, #f5ecd9 0%, var(--paper) 36%, #f8f4ea 100%);
+      color: var(--ink);
+      font-family: var(--mono);
+    }
+
+    body {
+      padding: 28px 18px 72px;
+    }
+
+    main {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 14px 0 10px;
+      font-size: clamp(34px, 6vw, 62px);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+    }
+
+    .hero p {
+      max-width: 780px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(340px, 520px) minmax(320px, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel-inner {
+      padding: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .section-copy {
+      margin: 0 0 14px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .toolbar,
+    .field-grid,
+    .button-row,
+    .status-row,
+    .summary-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .toolbar {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .field-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field.wide {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-soft);
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(23, 23, 23, 0.18);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--ink);
+      padding: 12px 14px;
+      min-height: 48px;
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      min-height: 48px;
+      border: 1px solid rgba(23, 23, 23, 0.18);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .check input {
+      width: 18px;
+      height: 18px;
+      min-height: auto;
+      padding: 0;
+      margin: 0;
+    }
+
+    .check span {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .button-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+
+    .button-row.compact {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+      color: white;
+      font-weight: 700;
+    }
+
+    .btn-secondary {
+      background: rgba(23, 23, 23, 0.08);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      font-weight: 700;
+    }
+
+    .builder-shell {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+    }
+
+    .architect-grid {
+      display: grid;
+      width: var(--grid-size);
+      max-width: 100%;
+      aspect-ratio: 1 / 1;
+      padding: 10px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 241, 228, 0.92));
+      border: 1px solid rgba(23, 23, 23, 0.12);
+    }
+
+    .grid-cell {
+      position: relative;
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      background: white;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .grid-cell::after {
+      content: attr(data-letter);
+      font-size: clamp(14px, 2vw, 24px);
+      opacity: 0.9;
+    }
+
+    .grid-cell.black {
+      background: #1d1d1d;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .grid-cell.black::after {
+      content: "";
+    }
+
+    .grid-cell .number {
+      position: absolute;
+      top: 4px;
+      left: 5px;
+      font-size: clamp(9px, 1vw, 11px);
+      color: rgba(23, 23, 23, 0.56);
+    }
+
+    .grid-cell.black .number {
+      display: none;
+    }
+
+    .pattern-box,
+    .json-box,
+    .slot-list,
+    .preview-meta,
+    .status-box {
+      border-radius: 16px;
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      background: rgba(255, 255, 255, 0.82);
+      padding: 14px;
+    }
+
+    .pattern-box code,
+    .preview-meta code {
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 8px;
+    }
+
+    .summary-card {
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(23, 23, 23, 0.05);
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    .summary-card span {
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .slot-list {
+      max-height: 240px;
+      overflow: auto;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .slot-list ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .slot-list li + li {
+      margin-top: 4px;
+    }
+
+    .status-row {
+      grid-template-columns: 1fr;
+      margin-top: 12px;
+    }
+
+    .status-box {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .status-box.warn {
+      border-color: rgba(176, 77, 20, 0.24);
+      background: rgba(176, 77, 20, 0.08);
+      color: #7f3308;
+    }
+
+    .status-box.ok {
+      border-color: rgba(14, 109, 101, 0.24);
+      background: rgba(14, 109, 101, 0.08);
+      color: #0b5a53;
+    }
+
+    .json-box {
+      min-height: 420px;
+    }
+
+    .option-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .option-card {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(23, 23, 23, 0.12);
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+
+    .option-card.active {
+      border-color: rgba(14, 109, 101, 0.45);
+      background: rgba(14, 109, 101, 0.08);
+    }
+
+    .option-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .option-card span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+
+    #jsonOutput {
+      min-height: 360px;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .preview-meta {
+      margin-bottom: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .preview-meta h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .preview-meta p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .inline-note {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar,
+      .field-grid,
+      .button-row.compact,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Stems Internal Tooling</div>
+      <h1>Crossword Architect</h1>
+      <p>
+        Build a rotationally symmetric 5×5 or 6×6 pattern, hand the pattern plus your music-world keywords
+        to Claude, then export a production-ready puzzle JSON that matches the live mini-crossword schema.
+      </p>
+    </section>
+
+    <section class="layout">
+      <div class="panel">
+        <div class="panel-inner">
+          <h2 class="section-title">Pattern Builder</h2>
+          <p class="section-copy">
+            Click squares to toggle white and black cells. When symmetry is on, the opposite cell flips too.
+          </p>
+
+          <div class="toolbar">
+            <div class="field">
+              <label for="gridSizeSelect">Grid Size</label>
+              <select id="gridSizeSelect">
+                <option value="5">5 × 5</option>
+                <option value="6">6 × 6</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="symmetryToggle">Symmetry</label>
+              <div class="check">
+                <input type="checkbox" id="symmetryToggle" checked />
+                <span>180-degree rotational symmetry</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="fillMode">Fill Preview</label>
+              <select id="fillMode">
+                <option value="pattern">Pattern only</option>
+                <option value="letters">Show generated letters</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="builder-shell">
+            <div id="grid" class="architect-grid" aria-label="Crossword builder grid"></div>
+          </div>
+
+          <div class="button-row compact">
+            <button class="btn-secondary" id="clearGridBtn" type="button">Clear Grid</button>
+            <button class="btn-secondary" id="seedGridBtn" type="button">Seed Mini Pattern</button>
+            <button class="btn-ghost" id="copyPatternBtn" type="button">Copy Pattern</button>
+          </div>
+
+          <div class="pattern-box" style="margin-top: 14px;">
+            <label for="patternOutput">Pattern String</label>
+            <code id="patternOutput">.....</code>
+            <div class="inline-note">
+              `.` = white cell, `#` = black cell. The string is row-major and is what the API receives.
+            </div>
+          </div>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <strong id="whiteCount">25</strong>
+              <span>White Cells</span>
+            </div>
+            <div class="summary-card">
+              <strong id="blackCount">0</strong>
+              <span>Black Cells</span>
+            </div>
+            <div class="summary-card">
+              <strong id="slotCount">10</strong>
+              <span>Total Slots</span>
+            </div>
+          </div>
+
+          <div class="slot-list" style="margin-top: 14px;">
+            <strong>Detected Slots</strong>
+            <ul id="slotList"></ul>
+          </div>
+
+          <div class="status-row">
+            <div id="gridStatus" class="status-box ok">
+              Pattern is clean. No one-letter answers detected.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-inner">
+          <h2 class="section-title">Magic Fill</h2>
+          <p class="section-copy">
+            Send the pattern plus your current angle to the serverless function. It will merge in the CSV keyword bank
+            and ask Claude for a fully formed puzzle JSON.
+          </p>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="titleInput">Title</label>
+              <input id="titleInput" type="text" placeholder="Outer Boroughs, 1994" />
+            </div>
+            <div class="field">
+              <label for="slugInput">Slug</label>
+              <input id="slugInput" type="text" placeholder="outer-boroughs-1994-2026-03-12" />
+            </div>
+            <div class="field wide">
+              <label for="infoInput">Info Line</label>
+              <input id="infoInput" type="text" placeholder="March 13, 2026 • 5×5" />
+            </div>
+            <div class="field wide">
+              <label for="keywordsInput">Keywords, artists, labels, themes, or source cues</label>
+              <textarea
+                id="keywordsInput"
+                placeholder="Stems, DSPs, touring, merch, publishing, Spotify, Live Nation, indie labels, TikTok"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button class="btn-primary" id="magicFillBtn" type="button">Generate Grid Options</button>
+            <button class="btn-secondary" id="generateCluesBtn" type="button" disabled>Write Clues</button>
+          </div>
+
+          <div class="button-row compact" style="margin-top: 12px;">
+            <button class="btn-ghost" id="downloadJsonBtn" type="button" disabled>Download JSON</button>
+            <button class="btn-secondary" id="copyJsonBtn" type="button" disabled>Copy JSON</button>
+            <button class="btn-secondary" id="copyApiPayloadBtn" type="button">Copy API Payload</button>
+            <button class="btn-secondary" id="resetGeneratedBtn" type="button">Reset Generated</button>
+          </div>
+
+          <div class="status-row">
+            <div id="requestStatus" class="status-box">
+              Ready. The generated puzzle will appear below in production format.
+            </div>
+          </div>
+
+          <div class="preview-meta" style="margin-top: 14px;">
+            <h3 id="previewTitle">No generated puzzle yet</h3>
+            <p id="previewInfo">Build a pattern, add context, then run Magic Fill.</p>
+          </div>
+
+          <div class="option-list" id="optionList"></div>
+
+          <div class="json-box">
+            <label for="jsonOutput">Puzzle JSON</label>
+            <textarea id="jsonOutput" spellcheck="false" placeholder="{ ... generated puzzle json ... }"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const state = {
+        size: 5,
+        grid: [],
+        generatedOptions: [],
+        selectedOptionIndex: null,
+        generatedPuzzle: null,
+        patternNotes: [],
+        fillMode: "pattern",
+      };
+
+      const els = {
+        grid: document.getElementById("grid"),
+        gridSizeSelect: document.getElementById("gridSizeSelect"),
+        symmetryToggle: document.getElementById("symmetryToggle"),
+        fillMode: document.getElementById("fillMode"),
+        clearGridBtn: document.getElementById("clearGridBtn"),
+        seedGridBtn: document.getElementById("seedGridBtn"),
+        copyPatternBtn: document.getElementById("copyPatternBtn"),
+        patternOutput: document.getElementById("patternOutput"),
+        whiteCount: document.getElementById("whiteCount"),
+        blackCount: document.getElementById("blackCount"),
+        slotCount: document.getElementById("slotCount"),
+        slotList: document.getElementById("slotList"),
+        gridStatus: document.getElementById("gridStatus"),
+        titleInput: document.getElementById("titleInput"),
+        slugInput: document.getElementById("slugInput"),
+        infoInput: document.getElementById("infoInput"),
+        keywordsInput: document.getElementById("keywordsInput"),
+        magicFillBtn: document.getElementById("magicFillBtn"),
+        generateCluesBtn: document.getElementById("generateCluesBtn"),
+        downloadJsonBtn: document.getElementById("downloadJsonBtn"),
+        copyJsonBtn: document.getElementById("copyJsonBtn"),
+        copyApiPayloadBtn: document.getElementById("copyApiPayloadBtn"),
+        resetGeneratedBtn: document.getElementById("resetGeneratedBtn"),
+        requestStatus: document.getElementById("requestStatus"),
+        previewTitle: document.getElementById("previewTitle"),
+        previewInfo: document.getElementById("previewInfo"),
+        optionList: document.getElementById("optionList"),
+        jsonOutput: document.getElementById("jsonOutput"),
+      };
+
+      function emptyGrid(size) {
+        return Array.from({ length: size }, () => Array(size).fill(false));
+      }
+
+      function makeSeedPattern(size) {
+        const grid = emptyGrid(size);
+        if (size === 5) {
+          const blocks = [
+            [0, 4], [1, 1], [1, 3], [3, 1], [3, 3], [4, 0],
+          ];
+          for (const [row, col] of blocks) grid[row][col] = true;
+          return grid;
+        }
+
+        const blocks = [
+          [0, 0], [0, 5], [1, 2], [1, 3], [2, 1], [2, 4],
+          [3, 1], [3, 4], [4, 2], [4, 3], [5, 0], [5, 5],
+        ];
+        for (const [row, col] of blocks) grid[row][col] = true;
+        return grid;
+      }
+
+      function slugify(value) {
+        return value
+          .toLowerCase()
+          .trim()
+          .replace(/['"]/g, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .replace(/-{2,}/g, "-");
+      }
+
+      function formatInfo(size) {
+        const now = new Date();
+        const formatted = now.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+        return `${formatted} • ${size}×${size}`;
+      }
+
+      function gridToPattern() {
+        return state.grid.flat().map((cell) => (cell ? "#" : ".")).join("");
+      }
+
+      function buildPatternMatrix(pattern, size) {
+        const rows = [];
+        for (let row = 0; row < size; row += 1) {
+          rows.push(pattern.slice(row * size, row * size + size).split(""));
+        }
+        return rows;
+      }
+
+      function detectSlots(pattern, size) {
+        const matrix = buildPatternMatrix(pattern, size);
+        const slots = [];
+        let number = 1;
+
+        for (let row = 0; row < size; row += 1) {
+          for (let col = 0; col < size; col += 1) {
+            if (matrix[row][col] === "#") continue;
+
+            const startsAcross = col === 0 || matrix[row][col - 1] === "#";
+            const startsDown = row === 0 || matrix[row - 1][col] === "#";
+            const acrossLength = startsAcross ? countRun(matrix, row, col, 0, 1) : 0;
+            const downLength = startsDown ? countRun(matrix, row, col, 1, 0) : 0;
+
+            let assignedNumber = null;
+            if (startsAcross || startsDown) {
+              assignedNumber = number;
+              number += 1;
+            }
+
+            if (startsAcross && acrossLength > 1) {
+              slots.push({
+                number: assignedNumber,
+                row,
+                col,
+                direction: "across",
+                length: acrossLength,
+              });
+            }
+
+            if (startsDown && downLength > 1) {
+              slots.push({
+                number: assignedNumber,
+                row,
+                col,
+                direction: "down",
+                length: downLength,
+              });
+            }
+          }
+        }
+
+        return slots;
+      }
+
+      function countRun(matrix, row, col, rowStep, colStep) {
+        let length = 0;
+        let currentRow = row;
+        let currentCol = col;
+        while (
+          currentRow >= 0 &&
+          currentRow < matrix.length &&
+          currentCol >= 0 &&
+          currentCol < matrix[0].length &&
+          matrix[currentRow][currentCol] !== "#"
+        ) {
+          length += 1;
+          currentRow += rowStep;
+          currentCol += colStep;
+        }
+        return length;
+      }
+
+      function listSingleCells(pattern, size) {
+        const matrix = buildPatternMatrix(pattern, size);
+        const warnings = [];
+        for (let row = 0; row < size; row += 1) {
+          for (let col = 0; col < size; col += 1) {
+            if (matrix[row][col] === "#") continue;
+            const leftBlocked = col === 0 || matrix[row][col - 1] === "#";
+            const rightBlocked = col === size - 1 || matrix[row][col + 1] === "#";
+            const topBlocked = row === 0 || matrix[row - 1][col] === "#";
+            const bottomBlocked = row === size - 1 || matrix[row + 1][col] === "#";
+            if ((leftBlocked && rightBlocked) || (topBlocked && bottomBlocked)) {
+              warnings.push(`[${row},${col}]`);
+            }
+          }
+        }
+        return warnings;
+      }
+
+      function buildAnswerMatrix(puzzle) {
+        if (!puzzle || !Array.isArray(puzzle.words)) return null;
+        const size = puzzle.gridSize?.rows || state.size;
+        const matrix = Array.from({ length: size }, () => Array(size).fill(""));
+        for (const word of puzzle.words) {
+          let row = Number(word.row);
+          let col = Number(word.col);
+          const letters = String(word.word || "").toUpperCase().split("");
+          for (const letter of letters) {
+            if (matrix[row] && typeof matrix[row][col] !== "undefined") {
+              matrix[row][col] = letter;
+            }
+            if (word.direction === "across") col += 1;
+            else row += 1;
+          }
+        }
+        return matrix;
+      }
+
+      function getSelectedOption() {
+        if (state.selectedOptionIndex === null) return null;
+        return state.generatedOptions[state.selectedOptionIndex] || null;
+      }
+
+      function renderGrid() {
+        const size = state.size;
+        const pattern = gridToPattern();
+        const slots = detectSlots(pattern, size);
+        const numbering = new Map();
+        for (const slot of slots) {
+          const key = `${slot.row}-${slot.col}`;
+          if (!numbering.has(key)) numbering.set(key, slot.number);
+        }
+
+        const previewSource = state.generatedPuzzle || getSelectedOption();
+        const answers = state.fillMode === "letters" ? buildAnswerMatrix(previewSource) : null;
+
+        els.grid.innerHTML = "";
+        els.grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+        els.grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
+        for (let row = 0; row < size; row += 1) {
+          for (let col = 0; col < size; col += 1) {
+            const cell = document.createElement("button");
+            cell.type = "button";
+            cell.className = `grid-cell${state.grid[row][col] ? " black" : ""}`;
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+            cell.setAttribute("aria-label", `Toggle row ${row + 1} column ${col + 1}`);
+            cell.dataset.letter = answers?.[row]?.[col] || "";
+
+            const key = `${row}-${col}`;
+            if (numbering.has(key)) {
+              const number = document.createElement("span");
+              number.className = "number";
+              number.textContent = numbering.get(key);
+              cell.appendChild(number);
+            }
+
+            cell.addEventListener("click", () => toggleCell(row, col));
+            els.grid.appendChild(cell);
+          }
+        }
+
+        updateSummaries(pattern, slots);
+      }
+
+      function updateSummaries(pattern, slots) {
+        const white = pattern.split("").filter((char) => char === ".").length;
+        const black = pattern.length - white;
+        els.patternOutput.textContent = pattern;
+        els.whiteCount.textContent = String(white);
+        els.blackCount.textContent = String(black);
+        els.slotCount.textContent = String(slots.length);
+        els.slotList.innerHTML = slots
+          .map(
+            (slot) =>
+              `<li><strong>${slot.number} ${slot.direction}</strong> · row ${slot.row + 1}, col ${slot.col + 1}, ${slot.length} letters</li>`
+          )
+          .join("");
+
+        const singleCells = listSingleCells(pattern, state.size);
+        if (singleCells.length) {
+          els.gridStatus.className = "status-box warn";
+          els.gridStatus.textContent =
+            `Pattern warning: one-letter answer lanes touch ${singleCells.join(", ")}. Claude can still try, but production grids will be cleaner if you fix them first.`;
+        } else {
+          els.gridStatus.className = "status-box ok";
+          els.gridStatus.textContent = "Pattern is clean. No one-letter answers detected.";
+        }
+      }
+
+      function toggleCell(row, col) {
+        if (state.generatedPuzzle) {
+          clearGeneratedPuzzle();
+          setRequestStatus("Pattern changed. Generated puzzle cleared so you do not export a stale fill.");
+        }
+
+        const nextValue = !state.grid[row][col];
+        state.grid[row][col] = nextValue;
+
+        if (els.symmetryToggle.checked) {
+          const mirrorRow = state.size - 1 - row;
+          const mirrorCol = state.size - 1 - col;
+          state.grid[mirrorRow][mirrorCol] = nextValue;
+        }
+
+        renderGrid();
+      }
+
+      function resetForSize(size, useSeed = false) {
+        state.size = size;
+        state.grid = useSeed ? makeSeedPattern(size) : emptyGrid(size);
+        if (!els.infoInput.value || /•\s\d×\d$/.test(els.infoInput.value)) {
+          els.infoInput.value = formatInfo(size);
+        }
+        clearGeneratedPuzzle();
+        renderGrid();
+      }
+
+      function syncSlug() {
+        if (!els.slugInput.value.trim() && els.titleInput.value.trim()) {
+          els.slugInput.value = slugify(els.titleInput.value);
+        }
+      }
+
+      function setRequestStatus(message, tone = "") {
+        els.requestStatus.textContent = message;
+        els.requestStatus.className = tone ? `status-box ${tone}` : "status-box";
+      }
+
+      function getApiPayload() {
+        syncSlug();
+        return {
+          pattern: gridToPattern(),
+          gridSize: {
+            rows: state.size,
+            cols: state.size,
+          },
+          title: els.titleInput.value.trim(),
+          slug: els.slugInput.value.trim() || slugify(els.titleInput.value || `stems-${Date.now()}`),
+          info: els.infoInput.value.trim() || formatInfo(state.size),
+          keywords: els.keywordsInput.value
+            .split(/\n|,/)
+            .map((value) => value.trim())
+            .filter(Boolean),
+        };
+      }
+
+      function clearGeneratedPuzzle() {
+        state.generatedOptions = [];
+        state.selectedOptionIndex = null;
+        state.generatedPuzzle = null;
+        state.patternNotes = [];
+        els.generateCluesBtn.disabled = true;
+        els.downloadJsonBtn.disabled = true;
+        els.copyJsonBtn.disabled = true;
+        els.previewTitle.textContent = "No generated puzzle yet";
+        els.previewInfo.textContent = "Build a pattern, add context, then run Magic Fill.";
+        els.optionList.innerHTML = "";
+        els.jsonOutput.value = "";
+        if (state.fillMode === "letters") renderGrid();
+      }
+
+      function updateGeneratedPuzzle(puzzle) {
+        state.generatedPuzzle = puzzle;
+        els.jsonOutput.value = JSON.stringify(puzzle, null, 2);
+        els.previewTitle.textContent = puzzle.title || "Generated puzzle";
+        els.previewInfo.textContent = `${puzzle.info || "No info line"} · ${(puzzle.words || []).length} word entries`;
+        els.downloadJsonBtn.disabled = false;
+        els.copyJsonBtn.disabled = false;
+        renderGrid();
+      }
+
+      function renderOptionList() {
+        const options = state.generatedOptions;
+        if (!options.length) {
+          els.optionList.innerHTML = "";
+          return;
+        }
+
+        els.optionList.innerHTML = options
+          .map((option, index) => {
+            const acrossSample = option.words.find((word) => word.direction === "across")?.word || "—";
+            const downSample = option.words.find((word) => word.direction === "down")?.word || "—";
+            const isActive = index === state.selectedOptionIndex ? " active" : "";
+            const score = typeof option.qualityScore === "number" ? option.qualityScore : "—";
+            const qualityLine = Array.isArray(option.qualityFlags) && option.qualityFlags.length
+              ? option.qualityFlags.join(" · ")
+              : "No quality flags yet";
+            const weakLine = Array.isArray(option.weakEntries) && option.weakEntries.length
+              ? `Watch: ${option.weakEntries.join(", ")}`
+              : Array.isArray(option.musicEntries) && option.musicEntries.length
+                ? `Music entries: ${option.musicEntries.slice(0, 4).join(", ")}`
+                : "No standout entries called out";
+            return `
+              <button class="option-card${isActive}" type="button" data-option-index="${index}">
+                <strong>${option.label || `Option ${index + 1}`} · score ${score}</strong>
+                <span>${qualityLine}</span>
+                <span>Across sample: ${acrossSample}</span>
+                <span>Down sample: ${downSample}</span>
+                <span>${weakLine}</span>
+              </button>
+            `;
+          })
+          .join("");
+
+        els.optionList.querySelectorAll("[data-option-index]").forEach((button) => {
+          button.addEventListener("click", () => {
+            selectOption(Number(button.dataset.optionIndex));
+          });
+        });
+      }
+
+      function selectOption(index) {
+        state.selectedOptionIndex = index;
+        state.generatedPuzzle = null;
+        const option = getSelectedOption();
+        if (!option) return;
+
+        els.generateCluesBtn.disabled = false;
+        els.downloadJsonBtn.disabled = true;
+        els.copyJsonBtn.disabled = true;
+        els.previewTitle.textContent = `${els.titleInput.value.trim() || "Draft grid"} · ${option.label || `Option ${index + 1}`}`;
+        const noteText = state.patternNotes.length ? ` · ${state.patternNotes.join(" ")}` : "";
+        const flagText = Array.isArray(option.qualityFlags) && option.qualityFlags.length
+          ? option.qualityFlags.join(" · ")
+          : "unscored";
+        els.previewInfo.textContent = `${state.generatedOptions.length} options ready · ${flagText}${noteText}`;
+        els.jsonOutput.value = JSON.stringify(option, null, 2);
+        state.fillMode = "letters";
+        els.fillMode.value = "letters";
+        renderOptionList();
+        renderGrid();
+      }
+
+      function updateGeneratedOptions(payload) {
+        state.generatedOptions = Array.isArray(payload.options) ? payload.options : [];
+        state.selectedOptionIndex = state.generatedOptions.length ? 0 : null;
+        state.generatedPuzzle = null;
+        state.patternNotes = Array.isArray(payload.patternNotes) ? payload.patternNotes : [];
+        els.generateCluesBtn.disabled = !state.generatedOptions.length;
+        els.downloadJsonBtn.disabled = true;
+        els.copyJsonBtn.disabled = true;
+        renderOptionList();
+        if (state.generatedOptions.length) {
+          const noteText = state.patternNotes.length ? ` ${state.patternNotes.join(" ")}` : "";
+          setRequestStatus(`Generated ${state.generatedOptions.length} grid options. Pick one, then write clues.${noteText}`, "ok");
+          selectOption(0);
+        } else {
+          els.previewTitle.textContent = "No grid options returned";
+          els.previewInfo.textContent = "Try stronger theme words or a simpler pattern.";
+          els.jsonOutput.value = "";
+        }
+      }
+
+      async function copyText(value, successMessage) {
+        await navigator.clipboard.writeText(value);
+        setRequestStatus(successMessage, "ok");
+      }
+
+      async function runMagicFill() {
+        const payload = {
+          ...getApiPayload(),
+          mode: "options",
+        };
+        setRequestStatus("Generating grid options from the current pattern and keyword stack...");
+        els.magicFillBtn.disabled = true;
+
+        try {
+          const response = await fetch("/api/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(body.error || "Magic Fill failed.");
+          }
+
+          updateGeneratedOptions(body);
+        } catch (error) {
+          setRequestStatus(error.message || "Magic Fill failed.", "warn");
+        } finally {
+          els.magicFillBtn.disabled = false;
+        }
+      }
+
+      async function runClueGeneration() {
+        const option = getSelectedOption();
+        if (!option) {
+          setRequestStatus("Pick a grid option before generating clues.", "warn");
+          return;
+        }
+
+        const payload = {
+          ...getApiPayload(),
+          mode: "clues",
+          words: option.words,
+        };
+
+        setRequestStatus("Writing clues for the selected grid...");
+        els.generateCluesBtn.disabled = true;
+
+        try {
+          const response = await fetch("/api/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const body = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(body.error || "Clue generation failed.");
+          }
+
+          updateGeneratedPuzzle(body);
+          setRequestStatus("Clues complete. Review the preview, then export the JSON.", "ok");
+        } catch (error) {
+          setRequestStatus(error.message || "Clue generation failed.", "warn");
+        } finally {
+          els.generateCluesBtn.disabled = false;
+        }
+      }
+
+      function downloadJson() {
+        let parsed;
+        try {
+          parsed = JSON.parse(els.jsonOutput.value);
+        } catch (error) {
+          setRequestStatus("JSON output is not valid. Fix it before downloading.", "warn");
+          return;
+        }
+
+        const filename = `${parsed.id || slugify(parsed.title || "stems-puzzle")}.json`;
+        const blob = new Blob([JSON.stringify(parsed, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        setRequestStatus(`Downloaded ${filename}.`, "ok");
+      }
+
+      function bindEvents() {
+        els.gridSizeSelect.addEventListener("change", (event) => {
+          resetForSize(Number(event.target.value));
+        });
+
+        els.fillMode.addEventListener("change", (event) => {
+          state.fillMode = event.target.value;
+          renderGrid();
+        });
+
+        els.clearGridBtn.addEventListener("click", () => resetForSize(state.size));
+        els.seedGridBtn.addEventListener("click", () => {
+          state.grid = makeSeedPattern(state.size);
+          clearGeneratedPuzzle();
+          renderGrid();
+        });
+        els.copyPatternBtn.addEventListener("click", async () => {
+          try {
+            await copyText(gridToPattern(), "Pattern string copied.");
+          } catch (error) {
+            setRequestStatus("Clipboard copy failed for the pattern.", "warn");
+          }
+        });
+
+        els.titleInput.addEventListener("input", () => {
+          if (!els.slugInput.value.trim() || els.slugInput.dataset.auto === "true") {
+            els.slugInput.value = slugify(els.titleInput.value);
+            els.slugInput.dataset.auto = "true";
+          }
+        });
+
+        els.slugInput.addEventListener("input", () => {
+          els.slugInput.dataset.auto = "false";
+        });
+
+        els.magicFillBtn.addEventListener("click", runMagicFill);
+        els.generateCluesBtn.addEventListener("click", runClueGeneration);
+        els.downloadJsonBtn.addEventListener("click", downloadJson);
+        els.copyJsonBtn.addEventListener("click", async () => {
+          try {
+            await copyText(els.jsonOutput.value, "Puzzle JSON copied.");
+          } catch (error) {
+            setRequestStatus("Clipboard copy failed for the JSON.", "warn");
+          }
+        });
+        els.copyApiPayloadBtn.addEventListener("click", async () => {
+          try {
+            await copyText(JSON.stringify(getApiPayload(), null, 2), "API payload copied.");
+          } catch (error) {
+            setRequestStatus("Clipboard copy failed for the API payload.", "warn");
+          }
+        });
+        els.resetGeneratedBtn.addEventListener("click", () => {
+          clearGeneratedPuzzle();
+          setRequestStatus("Generated puzzle state cleared.");
+        });
+      }
+
+      function init() {
+        els.titleInput.value = "";
+        els.infoInput.value = formatInfo(state.size);
+        state.grid = emptyGrid(state.size);
+        bindEvents();
+        renderGrid();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>

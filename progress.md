@@ -1,0 +1,50 @@
+Original prompt: **Role**: You are a Senior Full-Stack Engineer helping me build an internal "Crossword Architect" tool for my music industry newsletter, **Stems**.
+
+## 2026-03-13
+
+- Reviewed `index.html` and current `/puzzles/*.json` schema.
+- Confirmed production puzzle format uses `gridSize: { rows, cols }` and a flat `words` array containing both across and down entries.
+- Confirmed `architect.html` was empty at start of this session.
+- Confirmed the requested CSV file is not currently present in the repo; serverless function should handle that case clearly.
+- Built a new standalone `architect.html` with:
+  - 5x5 / 6x6 grid builder
+  - 180-degree rotational symmetry toggle
+  - live pattern-string generation
+  - detected-slot summary and isolated-cell warning state
+  - Magic Fill POST to `/api/generate`
+  - JSON preview plus download/copy actions
+- Added `api/generate.py` as a Vercel-style Python serverless endpoint that:
+  - validates the pattern and rejects orphan white cells
+  - loads keywords from the requested CSV file
+  - calls Anthropic Messages API
+  - normalizes and validates Claude output against the production puzzle schema
+- Adapted the attached newsroom CSV into project data files:
+  - `data/Master Music News Source List - Expanded_Music_News_Source_Master_List.csv`
+    - normalized headers (`source_name`, `priority_source`, `url`, `frequency`, `business_model`, `audience`, `content_focus`, `size`, `notes`)
+  - `data/music_source_keywords.csv`
+    - distilled keyword-bank rows (`keyword`, `keyword_type`, `source_name`, `priority_source`, `url`) for the LLM prompt
+- Updated `api/generate.py` to prefer `data/music_source_keywords.csv` and fall back to the normalized master CSV.
+- Replaced the brittle one-shot “Claude fills the entire crossword” flow with a hybrid pipeline:
+  - code now computes slots and solves crossings with backtracking
+  - local candidate pool draws from keywords, normalized source data, and existing puzzle answers
+  - Claude is now used for slot-level candidate suggestions only when local options are thin
+  - Claude writes final clues/metadata after a valid fill is found
+- Updated the architect flow to a two-step workflow:
+  - `Generate Grid Options` now returns multiple fill options without clues
+  - user can select an option in the UI
+  - `Write Clues` finalizes only the chosen grid into production JSON
+- Added a first-pass fill-quality layer to the option generator:
+  - `data/fill_preferences.json` now stores starter preferred / acceptable / banned answer banks
+  - solver candidates are scored before use, with heavy penalties for unverified or junky-looking fill
+  - option responses now include `qualityScore`, `qualityFlags`, `weakEntries`, and `musicEntries`
+  - architect option cards now surface those signals so weak fills are easier to spot before clueing
+  - wide-open / low-black patterns now return pattern notes warning when a layout is structurally likely to force uglier fill
+- Local solver/clue sanity checks passed with inline Python smoke tests.
+- Browser smoke test with mocked API responses confirmed:
+  - option cards render
+  - selecting a different option updates the preview state
+  - `Write Clues` finalizes the chosen option into exportable JSON
+- Verification completed:
+  - `python3 -m py_compile api/generate.py`
+  - helper-function sanity test via inline Python
+  - Playwright smoke test against `architect.html` confirming symmetry and pattern-length updates

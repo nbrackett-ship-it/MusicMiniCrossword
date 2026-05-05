@@ -1,0 +1,99 @@
+source_name,priority_source,url,frequency,business_model,audience,content_focus,size,notes
+Billboard.com Music News,TRUE,https://www.billboard.com/music/,Daily,Hybrid (Subscription + Ads),Industry Professionals,"Industry news, charts, features",High (Billboard ranking site),Billboard reach unknown but considered standard
+brooklynvegan,TRUE,https://www.brooklynvegan.com,Daily,Ad-Supported,Indie / Alt Fans,Local/indie music news,Moderate,Brooklyn local and indie focus
+Consequence of Sound,TRUE,https://consequence.net,Daily,Ad-Supported + Membership,General Music Fans,General music and pop culture,Moderate,Owned by Consequence Media
+Mashable (Music),TRUE,https://mashable.com/category/music,Daily,Ad-Supported,Tech-Savvy Readers,Tech & Entertainment,High,Covers tech and entertainment news.
+Music Ally,TRUE,https://musically.com/,Daily,Subscription,Music Professionals,Music Industry News,Medium,Provides insights into the music business.
+Music Business Worldwide,TRUE,https://www.musicbusinessworldwide.com,Frequent,Freemium / Subscription,Industry Professionals,Global music industry,High (Industry standard),Subscription model info from website
+NPR Music,TRUE,https://www.npr.org/music/,Daily,Public Media / Donations + Underwriting,"Cultural Enthusiasts, Music Fans","Features, interviews, Tiny Desk, genre coverage",High,Popular for indie/alternative and public radio audience
+Stereogum,TRUE,https://www.stereogum.com,Daily,Freemium / Member-Supported,Music Fans / Indie Fans,Indie/Alternative music news,Moderate,"Independent, strong indie readership"
+The FADER,TRUE,https://www.thefader.com/,Daily,Ad-Supported,"Young, Trend-Oriented Audience","Emerging Artists, Hip-Hop, Style",High,Influential youth and genre journalism
+The Guardian - Music,TRUE,https://www.theguardian.com/music,Daily,Ad-Supported + Subscription,"General Public, Music Fans","News, Reviews, Interviews",High (UK & Global),Respected UK outlet with strong music criticism
+The Honest Broker,TRUE,https://tedgioia.substack.com/,Weekly+,Freemium,Music Intellectuals / Academics,"Music history, industry trends",Over 100K readers (Substack Top 10),"Substack leaderboard, 2024"
+The New York Times - Music,TRUE,https://www.nytimes.com/section/arts/music,Daily,Subscription + Ad-Supported,"General Public, Arts Readers","Music reviews, news, cultural criticism",High (Global),Requires subscription for most articles
+The Washington Post - Music,TRUE,https://www.washingtonpost.com/entertainment/music/,Daily,Subscription + Ad-Supported,"General Public, Arts Readers","Music news, reviews, cultural commentary",High,Subscription required for most content
+Variety - Music,TRUE,https://variety.com/v/music/,Frequent,Ad-Supported,Industry / General Audience,Music industry news and coverage,N/A,Mainstream entertainment trade
+Wall Street Journal - Music,TRUE,https://www.wsj.com/news/types/music,Daily,Subscription,"Professionals, Business Readers","Music business, technology, features",High,"Paywalled, business-oriented lens"
+Your Morning Coffee,TRUE,https://yourmorningcoffeepodcast.com,Weekly,Ad-Supported / Podcast,Industry Professionals,Music business news and insights,N/A,Curated by Jay Gilbert
+AllMusic,FALSE,https://www.allmusic.com/,Weekly,Ad-Supported,General Music Fans,Music Metadata and Reviews,High,All-in-one database for albums/artists
+ARTnews,FALSE,https://www.artnews.com/,Unknown,Ad-Supported,Art Enthusiasts,Visual Arts,High,Oldest art magazine in the world.
+ASCAP news,FALSE,https://www.ascap.com/news-events,Daily,Membership / Association,"Songwriters, publishers","Policy, success stories",N/A,Daily news and updates for members
+Associated Press - Music,FALSE,https://apnews.com/hub/music,Daily,Syndicated / Ad-Supported,General News Readers,"Breaking music news, artist coverage",High (Syndicated),Widely republished by other outlets
+Audience Strategies (Bas Grasmayer),FALSE,https://newsletter.basbasbas.com,Weekly,Free,"Music tech thinkers, strategists",Tech and audience building for artists,N/A,Smart on community-building models
+Austin American Statesman Music,FALSE,https://eu.statesman.com/austin360/music/,Daily,Subscription + Ad-Supported,"General Public, Arts Readers","Music reviews, news, cultural criticism, local music news",High (Global),Requires subscription for most articles
+Back of House,FALSE,https://www.bohlive.com/,Occasional,Ad-Supported / Promotional,"Music Professionals, Live Industry","Live music industry updates, tech, and production",N/A,Focuses on concert production and live events
+BBC Music,FALSE,https://www.bbc.co.uk/music,Daily,Public Broadcaster,"General Public, UK","News, Radio, Playlists",High (UK & Global),Includes BBC Sounds and artist-focused profiles
+BBC Music News,FALSE,https://www.bbc.com/news/entertainment_and_arts,Daily,Public Broadcaster,UK + Global General Audience,"Breaking music news, global culture",High (Global),Global perspective; arts section includes music
+Beats & Bytes,FALSE,https://www.nueagency.com/beats-bytes,Weekly,Sponsored / Marketing,"Brand marketers, Industry execs","Music, tech, brand trends",N/A,Published by Nue Agency
+Bloomberg - Music Industry News,FALSE,https://www.bloomberg.com/entertainment/music,Occasional,Ad-Supported,Business Professionals,Financial Coverage of Music Deals,High,Occasional deep dives on music investments
+BMI The Weekly,FALSE,https://www.bmi.com/news,Weekly,Membership / Association,"Songwriters, music professionals","Industry news, education",N/A,Owned by BMI
+Brooklyn Magazine,FALSE,https://www.bkmag.com/,Unknown,Subscription,Brooklyn Residents,Local Culture,Medium,Covers Brooklyn’s music scene and events.
+Chartmetric - How Music Charts,FALSE,https://blog.chartmetric.com,Weekly,Free / Promo for product,"Music marketers, data nerds","Data analysis, trends, metrics",Medium,Strong with analytics crowd
+Chicago Tribune - Music,FALSE,https://www.chicagotribune.com/entertainment/music/,Weekly,Ad-Supported,Midwest General Audience,"Concerts, Local Coverage",Moderate,Local coverage for Chicago arts/music
+Clash Magazine,FALSE,https://www.clashmusic.com/,Daily,Ad-Supported,UK Music Fans,"Music News, Interviews",Moderate,UK style/music mix with cultural clout
+Colin Meloy's Machine Shop,FALSE,https://www.substack.com,Unknown,Freemium (Substack),Fans of Colin Meloy,Creative process and personal essays,N/A,Substack creator
+DancehallMag,FALSE,https://www.dancehallmag.com/,Weekly,Ad-Supported,Japan-based Global Audience,"Reggae, Dancehall, Caribbean",Moderate,Japan’s leading English-language news
+Dazed - Music,FALSE,https://www.dazeddigital.com/music,Weekly,Ad-Supported,Youth/Alt Culture Fans,"Pop, Experimental, Global",High,Genre-agnostic pop meets performance art
+Dazed Digital,FALSE,https://www.dazeddigital.com/music,Unknown,Ad-Supported,Youth Culture,Music and Fashion,High,Focus on youth culture and music.
+Deep Cuts,FALSE,https://amberhorsburgh.substack.com,Weekly,Freemium (Substack),"Marketers, Industry Professionals",Music marketing strategy,N/A,Written by Amber Horsburgh
+Detroit Metro Times,FALSE,https://www.metrotimes.com/music,Daily,Ad-Supported,Detroit Residents,Local Music Scene,Medium,Covers Detroit’s music events and news.
+Digital Music News,FALSE,https://www.digitalmusicnews.com,Daily,Ad-supported,Broad industry,"News, licensing, lawsuits, tech",High,Frequently indexed by Google News
+DIY Magazine,FALSE,https://diymag.com/,Weekly,Ad-Supported,Indie Fans,Indie Scene,Moderate,DIY ethic and print tradition
+Earmilk,FALSE,https://earmilk.com/,Daily,Ad-Supported,Music Discovery Enthusiasts,Emerging Music Trends,Moderate,"Blog aggregator, legacy reputation"
+EDM.com,FALSE,https://edm.com,Daily,Ad-Supported,EDM Fans,Electronic music culture,N/A,EDM niche
+Entering the Lung,FALSE,https://nekocase.substack.com/,Unknown,Freemium (Substack),Experimental / Indie Fans,Experimental music commentary,N/A,Experimental niche
+Exclaim!,FALSE,https://exclaim.ca/,Weekly,Ad-Supported,Canada General + Indie Fans,"Indie, Rock, Pop",Moderate,Canada’s alt and music discovery authority
+FACT Magazine,FALSE,https://www.factmag.com/,Daily,Ad-Supported,Electronic/Experimental Fans,"Experimental, Cutting Edge News",Moderate,Deep dive essays and editorial voice
+Financial Times - Arts & Music,FALSE,https://www.ft.com/arts/music,Weekly,Subscription,Business + Arts Audience,"Global Market, Arts Strategy",High (Premium),Focuses on classical and high arts with crossover pieces
+Forbes - Business of Music,FALSE,https://www.forbes.com/business-of-music/,Occasional,Ad-Supported,Business Readers,"Industry Strategy, Artist Business",High,Features Zack O'Malley Greenburg's music business reporting
+Goldo Sync Report,FALSE,N/A,Weekly,Sponsored / Curated,"Music supervisors, composers","Sync, licensing, curation",N/A,"Bicoastal, curated perspective"
+Google News - Music,FALSE,https://news.google.com/search?q=music,Constant,Ad-Supported,General Audience,Aggregated music news,N/A,Based on Google aggregation volume
+HipHopDX News,FALSE,https://hiphopdx.com/news,Daily,Ad-Supported,Hip-Hop Fans,Hip-hop news and analysis,N/A,Targeted hip-hop coverage
+Hot Press,FALSE,https://www.hotpress.com/,Weekly,Ad-Supported,Irish Music Audience,Local + Global Artists,Moderate,"Ireland-based, music and arts hybrid"
+Hype Machine,FALSE,https://hypem.com/,Weekly,Ad-Supported,Urban & Hip-Hop Fans,Playlist Blog Aggregator,Moderate,Strong roots in hip-hop culture
+Hypebot,FALSE,https://www.hypebot.com,Daily,Ad-Supported,Industry Professionals,"Music tech, marketing, DIY",Moderate (per SimilarWeb),Traffic estimated by SimilarWeb
+Jezebel (music),FALSE,https://www.jezebel.com/music,Unknown,Ad-Supported,General Public,Celebrity & Culture,High,"Focus on celebrity, politics, and entertainment."
+Longreads Music,FALSE,https://longreads.com/?s=music,Occasional,,,,,
+Los Angeles Times,FALSE,https://www.latimes.com/entertainment-arts/music,Daily,Subscription,General Public,Music News & Reviews,High,Comprehensive music coverage.
+Los Angeles Times - Music,FALSE,https://www.latimes.com/entertainment-arts/music,Daily,Ad-Supported,West Coast General Audience,"Pop, Hip-Hop, Live Music",Moderate,Focused LA culture/music coverage
+Loud And Quiet,FALSE,https://www.loudandquiet.com/,Weekly,Ad-Supported,UK Indie Fans,"Alt, Indie Rock",Niche,Small but critical darling among UK blogs
+MBW – Stat of the Week,FALSE,https://www.musicbusinessworldwide.com,Weekly,Freemium,Industry Professionals,Financial and strategic analysis,High,Found within main MBW feed
+Metal Injection,FALSE,https://metalinjection.net,Daily,Ad-Supported,Metal Fans,Metal news and culture,N/A,Metal niche
+MIDiA Research Blog,FALSE,https://www.midiaresearch.com/blog,Weekly,Subscription / Consulting,"Music + tech execs, investors","Market analysis, trends, consumer behavior",Medium,Part of MIDiA’s analyst firm
+Music Biz NEXT,FALSE,https://musicbiz.org/news/,Occasional,Sponsored / Association,"Music execs, members","Trends, strategy, tech",N/A,Operated by Music Biz association
+Music Lists | ScreenRant,FALSE,https://screenrant.com/tag/music-lists/,Weekly,Ad-Supported,Pop Culture Fans,Music ranking and lists,High (Valnet Media),Owned by Valnet Inc.
+MusicREDEF (Jason Hirschhorn),FALSE,https://redef.com/music,Daily,Free / Email signup,"Execs, tastemakers",Curated industry links with commentary,High,"No original reporting, but great filter"
+Network Notes (Motive Unknown),FALSE,https://networknotes.motiveunknown.com/,Daily,Free / Community-Focused,"Music Execs, Marketers, Artists","Music, tech, app and industry news aggregation",N/A,Curated by Darren Hemmings
+Newsweek - Music,FALSE,https://www.newsweek.com/topic/music,Daily,Ad-Supported,General Public,Mainstream music news and pop culture,High (Global Media Site),Generalist outlet with music tag
+NME,FALSE,https://nme.com,Daily,Ad-Supported,General Music Fans,Music news and reviews,High (UK-based),UK legacy outlet
+Okayplayer,FALSE,https://www.okayplayer.com/,Weekly,Ad-Supported,Hip-Hop/R&B Fans,"Hip-Hop, Politics, Culture",Moderate,Fast hip-hop release coverage
+Passion of the Weiss,FALSE,https://www.passionweiss.com/,Occasional,Ad-Supported,Music Enthusiasts,Music Criticism,Niche,Independent music blog.
+Patti Smith,FALSE,http://pattismith.substack.com/,Occasional,Freemium (Substack),Fans of Patti Smith,Personal updates and reflections,N/A,Substack creator page
+Penny Fractions,FALSE,https://pennyfractions.ghost.io,Weekly,Free,"Industry Analysts, Critics","Music economics, streaming critique",N/A,By David Turner (ex-MBW)
+Pitchfork: Album Reviews,FALSE,https://pitchfork.com/reviews/albums/,Daily,Ad-Supported / Conde Nast,Music Fans / Critics,Album reviews,N/A,Owned by Conde Nast
+Pitchfork: Features,FALSE,https://pitchfork.com/features/,Ongoing,Ad-Supported / Conde Nast,Music Fans / Critics,Long-form music features,N/A,Conde Nast-owned
+Pitchfork: News,FALSE,https://pitchfork.com/news/,Daily,Ad-Supported / Conde Nast,Music Fans / Critics,Music news,N/A,Owned by Conde Nast
+Pitchfork: Track Reviews,FALSE,https://pitchfork.com/reviews/tracks/,Occasional,Ad-Supported / Conde Nast,Music Fans / Critics,Track reviews,N/A,Owned by Conde Nast
+Platform & Stream,FALSE,N/A,Daily,Possibly Paid,Industry Professionals,Streaming platforms & business,N/A,Mentioned as a direct competitor with daily cadence
+Pollstar Pro,FALSE,https://www.pollstar.com,Weekly,Subscription,Live music professionals,"Touring, ticketing, live analytics",N/A,Paywalled professional data product
+PopMatters,FALSE,https://www.popmatters.com/,Daily,Ad-Supported,General Pop Culture,Essays and Reviews,Moderate,Global music criticism and essays
+Questlove Supreme,FALSE,https://www.iheart.com/podcast/1119-questlove-supreme-29220738/,Weekly,Ad-Supported (Podcast),General Audience,Interviews with music legends,N/A,Podcast only
+Rap-Up,FALSE,https://www.rap-up.com/,Weekly,Ad-Supported,Dancehall/Caribbean Fans,"Hip-Hop, R&B",Moderate,Jamaican industry perspective
+Resident Advisor,FALSE,https://www.residentadvisor.net/,Daily,Ad-Supported,Electronic Music Fans,Electronic Music Scene,Niche but Global,Leading global electronic music publication
+Reuters - Entertainment (Music),FALSE,https://www.reuters.com/lifestyle/entertainment/,Daily,Ad-Supported / Syndicated,Global News Consumers,"Music business news, global trends",High,Wire service with international reach
+RightsTech Newsletter,FALSE,https://www.rightstech.com,Weekly,Ad-Supported / Sponsored,"Rights professionals, Tech execs","IP, rights, licensing",N/A,Niche focus on monetization tech
+RollingStone.com: Music,FALSE,https://rollingstone.com/music,Daily,Ad-Supported / PMC,General Music Fans,Comprehensive music coverage,170 articles saved,Number of saved articles in user folder
+Screen Rant - Music Features,FALSE,https://screenrant.com/music/,Weekly,Ad-Supported,Pop Culture Fans,Mainstream music and features,High (Valnet Media),Owned by Valnet Inc.
+SonoSuite Newsletter,FALSE,https://sonosuite.com,Occasional,Platform promotional,"Distributors, DIY artists","Streaming trends, royalties",N/A,Owned by distribution platform
+Spotify for Artists,FALSE,https://artists.spotify.com,Occasional,Platform-Supported,Artists / Labels,"Tips, tools and platform updates",N/A,Spotify-owned platform
+Starship Casual,FALSE,https://jefftweedy.substack.com/,Occasional,Freemium,Fans of Jeff Tweedy,Personal stories and music commentary,N/A,Substack creator; estimate based on Tweedy's popularity
+The Independent - Music,FALSE,https://www.independent.co.uk/arts-entertainment/music,Daily,Ad-Supported,UK General Public,Music News and Culture,Moderate,"Indie/alt-leaning, strong digital reporting"
+The Japan Times - Music,FALSE,https://www.japantimes.co.jp/culture/music/,Weekly,Ad-Supported,Global Arts & Music Readers,Japanese and International Music News,Moderate,FT music stories often cross over with investment coverage
+The Line of Best Fit,FALSE,https://www.thelineofbestfit.com/,Daily,Ad-Supported,Global Indie Music Fans,"Indie, Electronic, Pop",Moderate,UK indie-pop leaning publication
+The Quietus,FALSE,https://thequietus.com/,Weekly,Ad-Supported,Experimental Music Fans,"Avant-garde, Critical Essays",Niche,Experimental and critical writing
+The Telegraph - Music,FALSE,https://www.telegraph.co.uk/music/,Daily,Subscription,"UK Public, Arts Readers","News, Reviews, Interviews",High,"Traditional UK broadsheet, includes classical reviews"
+Trapital,FALSE,https://trapital.co,Weekly,Paid Subscription,Industry Professionals,Hip-hop business analysis,N/A,Estimated; no direct source
+Under the Radar,FALSE,https://www.undertheradarmag.com/,Weekly,Ad-Supported,Indie Rock Fans,"Alternative, Indie",Moderate,Known for smart indie and alt coverage
+UPROXX,FALSE,https://uproxx.com/music,Daily,Ad-Supported,General Audience,Pop culture and music,High (Vox Media property),Part of Vox Media
+Water & Music,FALSE,https://www.waterandmusic.com/archive,Weekly,Subscription / Community,"Industry Professionals, Artists","Music, tech, creativity",N/A,Founded by Cherie Hu
+WaterTower Insights,FALSE,https://watertowerinsights.substack.com,Weekly,Free (Substack),"Strategy folks, music/TV/tech crossers","Strategic insights, rights, M&A",N/A,From WaterTower VC partners

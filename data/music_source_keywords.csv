@@ -1,0 +1,273 @@
+keyword,keyword_type,source_name,priority_source,url
+Billboard.com Music News,source_name,Billboard.com Music News,TRUE,https://www.billboard.com/music/
+brooklynvegan,source_name,brooklynvegan,TRUE,https://www.brooklynvegan.com
+Consequence of Sound,source_name,Consequence of Sound,TRUE,https://consequence.net
+Mashable (Music),source_name,Mashable (Music),TRUE,https://mashable.com/category/music
+Music Ally,source_name,Music Ally,TRUE,https://musically.com/
+Music Business Worldwide,source_name,Music Business Worldwide,TRUE,https://www.musicbusinessworldwide.com
+NPR Music,source_name,NPR Music,TRUE,https://www.npr.org/music/
+Stereogum,source_name,Stereogum,TRUE,https://www.stereogum.com
+The FADER,source_name,The FADER,TRUE,https://www.thefader.com/
+The Guardian - Music,source_name,The Guardian - Music,TRUE,https://www.theguardian.com/music
+The Honest Broker,source_name,The Honest Broker,TRUE,https://tedgioia.substack.com/
+The New York Times - Music,source_name,The New York Times - Music,TRUE,https://www.nytimes.com/section/arts/music
+The Washington Post - Music,source_name,The Washington Post - Music,TRUE,https://www.washingtonpost.com/entertainment/music/
+Variety - Music,source_name,Variety - Music,TRUE,https://variety.com/v/music/
+Wall Street Journal - Music,source_name,Wall Street Journal - Music,TRUE,https://www.wsj.com/news/types/music
+Your Morning Coffee,source_name,Your Morning Coffee,TRUE,https://yourmorningcoffeepodcast.com
+"Emerging Artists, Hip-Hop, Style",content_focus,The FADER,TRUE,https://www.thefader.com/
+"Features, interviews, Tiny Desk, genre coverage",content_focus,NPR Music,TRUE,https://www.npr.org/music/
+General music and pop culture,content_focus,Consequence of Sound,TRUE,https://consequence.net
+Global music industry,content_focus,Music Business Worldwide,TRUE,https://www.musicbusinessworldwide.com
+Indie/Alternative music news,content_focus,Stereogum,TRUE,https://www.stereogum.com
+"Industry news, charts, features",content_focus,Billboard.com Music News,TRUE,https://www.billboard.com/music/
+Local/indie music news,content_focus,brooklynvegan,TRUE,https://www.brooklynvegan.com
+Music business news and insights,content_focus,Your Morning Coffee,TRUE,https://yourmorningcoffeepodcast.com
+"Music business, technology, features",content_focus,Wall Street Journal - Music,TRUE,https://www.wsj.com/news/types/music
+"Music history, industry trends",content_focus,The Honest Broker,TRUE,https://tedgioia.substack.com/
+Music Industry News,content_focus,Music Ally,TRUE,https://musically.com/
+Music industry news and coverage,content_focus,Variety - Music,TRUE,https://variety.com/v/music/
+"Music news, reviews, cultural commentary",content_focus,The Washington Post - Music,TRUE,https://www.washingtonpost.com/entertainment/music/
+"Music reviews, news, cultural criticism",content_focus,The New York Times - Music,TRUE,https://www.nytimes.com/section/arts/music
+Tech & Entertainment,content_focus,Mashable (Music),TRUE,https://mashable.com/category/music
+"Cultural Enthusiasts, Music Fans",audience,NPR Music,TRUE,https://www.npr.org/music/
+"General Public, Music Fans",audience,The Guardian - Music,TRUE,https://www.theguardian.com/music
+Indie / Alt Fans,audience,brooklynvegan,TRUE,https://www.brooklynvegan.com
+Industry / General Audience,audience,Variety - Music,TRUE,https://variety.com/v/music/
+Music Fans / Indie Fans,audience,Stereogum,TRUE,https://www.stereogum.com
+Music Intellectuals / Academics,audience,The Honest Broker,TRUE,https://tedgioia.substack.com/
+Music Professionals,audience,Music Ally,TRUE,https://musically.com/
+"Professionals, Business Readers",audience,Wall Street Journal - Music,TRUE,https://www.wsj.com/news/types/music
+Tech-Savvy Readers,audience,Mashable (Music),TRUE,https://mashable.com/category/music
+"Young, Trend-Oriented Audience",audience,The FADER,TRUE,https://www.thefader.com/
+AllMusic,source_name,AllMusic,FALSE,https://www.allmusic.com/
+ARTnews,source_name,ARTnews,FALSE,https://www.artnews.com/
+ASCAP news,source_name,ASCAP news,FALSE,https://www.ascap.com/news-events
+Associated Press - Music,source_name,Associated Press - Music,FALSE,https://apnews.com/hub/music
+Audience Strategies (Bas Grasmayer),source_name,Audience Strategies (Bas Grasmayer),FALSE,https://newsletter.basbasbas.com
+Austin American Statesman Music,source_name,Austin American Statesman Music,FALSE,https://eu.statesman.com/austin360/music/
+Back of House,source_name,Back of House,FALSE,https://www.bohlive.com/
+BBC Music,source_name,BBC Music,FALSE,https://www.bbc.co.uk/music
+BBC Music News,source_name,BBC Music News,FALSE,https://www.bbc.com/news/entertainment_and_arts
+Beats & Bytes,source_name,Beats & Bytes,FALSE,https://www.nueagency.com/beats-bytes
+Bloomberg - Music Industry News,source_name,Bloomberg - Music Industry News,FALSE,https://www.bloomberg.com/entertainment/music
+BMI The Weekly,source_name,BMI The Weekly,FALSE,https://www.bmi.com/news
+Brooklyn Magazine,source_name,Brooklyn Magazine,FALSE,https://www.bkmag.com/
+Chartmetric - How Music Charts,source_name,Chartmetric - How Music Charts,FALSE,https://blog.chartmetric.com
+Chicago Tribune - Music,source_name,Chicago Tribune - Music,FALSE,https://www.chicagotribune.com/entertainment/music/
+Clash Magazine,source_name,Clash Magazine,FALSE,https://www.clashmusic.com/
+Colin Meloy's Machine Shop,source_name,Colin Meloy's Machine Shop,FALSE,https://www.substack.com
+DancehallMag,source_name,DancehallMag,FALSE,https://www.dancehallmag.com/
+Dazed - Music,source_name,Dazed - Music,FALSE,https://www.dazeddigital.com/music
+Dazed Digital,source_name,Dazed Digital,FALSE,https://www.dazeddigital.com/music
+Deep Cuts,source_name,Deep Cuts,FALSE,https://amberhorsburgh.substack.com
+Detroit Metro Times,source_name,Detroit Metro Times,FALSE,https://www.metrotimes.com/music
+Digital Music News,source_name,Digital Music News,FALSE,https://www.digitalmusicnews.com
+DIY Magazine,source_name,DIY Magazine,FALSE,https://diymag.com/
+Earmilk,source_name,Earmilk,FALSE,https://earmilk.com/
+EDM.com,source_name,EDM.com,FALSE,https://edm.com
+Entering the Lung,source_name,Entering the Lung,FALSE,https://nekocase.substack.com/
+Exclaim!,source_name,Exclaim!,FALSE,https://exclaim.ca/
+FACT Magazine,source_name,FACT Magazine,FALSE,https://www.factmag.com/
+Financial Times - Arts & Music,source_name,Financial Times - Arts & Music,FALSE,https://www.ft.com/arts/music
+Forbes - Business of Music,source_name,Forbes - Business of Music,FALSE,https://www.forbes.com/business-of-music/
+Goldo Sync Report,source_name,Goldo Sync Report,FALSE,N/A
+Google News - Music,source_name,Google News - Music,FALSE,https://news.google.com/search?q=music
+HipHopDX News,source_name,HipHopDX News,FALSE,https://hiphopdx.com/news
+Hot Press,source_name,Hot Press,FALSE,https://www.hotpress.com/
+Hype Machine,source_name,Hype Machine,FALSE,https://hypem.com/
+Hypebot,source_name,Hypebot,FALSE,https://www.hypebot.com
+Jezebel (music),source_name,Jezebel (music),FALSE,https://www.jezebel.com/music
+Longreads Music,source_name,Longreads Music,FALSE,https://longreads.com/?s=music
+Los Angeles Times,source_name,Los Angeles Times,FALSE,https://www.latimes.com/entertainment-arts/music
+Los Angeles Times - Music,source_name,Los Angeles Times - Music,FALSE,https://www.latimes.com/entertainment-arts/music
+Loud And Quiet,source_name,Loud And Quiet,FALSE,https://www.loudandquiet.com/
+MBW – Stat of the Week,source_name,MBW – Stat of the Week,FALSE,https://www.musicbusinessworldwide.com
+Metal Injection,source_name,Metal Injection,FALSE,https://metalinjection.net
+MIDiA Research Blog,source_name,MIDiA Research Blog,FALSE,https://www.midiaresearch.com/blog
+Music Biz NEXT,source_name,Music Biz NEXT,FALSE,https://musicbiz.org/news/
+Music Lists | ScreenRant,source_name,Music Lists | ScreenRant,FALSE,https://screenrant.com/tag/music-lists/
+MusicREDEF (Jason Hirschhorn),source_name,MusicREDEF (Jason Hirschhorn),FALSE,https://redef.com/music
+Network Notes (Motive Unknown),source_name,Network Notes (Motive Unknown),FALSE,https://networknotes.motiveunknown.com/
+Newsweek - Music,source_name,Newsweek - Music,FALSE,https://www.newsweek.com/topic/music
+NME,source_name,NME,FALSE,https://nme.com
+Okayplayer,source_name,Okayplayer,FALSE,https://www.okayplayer.com/
+Passion of the Weiss,source_name,Passion of the Weiss,FALSE,https://www.passionweiss.com/
+Patti Smith,source_name,Patti Smith,FALSE,http://pattismith.substack.com/
+Penny Fractions,source_name,Penny Fractions,FALSE,https://pennyfractions.ghost.io
+Pitchfork: Album Reviews,source_name,Pitchfork: Album Reviews,FALSE,https://pitchfork.com/reviews/albums/
+Pitchfork: Features,source_name,Pitchfork: Features,FALSE,https://pitchfork.com/features/
+Pitchfork: News,source_name,Pitchfork: News,FALSE,https://pitchfork.com/news/
+Pitchfork: Track Reviews,source_name,Pitchfork: Track Reviews,FALSE,https://pitchfork.com/reviews/tracks/
+Platform & Stream,source_name,Platform & Stream,FALSE,N/A
+Pollstar Pro,source_name,Pollstar Pro,FALSE,https://www.pollstar.com
+PopMatters,source_name,PopMatters,FALSE,https://www.popmatters.com/
+Questlove Supreme,source_name,Questlove Supreme,FALSE,https://www.iheart.com/podcast/1119-questlove-supreme-29220738/
+Rap-Up,source_name,Rap-Up,FALSE,https://www.rap-up.com/
+Resident Advisor,source_name,Resident Advisor,FALSE,https://www.residentadvisor.net/
+Reuters - Entertainment (Music),source_name,Reuters - Entertainment (Music),FALSE,https://www.reuters.com/lifestyle/entertainment/
+RightsTech Newsletter,source_name,RightsTech Newsletter,FALSE,https://www.rightstech.com
+RollingStone.com: Music,source_name,RollingStone.com: Music,FALSE,https://rollingstone.com/music
+Screen Rant - Music Features,source_name,Screen Rant - Music Features,FALSE,https://screenrant.com/music/
+SonoSuite Newsletter,source_name,SonoSuite Newsletter,FALSE,https://sonosuite.com
+Spotify for Artists,source_name,Spotify for Artists,FALSE,https://artists.spotify.com
+Starship Casual,source_name,Starship Casual,FALSE,https://jefftweedy.substack.com/
+The Independent - Music,source_name,The Independent - Music,FALSE,https://www.independent.co.uk/arts-entertainment/music
+The Japan Times - Music,source_name,The Japan Times - Music,FALSE,https://www.japantimes.co.jp/culture/music/
+The Line of Best Fit,source_name,The Line of Best Fit,FALSE,https://www.thelineofbestfit.com/
+The Quietus,source_name,The Quietus,FALSE,https://thequietus.com/
+The Telegraph - Music,source_name,The Telegraph - Music,FALSE,https://www.telegraph.co.uk/music/
+Trapital,source_name,Trapital,FALSE,https://trapital.co
+Under the Radar,source_name,Under the Radar,FALSE,https://www.undertheradarmag.com/
+UPROXX,source_name,UPROXX,FALSE,https://uproxx.com/music
+Water & Music,source_name,Water & Music,FALSE,https://www.waterandmusic.com/archive
+WaterTower Insights,source_name,WaterTower Insights,FALSE,https://watertowerinsights.substack.com
+Aggregated music news,content_focus,Google News - Music,FALSE,https://news.google.com/search?q=music
+Album reviews,content_focus,Pitchfork: Album Reviews,FALSE,https://pitchfork.com/reviews/albums/
+"Alt, Indie Rock",content_focus,Loud And Quiet,FALSE,https://www.loudandquiet.com/
+"Alternative, Indie",content_focus,Under the Radar,FALSE,https://www.undertheradarmag.com/
+"Avant-garde, Critical Essays",content_focus,The Quietus,FALSE,https://thequietus.com/
+"Breaking music news, artist coverage",content_focus,Associated Press - Music,FALSE,https://apnews.com/hub/music
+"Breaking music news, global culture",content_focus,BBC Music News,FALSE,https://www.bbc.com/news/entertainment_and_arts
+Celebrity & Culture,content_focus,Jezebel (music),FALSE,https://www.jezebel.com/music
+Comprehensive music coverage,content_focus,RollingStone.com: Music,FALSE,https://rollingstone.com/music
+"Concerts, Local Coverage",content_focus,Chicago Tribune - Music,FALSE,https://www.chicagotribune.com/entertainment/music/
+Creative process and personal essays,content_focus,Colin Meloy's Machine Shop,FALSE,https://www.substack.com
+Curated industry links with commentary,content_focus,MusicREDEF (Jason Hirschhorn),FALSE,https://redef.com/music
+"Data analysis, trends, metrics",content_focus,Chartmetric - How Music Charts,FALSE,https://blog.chartmetric.com
+Electronic music culture,content_focus,EDM.com,FALSE,https://edm.com
+Electronic Music Scene,content_focus,Resident Advisor,FALSE,https://www.residentadvisor.net/
+Emerging Music Trends,content_focus,Earmilk,FALSE,https://earmilk.com/
+Essays and Reviews,content_focus,PopMatters,FALSE,https://www.popmatters.com/
+Experimental music commentary,content_focus,Entering the Lung,FALSE,https://nekocase.substack.com/
+"Experimental, Cutting Edge News",content_focus,FACT Magazine,FALSE,https://www.factmag.com/
+Financial and strategic analysis,content_focus,MBW – Stat of the Week,FALSE,https://www.musicbusinessworldwide.com
+Financial Coverage of Music Deals,content_focus,Bloomberg - Music Industry News,FALSE,https://www.bloomberg.com/entertainment/music
+"Global Market, Arts Strategy",content_focus,Financial Times - Arts & Music,FALSE,https://www.ft.com/arts/music
+Hip-hop business analysis,content_focus,Trapital,FALSE,https://trapital.co
+Hip-hop news and analysis,content_focus,HipHopDX News,FALSE,https://hiphopdx.com/news
+"Hip-Hop, Politics, Culture",content_focus,Okayplayer,FALSE,https://www.okayplayer.com/
+"Hip-Hop, R&B",content_focus,Rap-Up,FALSE,https://www.rap-up.com/
+Indie Scene,content_focus,DIY Magazine,FALSE,https://diymag.com/
+"Indie, Electronic, Pop",content_focus,The Line of Best Fit,FALSE,https://www.thelineofbestfit.com/
+"Indie, Rock, Pop",content_focus,Exclaim!,FALSE,https://exclaim.ca/
+"Industry news, education",content_focus,BMI The Weekly,FALSE,https://www.bmi.com/news
+"Industry Strategy, Artist Business",content_focus,Forbes - Business of Music,FALSE,https://www.forbes.com/business-of-music/
+Interviews with music legends,content_focus,Questlove Supreme,FALSE,https://www.iheart.com/podcast/1119-questlove-supreme-29220738/
+"IP, rights, licensing",content_focus,RightsTech Newsletter,FALSE,https://www.rightstech.com
+Japanese and International Music News,content_focus,The Japan Times - Music,FALSE,https://www.japantimes.co.jp/culture/music/
+"Live music industry updates, tech, and production",content_focus,Back of House,FALSE,https://www.bohlive.com/
+Local + Global Artists,content_focus,Hot Press,FALSE,https://www.hotpress.com/
+Local Culture,content_focus,Brooklyn Magazine,FALSE,https://www.bkmag.com/
+Local Music Scene,content_focus,Detroit Metro Times,FALSE,https://www.metrotimes.com/music
+Long-form music features,content_focus,Pitchfork: Features,FALSE,https://pitchfork.com/features/
+Mainstream music and features,content_focus,Screen Rant - Music Features,FALSE,https://screenrant.com/music/
+Mainstream music news and pop culture,content_focus,Newsweek - Music,FALSE,https://www.newsweek.com/topic/music
+"Market analysis, trends, consumer behavior",content_focus,MIDiA Research Blog,FALSE,https://www.midiaresearch.com/blog
+Metal news and culture,content_focus,Metal Injection,FALSE,https://metalinjection.net
+Music and Fashion,content_focus,Dazed Digital,FALSE,https://www.dazeddigital.com/music
+"Music business news, global trends",content_focus,Reuters - Entertainment (Music),FALSE,https://www.reuters.com/lifestyle/entertainment/
+Music Criticism,content_focus,Passion of the Weiss,FALSE,https://www.passionweiss.com/
+"Music economics, streaming critique",content_focus,Penny Fractions,FALSE,https://pennyfractions.ghost.io
+Music marketing strategy,content_focus,Deep Cuts,FALSE,https://amberhorsburgh.substack.com
+Music Metadata and Reviews,content_focus,AllMusic,FALSE,https://www.allmusic.com/
+Music news,content_focus,Pitchfork: News,FALSE,https://pitchfork.com/news/
+Music News & Reviews,content_focus,Los Angeles Times,FALSE,https://www.latimes.com/entertainment-arts/music
+Music News and Culture,content_focus,The Independent - Music,FALSE,https://www.independent.co.uk/arts-entertainment/music
+Music news and reviews,content_focus,NME,FALSE,https://nme.com
+"Music News, Interviews",content_focus,Clash Magazine,FALSE,https://www.clashmusic.com/
+Music ranking and lists,content_focus,Music Lists | ScreenRant,FALSE,https://screenrant.com/tag/music-lists/
+"Music reviews, news, cultural criticism, local music news",content_focus,Austin American Statesman Music,FALSE,https://eu.statesman.com/austin360/music/
+"Music tech, marketing, DIY",content_focus,Hypebot,FALSE,https://www.hypebot.com
+"Music, tech, app and industry news aggregation",content_focus,Network Notes (Motive Unknown),FALSE,https://networknotes.motiveunknown.com/
+"Music, tech, brand trends",content_focus,Beats & Bytes,FALSE,https://www.nueagency.com/beats-bytes
+"Music, tech, creativity",content_focus,Water & Music,FALSE,https://www.waterandmusic.com/archive
+"News, licensing, lawsuits, tech",content_focus,Digital Music News,FALSE,https://www.digitalmusicnews.com
+"News, Radio, Playlists",content_focus,BBC Music,FALSE,https://www.bbc.co.uk/music
+"News, Reviews, Interviews",content_focus,The Telegraph - Music,FALSE,https://www.telegraph.co.uk/music/
+Personal stories and music commentary,content_focus,Starship Casual,FALSE,https://jefftweedy.substack.com/
+Personal updates and reflections,content_focus,Patti Smith,FALSE,http://pattismith.substack.com/
+Playlist Blog Aggregator,content_focus,Hype Machine,FALSE,https://hypem.com/
+"Policy, success stories",content_focus,ASCAP news,FALSE,https://www.ascap.com/news-events
+Pop culture and music,content_focus,UPROXX,FALSE,https://uproxx.com/music
+"Pop, Experimental, Global",content_focus,Dazed - Music,FALSE,https://www.dazeddigital.com/music
+"Pop, Hip-Hop, Live Music",content_focus,Los Angeles Times - Music,FALSE,https://www.latimes.com/entertainment-arts/music
+"Reggae, Dancehall, Caribbean",content_focus,DancehallMag,FALSE,https://www.dancehallmag.com/
+"Strategic insights, rights, M&A",content_focus,WaterTower Insights,FALSE,https://watertowerinsights.substack.com
+Streaming platforms & business,content_focus,Platform & Stream,FALSE,N/A
+"Streaming trends, royalties",content_focus,SonoSuite Newsletter,FALSE,https://sonosuite.com
+"Sync, licensing, curation",content_focus,Goldo Sync Report,FALSE,N/A
+Tech and audience building for artists,content_focus,Audience Strategies (Bas Grasmayer),FALSE,https://newsletter.basbasbas.com
+"Tips, tools and platform updates",content_focus,Spotify for Artists,FALSE,https://artists.spotify.com
+"Touring, ticketing, live analytics",content_focus,Pollstar Pro,FALSE,https://www.pollstar.com
+Track reviews,content_focus,Pitchfork: Track Reviews,FALSE,https://pitchfork.com/reviews/tracks/
+"Trends, strategy, tech",content_focus,Music Biz NEXT,FALSE,https://musicbiz.org/news/
+Visual Arts,content_focus,ARTnews,FALSE,https://www.artnews.com/
+Art Enthusiasts,audience,ARTnews,FALSE,https://www.artnews.com/
+Artists / Labels,audience,Spotify for Artists,FALSE,https://artists.spotify.com
+"Brand marketers, Industry execs",audience,Beats & Bytes,FALSE,https://www.nueagency.com/beats-bytes
+Broad industry,audience,Digital Music News,FALSE,https://www.digitalmusicnews.com
+Brooklyn Residents,audience,Brooklyn Magazine,FALSE,https://www.bkmag.com/
+Business + Arts Audience,audience,Financial Times - Arts & Music,FALSE,https://www.ft.com/arts/music
+Business Professionals,audience,Bloomberg - Music Industry News,FALSE,https://www.bloomberg.com/entertainment/music
+Business Readers,audience,Forbes - Business of Music,FALSE,https://www.forbes.com/business-of-music/
+Canada General + Indie Fans,audience,Exclaim!,FALSE,https://exclaim.ca/
+Dancehall/Caribbean Fans,audience,Rap-Up,FALSE,https://www.rap-up.com/
+Detroit Residents,audience,Detroit Metro Times,FALSE,https://www.metrotimes.com/music
+"Distributors, DIY artists",audience,SonoSuite Newsletter,FALSE,https://sonosuite.com
+EDM Fans,audience,EDM.com,FALSE,https://edm.com
+Electronic Music Fans,audience,Resident Advisor,FALSE,https://www.residentadvisor.net/
+Electronic/Experimental Fans,audience,FACT Magazine,FALSE,https://www.factmag.com/
+"Execs, tastemakers",audience,MusicREDEF (Jason Hirschhorn),FALSE,https://redef.com/music
+Experimental / Indie Fans,audience,Entering the Lung,FALSE,https://nekocase.substack.com/
+Experimental Music Fans,audience,The Quietus,FALSE,https://thequietus.com/
+Fans of Colin Meloy,audience,Colin Meloy's Machine Shop,FALSE,https://www.substack.com
+Fans of Jeff Tweedy,audience,Starship Casual,FALSE,https://jefftweedy.substack.com/
+Fans of Patti Smith,audience,Patti Smith,FALSE,http://pattismith.substack.com/
+General Audience,audience,Google News - Music,FALSE,https://news.google.com/search?q=music
+General Music Fans,audience,AllMusic,FALSE,https://www.allmusic.com/
+General News Readers,audience,Associated Press - Music,FALSE,https://apnews.com/hub/music
+General Pop Culture,audience,PopMatters,FALSE,https://www.popmatters.com/
+General Public,audience,Jezebel (music),FALSE,https://www.jezebel.com/music
+"General Public, Arts Readers",audience,Austin American Statesman Music,FALSE,https://eu.statesman.com/austin360/music/
+"General Public, UK",audience,BBC Music,FALSE,https://www.bbc.co.uk/music
+Global Arts & Music Readers,audience,The Japan Times - Music,FALSE,https://www.japantimes.co.jp/culture/music/
+Global Indie Music Fans,audience,The Line of Best Fit,FALSE,https://www.thelineofbestfit.com/
+Global News Consumers,audience,Reuters - Entertainment (Music),FALSE,https://www.reuters.com/lifestyle/entertainment/
+Hip-Hop Fans,audience,HipHopDX News,FALSE,https://hiphopdx.com/news
+Hip-Hop/R&B Fans,audience,Okayplayer,FALSE,https://www.okayplayer.com/
+Indie Fans,audience,DIY Magazine,FALSE,https://diymag.com/
+Indie Rock Fans,audience,Under the Radar,FALSE,https://www.undertheradarmag.com/
+"Industry Analysts, Critics",audience,Penny Fractions,FALSE,https://pennyfractions.ghost.io
+Industry Professionals,audience,Hypebot,FALSE,https://www.hypebot.com
+"Industry Professionals, Artists",audience,Water & Music,FALSE,https://www.waterandmusic.com/archive
+Irish Music Audience,audience,Hot Press,FALSE,https://www.hotpress.com/
+Japan-based Global Audience,audience,DancehallMag,FALSE,https://www.dancehallmag.com/
+Live music professionals,audience,Pollstar Pro,FALSE,https://www.pollstar.com
+"Marketers, Industry Professionals",audience,Deep Cuts,FALSE,https://amberhorsburgh.substack.com
+Metal Fans,audience,Metal Injection,FALSE,https://metalinjection.net
+Midwest General Audience,audience,Chicago Tribune - Music,FALSE,https://www.chicagotribune.com/entertainment/music/
+"Music + tech execs, investors",audience,MIDiA Research Blog,FALSE,https://www.midiaresearch.com/blog
+Music Discovery Enthusiasts,audience,Earmilk,FALSE,https://earmilk.com/
+Music Enthusiasts,audience,Passion of the Weiss,FALSE,https://www.passionweiss.com/
+"Music Execs, Marketers, Artists",audience,Network Notes (Motive Unknown),FALSE,https://networknotes.motiveunknown.com/
+"Music execs, members",audience,Music Biz NEXT,FALSE,https://musicbiz.org/news/
+Music Fans / Critics,audience,Pitchfork: Album Reviews,FALSE,https://pitchfork.com/reviews/albums/
+"Music marketers, data nerds",audience,Chartmetric - How Music Charts,FALSE,https://blog.chartmetric.com
+"Music Professionals, Live Industry",audience,Back of House,FALSE,https://www.bohlive.com/
+"Music supervisors, composers",audience,Goldo Sync Report,FALSE,N/A
+"Music tech thinkers, strategists",audience,Audience Strategies (Bas Grasmayer),FALSE,https://newsletter.basbasbas.com
+Pop Culture Fans,audience,Music Lists | ScreenRant,FALSE,https://screenrant.com/tag/music-lists/
+"Rights professionals, Tech execs",audience,RightsTech Newsletter,FALSE,https://www.rightstech.com
+"Songwriters, music professionals",audience,BMI The Weekly,FALSE,https://www.bmi.com/news
+"Songwriters, publishers",audience,ASCAP news,FALSE,https://www.ascap.com/news-events
+"Strategy folks, music/TV/tech crossers",audience,WaterTower Insights,FALSE,https://watertowerinsights.substack.com
+UK + Global General Audience,audience,BBC Music News,FALSE,https://www.bbc.com/news/entertainment_and_arts
+UK General Public,audience,The Independent - Music,FALSE,https://www.independent.co.uk/arts-entertainment/music
+UK Indie Fans,audience,Loud And Quiet,FALSE,https://www.loudandquiet.com/
+UK Music Fans,audience,Clash Magazine,FALSE,https://www.clashmusic.com/
+"UK Public, Arts Readers",audience,The Telegraph - Music,FALSE,https://www.telegraph.co.uk/music/
+Urban & Hip-Hop Fans,audience,Hype Machine,FALSE,https://hypem.com/
+West Coast General Audience,audience,Los Angeles Times - Music,FALSE,https://www.latimes.com/entertainment-arts/music
+Youth Culture,audience,Dazed Digital,FALSE,https://www.dazeddigital.com/music
+Youth/Alt Culture Fans,audience,Dazed - Music,FALSE,https://www.dazeddigital.com/music
