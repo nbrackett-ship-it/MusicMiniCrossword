@@ -266,6 +266,50 @@
       border-top: 1px solid var(--border);
     }
 
+    /* ── Load bar ── */
+    #load-bar {
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    #load-bar input {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    #load-bar button {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-2);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 11px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color .15s, color .15s;
+    }
+
+    #load-bar button:hover { border-color: var(--gold); color: var(--gold); }
+    #load-bar button:disabled { opacity: .4; cursor: not-allowed; }
+
+    #load-error {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #E06060;
+      margin-bottom: 12px;
+      display: none;
+    }
+    #load-error.visible { display: block; }
+
     /* ── API error ── */
     #api-error {
       display: none;
@@ -293,6 +337,12 @@
 </header>
 
 <div class="divider"></div>
+
+<div id="load-bar">
+  <input id="load-slug" type="text" placeholder="Load existing puzzle — paste slug (e.g. the-magic-number-2026-05-08)" />
+  <button type="button" id="load-btn">Load</button>
+</div>
+<div id="load-error"></div>
 
 <form id="publish-form" novalidate>
 
@@ -389,6 +439,74 @@
 
   const $date = document.getElementById('date');
   if (!$date.value) $date.value = nextThursday();
+
+  // ── Load existing puzzle ────────────────────────────────────────────────
+  const $loadBtn   = document.getElementById('load-btn');
+  const $loadSlug  = document.getElementById('load-slug');
+  const $loadError = document.getElementById('load-error');
+
+  $loadBtn.addEventListener('click', async () => {
+    const slug = $loadSlug.value.trim();
+    $loadError.classList.remove('visible');
+    $loadError.textContent = '';
+
+    if (!slug) {
+      $loadError.textContent = 'Enter a slug to load.';
+      $loadError.classList.add('visible');
+      return;
+    }
+
+    $loadBtn.disabled = true;
+    $loadBtn.textContent = 'Loading…';
+
+    try {
+      // Fetch puzzle JSON from live site
+      const jsonRes = await fetch(`https://crossword.stems.media/puzzles/${slug}.json`);
+      if (!jsonRes.ok) throw new Error(`Puzzle not found: ${slug}`);
+      const puzzleJson = await jsonRes.json();
+
+      // Pre-fill JSON and title
+      document.getElementById('puzzle-json').value = JSON.stringify(puzzleJson, null, 2);
+      if (puzzleJson.title) document.getElementById('title').value = puzzleJson.title;
+
+      // Try to pull theme, date, teaser from saved Beehiiv snippet
+      const owner = $owner.value.trim() || 'nbrackett-ship-it';
+      const repo  = $repo.value.trim()  || 'MusicMiniCrossword';
+      const htmlRes = await fetch(
+        `https://raw.githubusercontent.com/${owner}/${repo}/main/output/${slug}-beehiiv.html`
+      );
+
+      if (htmlRes.ok) {
+        const html = await htmlRes.text();
+
+        // Parse theme + date from the subtitle line: "THEME • Month D, YYYY • 5x5"
+        const subtitleMatch = html.match(/>([^<]+) • ([A-Z][a-z]+ \d+, \d{4}) • 5x5</);
+        if (subtitleMatch) {
+          document.getElementById('theme').value = subtitleMatch[1];
+          // Convert "Month D, YYYY" → YYYY-MM-DD for the date input
+          const parsed = new Date(subtitleMatch[2]);
+          if (!isNaN(parsed)) {
+            const y = parsed.getFullYear();
+            const m = String(parsed.getMonth() + 1).padStart(2, '0');
+            const d = String(parsed.getDate()).padStart(2, '0');
+            $date.value = `${y}-${m}-${d}`;
+          }
+        }
+
+        // Parse teaser: the 15px paragraph before the PLAY NOW button
+        const teaserMatch = html.match(/font-size:15px[^>]*>([^<]+)<\/p>/);
+        if (teaserMatch) document.getElementById('teaser').value = teaserMatch[1];
+      }
+
+      $loadSlug.value = '';
+    } catch (err) {
+      $loadError.textContent = err.message;
+      $loadError.classList.add('visible');
+    } finally {
+      $loadBtn.disabled = false;
+      $loadBtn.textContent = 'Load';
+    }
+  });
 
   // ── Form submit ─────────────────────────────────────────────────────────
   const form       = document.getElementById('publish-form');
