@@ -105,7 +105,7 @@ jobs:
           TARGET="https://crossword.stems.media/?puzzle=${SLUG}&v=1"
           mkdir -p images
           HTTP_CODE=$(curl -s -o "images/${SLUG}.png" -w "%{http_code}" \
-            "${URL}?access_key=${SCREENSHOTONE_KEY}&url=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$TARGET")&viewport_width=800&viewport_height=800&full_page=false&format=png&block_ads=true&block_cookie_banners=true&selector=%23grid-wrap&image_padding=16")
+            "${URL}?access_key=${SCREENSHOTONE_KEY}&url=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$TARGET")&viewport_width=800&viewport_height=800&full_page=false&format=png&block_ads=true&block_cookie_banners=true&hide_selectors%5B%5D=%23sticky-clue-bar")
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
             echo "::error::Screenshotone API returned HTTP $HTTP_CODE"
             cat "images/${SLUG}.png"
