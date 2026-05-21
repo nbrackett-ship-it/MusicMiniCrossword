@@ -1,0 +1,37 @@
+{
+  "id": "graduation-season-2026-05-21",
+  "title": "Graduation Season",
+  "info": "May 21, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "GARBO" },
+    { "number": 6, "row": 1, "col": 0, "direction": "across", "word": "ROYAL" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "ORDRE" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "UTERI" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "TARYN" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down",   "word": "GROUT" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down",   "word": "AORTA" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down",   "word": "RYDER" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down",   "word": "BARRY" },
+    { "number": 5, "row": 0, "col": 4, "direction": "down",   "word": "OLEIN" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Iconic early Hollywood actress who became a recluse" },
+      { "number": 6, "text": "\"The _____ Scam\" (Source album for the key sample in \"Champion,\" from Kanye's Graduation)" },
+      { "number": 7, "text": "\"_____ des Arts et des Lettres\" (French culture award)" },
+      { "number": 8, "text": "Female body part (pl.)" },
+      { "number": 9, "text": "Hustle & Flow actress and recording artist Manning" }
+    ],
+    "down": [
+      { "number": 1, "text": "Tiles usually need this" },
+      { "number": 2, "text": "Highway to your heart" },
+      { "number": 3, "text": "Mitch _____ and the Detroit Wheels" },
+      { "number": 4, "text": "First name of slugger who inspired song on Graduation" },
+      { "number": 5, "text": "Naturally occurring glyceride found in olive oil" }
+    ]
+  }
+}
