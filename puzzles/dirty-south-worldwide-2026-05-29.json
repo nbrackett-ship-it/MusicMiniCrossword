@@ -7,31 +7,121 @@
     "cols": 5
   },
   "words": [
-    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "CRUNK" },
-    { "number": 6, "row": 1, "col": 0, "direction": "across", "word": "HUMOR" },
-    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "APPIA" },
-    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "JEEZY" },
-    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "ANDES" },
-    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "CHAJA" },
-    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "RUPEN" },
-    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "UMPED" },
-    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "NOIZE" },
-    { "number": 5, "row": 0, "col": 4, "direction": "down", "word": "KRAYS" }
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "across",
+      "word": "CRUNK"
+    },
+    {
+      "number": 6,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "HUMOR"
+    },
+    {
+      "number": 7,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "APPIA"
+    },
+    {
+      "number": 8,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "JEEZY"
+    },
+    {
+      "number": 9,
+      "row": 4,
+      "col": 0,
+      "direction": "across",
+      "word": "ANDES"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "down",
+      "word": "CHAJA"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "RUPEN"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "UMPED"
+    },
+    {
+      "number": 4,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "NOIZE"
+    },
+    {
+      "number": 5,
+      "row": 0,
+      "col": 4,
+      "direction": "down",
+      "word": "KRAYS"
+    }
   ],
   "clues": {
     "across": [
-      { "number": 1, "text": "High octane ATL export that became an adjective" },
-      { "number": 6, "text": "Silliness" },
-      { "number": 7, "text": "Via _____ (famous Roman road)" },
-      { "number": 8, "text": "2000s-era trap Snowman" },
-      { "number": 9, "text": "Mountain range south of the Dirty South" }
+      {
+        "number": 1,
+        "text": "High octane ATL export that became an adjective"
+      },
+      {
+        "number": 6,
+        "text": "Silliness"
+      },
+      {
+        "number": 7,
+        "text": "Via _____ (famous Roman road)"
+      },
+      {
+        "number": 8,
+        "text": "2000s-era trap Snowman"
+      },
+      {
+        "number": 9,
+        "text": "Mountain range south of the Dirty South"
+      }
     ],
     "down": [
-      { "number": 1, "text": "Famous Uruguayan dessert" },
-      { "number": 2, "text": "Armenian version of Reuben" },
-      { "number": 3, "text": "Shorthand for if you called a baseball game" },
-      { "number": 4, "text": "Organized _______ (Atlanta producer collective)" },
-      { "number": 5, "text": "British gangster twins" }
+      {
+        "number": 1,
+        "text": "Famous Uruguayan dessert"
+      },
+      {
+        "number": 2,
+        "text": "Armenian version of Reuben"
+      },
+      {
+        "number": 3,
+        "text": "Shorthand for if you called a baseball game"
+      },
+      {
+        "number": 4,
+        "text": "Organized _______ (Atlanta producer collective)"
+      },
+      {
+        "number": 5,
+        "text": "British gangster twins"
+      }
     ]
   }
 }
