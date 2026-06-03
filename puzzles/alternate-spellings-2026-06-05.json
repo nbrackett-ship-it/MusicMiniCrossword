@@ -1,0 +1,37 @@
+{
+  "id": "alternate-spellings-2026-06-05",
+  "title": "Alternate Spellings",
+  "info": "June 5, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "YUSUF" },
+    { "number": 6, "row": 1, "col": 0, "direction": "across", "word": "ULTRA" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "SNAKE" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "EATER" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "FEELY" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "YUSEF" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "ULNAE" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "STATE" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "URKEL" },
+    { "number": 5, "row": 0, "col": 4, "direction": "down", "word": "FAERY" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "\"Teaser and the Firecat\" artist, these days" },
+      { "number": 6, "text": "Prefix to \"violence\" for Lana Del Rey" },
+      { "number": 7, "text": "DJ ___ (French producer behind \"Turn Down for What,\" \"Let Me Love You\" and a bucketful of other hits)" },
+      { "number": 8, "text": "One who consumes (and dining website)" },
+      { "number": 9, "text": "Solo member of influential late-70s/80s jangle-pop band?" }
+    ],
+    "down": [
+      { "number": 1, "text": "Multi-instrumentalist Lateef" },
+      { "number": 2, "text": "Forearm bones" },
+      { "number": 3, "text": "\"_____ Trooper\" (from Nebraska)" },
+      { "number": 4, "text": "'80s TV nerd" },
+      { "number": 5, "text": "Whimsical alternate spelling of whimsical mystical creature" }
+    ]
+  }
+}
