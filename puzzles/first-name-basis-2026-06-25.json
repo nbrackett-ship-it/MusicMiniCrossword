@@ -1,0 +1,34 @@
+{
+  "id": "first-name-basis-2026-06-25",
+  "title": "First Name Basis",
+  "info": "June 25, 2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "OTTER" },
+    { "number": 6, "row": 1, "col": 0, "direction": "across", "word": "MERLE" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "BGAME" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "RACED" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "ENTRY" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "OMBRE" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "TEGAN" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "TRACT" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "ELMER" },
+    { "number": 5, "row": 0, "col": 4, "direction": "down", "word": "REEDY" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "River swimmer (and \"Animal House\" character)" },
+      { "number": 6, "text": "Bakersfield outlaw country master" },
+      { "number": 7, "text": "Less than your best effort" },
+      { "number": 8, "text": "Floored it" },
+      { "number": 9, "text": "Diary installment" }
+    ],
+    "down": [
+      { "number": 1, "text": "Gradient hair look" },
+      { "number": 2, "text": "Sara collaborator" },
+      { "number": 3, "text": "Parcel of land" },
+      { "number": 4, "text": "Film composer Bernstein (anagram of 6-Across)" },
+      { "number": 5, "text": "Thin, high-pitched" }
+    ]
+  }
+}
