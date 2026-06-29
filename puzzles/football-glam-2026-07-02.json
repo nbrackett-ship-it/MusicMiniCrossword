@@ -1,0 +1,37 @@
+{
+  "id": "football-glam-2026-07-02",
+  "title": "Football Glam",
+  "info": "July 2, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "ADELE" },
+    { "number": 6, "row": 1, "col": 0, "direction": "across", "word": "DOLLS" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "ONTAP" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "ROOMY" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "ETNAS" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "ADORE" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "DONOT" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "ELTON" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "LLAMA" },
+    { "number": 5, "row": 0, "col": 4, "direction": "down", "word": "ESPYS" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Big voice, big Tottenham Hotspur fan" },
+      { "number": 6, "text": "Shorthand term for '70s glam-punk giants" },
+      { "number": 7, "text": "Ready to pour" },
+      { "number": 8, "text": "Spacious" },
+      { "number": 9, "text": "Belonging to legendary European volcano?" }
+    ],
+    "down": [
+      { "number": 1, "text": "Idolize as if they are a star striker or a pop star" },
+      { "number": 2, "text": "\"___ pass Go\"" },
+      { "number": 3, "text": "This icon who bought his childhood-favorite football club in 1976" },
+      { "number": 4, "text": "Andean animal" },
+      { "number": 5, "text": "Annual sports awards" }
+    ]
+  }
+}
