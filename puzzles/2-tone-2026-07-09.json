@@ -1,0 +1,127 @@
+{
+  "id": "2-tone-2026-07-09",
+  "title": "2 Tone",
+  "info": "July 9, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "across",
+      "word": "STANS"
+    },
+    {
+      "number": 6,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "TONAL"
+    },
+    {
+      "number": 7,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "INDIE"
+    },
+    {
+      "number": 8,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "NERVE"
+    },
+    {
+      "number": 9,
+      "row": 4,
+      "col": 0,
+      "direction": "across",
+      "word": "GREET"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "down",
+      "word": "STING"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "TONER"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "ANDRE"
+    },
+    {
+      "number": 4,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "NAIVE"
+    },
+    {
+      "number": 5,
+      "row": 0,
+      "col": 4,
+      "direction": "down",
+      "word": "SLEET"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "Eminem doc"
+      },
+      {
+        "number": 6,
+        "text": "Like most pop music, harmonically speaking"
+      },
+      {
+        "number": 7,
+        "text": "Commercial state, and/or a genre"
+      },
+      {
+        "number": 8,
+        "text": "Chutzpah"
+      },
+      {
+        "number": 9,
+        "text": "Goes with 'meet'"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "Shaggy collaborator + \"Last Ship\" auteur"
+      },
+      {
+        "number": 2,
+        "text": "Belongs in cartridges (no relation to 2 Across)"
+      },
+      {
+        "number": 3,
+        "text": "First name of noted Atlanta flute player and MC"
+      },
+      {
+        "number": 4,
+        "text": "Like somebody who signs a contract without reading it"
+      },
+      {
+        "number": 5,
+        "text": "Wintry mix component"
+      }
+    ]
+  }
+}
