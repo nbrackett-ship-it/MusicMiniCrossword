@@ -1,0 +1,34 @@
+{
+  "id": "second-stage-2026-07-16",
+  "title": "Second Stage",
+  "info": "July 16, 2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "LOLLA" },
+    { "number": 6, "row": 1, "col": 1, "direction": "across", "word": "WOOL" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "PERRY" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "UTNE" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "TOAST" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "L" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "OWETO" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "LORNA" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "LORES" },
+    { "number": 5, "row": 0, "col": 4, "direction": "down", "word": "ALY" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Grant Park mega-fest, familiarly" },
+      { "number": 6, "text": "Merino is one type of this" },
+      { "number": 7, "text": "First name of 1A founder" },
+      { "number": 8, "text": "___ Reader (alt press digest founded in '80s)" },
+      { "number": 9, "text": "Speak rhythmically over a beat (retro Jamaican term)" }
+    ],
+    "down": [
+      { "number": 1, "text": "You take one of these in defeat" },
+      { "number": 2, "text": "\"Everything they have, they ___ good timing\"" },
+      { "number": 3, "text": "___ Doone (shortbread brand)" },
+      { "number": 4, "text": "Bodies of traditional knowledge or stories" },
+      { "number": 5, "text": "___ & AJ (2000s Disney pop duo)" }
+    ]
+  }
+}
