@@ -1,0 +1,38 @@
+{
+  "id": "take-two-2026-07-23",
+  "title": "Take Two",
+  "info": "July 23, 2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1,  "row": 0, "col": 0, "direction": "across", "word": "WALTZ" },
+    { "number": 6,  "row": 1, "col": 0, "direction": "across", "word": "ATARI" },
+    { "number": 7,  "row": 2, "col": 0, "direction": "across", "word": "DO" },
+    { "number": 8,  "row": 2, "col": 3, "direction": "across", "word": "EP" },
+    { "number": 9,  "row": 3, "col": 0, "direction": "across", "word": "UNCAP" },
+    { "number": 11, "row": 4, "col": 0, "direction": "across", "word": "PESTO" },
+    { "number": 1,  "row": 0, "col": 0, "direction": "down", "word": "WADUP" },
+    { "number": 2,  "row": 0, "col": 1, "direction": "down", "word": "ATONE" },
+    { "number": 3,  "row": 0, "col": 2, "direction": "down", "word": "LA" },
+    { "number": 4,  "row": 0, "col": 3, "direction": "down", "word": "TREAT" },
+    { "number": 5,  "row": 0, "col": 4, "direction": "down", "word": "ZIPPO" },
+    { "number": 10, "row": 3, "col": 2, "direction": "down", "word": "CS" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1,  "text": "\"______ #2 (XO)\" (Elliott Smith tearjerker)" },
+      { "number": 6,  "text": "\"______ Teenage Riot\" (Grand Royal signing)" },
+      { "number": 7,  "text": "Syllable that opens the scale" },
+      { "number": 8,  "text": "More than a single, less than an album" },
+      { "number": 9,  "text": "Take the top off" },
+      { "number": 11, "text": "Green sauce" }
+    ],
+    "down": [
+      { "number": 1,  "text": "Crumple into a ball (or say 'hey'?)" },
+      { "number": 2,  "text": "\"I'm ______ with the universe\"" },
+      { "number": 3,  "text": "Loved by Randy Newman" },
+      { "number": 4,  "text": "Trick counterpart" },
+      { "number": 5,  "text": "Iconic lighter" },
+      { "number": 10, "text": "Lewis behind \"Narnia\" series" }
+    ]
+  }
+}
