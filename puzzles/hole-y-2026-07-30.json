@@ -1,0 +1,34 @@
+{
+  "id": "hole-y-2026-07-30",
+  "title": "Hole-y",
+  "info": "July 30, 2026 • 5x5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "PARTS" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "POSER" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "ABA" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "RINDS" },
+    { "number": 4, "row": 0, "col": 4, "direction": "down", "word": "START" },
+    { "number": 5, "row": 1, "col": 0, "direction": "across", "word": "OBI" },
+    { "number": 6, "row": 2, "col": 0, "direction": "across", "word": "SANSA" },
+    { "number": 7, "row": 2, "col": 3, "direction": "down", "word": "SEE" },
+    { "number": 8, "row": 3, "col": 2, "direction": "across", "word": "DER" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "RESET" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "\"Doll _____\" (1994 hit)" },
+      { "number": 5, "text": "Help me, ___-Wan, you're my only hope" },
+      { "number": 6, "text": "Stark daughter on \"Game of Thrones\"" },
+      { "number": 8, "text": "Bassist Auf ___ Mer" },
+      { "number": 9, "text": "Return a device to its default state" }
+    ],
+    "down": [
+      { "number": 1, "text": "Someone who hides their lack of punk rock credentials" },
+      { "number": 2, "text": "Pro basketball league that merged with NBA in '76" },
+      { "number": 3, "text": "Cheese-board leftovers" },
+      { "number": 4, "text": "A jump scare can give you one of these" },
+      { "number": 7, "text": "\"___ You Again\" (2015 Wiz Khalifa single)" }
+    ]
+  }
+}
