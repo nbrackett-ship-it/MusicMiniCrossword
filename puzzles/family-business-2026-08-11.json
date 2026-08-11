@@ -1,0 +1,34 @@
+{
+  "id": "family-business-2026-08-11",
+  "title": "Family Business",
+  "info": "August 11, 2026 • 5x5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "HAIM" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "HAWK" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "APHID" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "IRINA" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "MILKY" },
+    { "number": 5, "row": 1, "col": 0, "direction": "across", "word": "APRIL" },
+    { "number": 6, "row": 1, "col": 4, "direction": "down", "word": "LESS" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "WHILE" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "KINKS" },
+    { "number": 9, "row": 4, "col": 1, "direction": "across", "word": "DAYS" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Days Are Gone L.A. sister act" },
+      { "number": 5, "text": "\"____ Come She Will\" (Simon & Garfunkel)" },
+      { "number": 7, "text": "\"____ My Guitar…\" (Harrison song)" },
+      { "number": 8, "text": "Fractious family business behind Something Else and Low Budget" },
+      { "number": 9, "text": "\"Thank you for the days / Those endless days / … you gave me\" (1968 single by The Kinks)" }
+    ],
+    "down": [
+      { "number": 1, "text": "____s & Doves (1980 Neil Young album)" },
+      { "number": 2, "text": "Tiny bug that sucks sap from plants" },
+      { "number": 3, "text": "Russian gold medal skater Slutskaya and model Shayk" },
+      { "number": 4, "text": "\"Under the _____ Way\" (1988 song by The Church)" },
+      { "number": 6, "text": "\"A Little ____ Conversation\" (1968 Elvis tune)" }
+    ]
+  }
+}
