@@ -1,0 +1,149 @@
+{
+  "id": "names-and-places-2026-08-27",
+  "title": "Names and Places",
+  "info": "August 27, 2026 • 6×6",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 2,
+      "direction": "across",
+      "word": "SSD"
+    },
+    {
+      "number": 4,
+      "row": 1,
+      "col": 1,
+      "direction": "across",
+      "word": "CUTIE"
+    },
+    {
+      "number": 6,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "ARIANA"
+    },
+    {
+      "number": 7,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "LESTER"
+    },
+    {
+      "number": 8,
+      "row": 4,
+      "col": 0,
+      "direction": "across",
+      "word": "LASER"
+    },
+    {
+      "number": 9,
+      "row": 5,
+      "col": 1,
+      "direction": "across",
+      "word": "MEN"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "SUISSE"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "STATEN"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 4,
+      "direction": "down",
+      "word": "DINER"
+    },
+    {
+      "number": 4,
+      "row": 1,
+      "col": 1,
+      "direction": "down",
+      "word": "CREAM"
+    },
+    {
+      "number": 5,
+      "row": 1,
+      "col": 5,
+      "direction": "down",
+      "word": "EAR"
+    },
+    {
+      "number": 6,
+      "row": 2,
+      "col": 0,
+      "direction": "down",
+      "word": "ALL"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "'80s Boston hardcore band, or a type of data storage device"
+      },
+      {
+        "number": 4,
+        "text": "Who's the Death Cab for?"
+      },
+      {
+        "number": 6,
+        "text": "\"thank u, next\" star"
+      },
+      {
+        "number": 7,
+        "text": "Creem scribbler Bangs"
+      },
+      {
+        "number": 8,
+        "text": "Type of light show"
+      },
+      {
+        "number": 9,
+        "text": "Without hats?"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "Credit ______ (former Zurich-based investment bank)"
+      },
+      {
+        "number": 2,
+        "text": "Island of the Wu"
+      },
+      {
+        "number": 3,
+        "text": "1982 Barry Levinson movie"
+      },
+      {
+        "number": 4,
+        "text": "1993 banger out of 2. Down"
+      },
+      {
+        "number": 5,
+        "text": "Keep this to the street"
+      },
+      {
+        "number": 6,
+        "text": "\"____ Falls Down\" (2004 \"College Dropout\" single)"
+      }
+    ]
+  }
+}
