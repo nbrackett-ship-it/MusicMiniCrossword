@@ -1,0 +1,34 @@
+{
+  "id": "back-to-school-classics-2026-09-11",
+  "title": "Back to School Classics",
+  "info": "September 11, 2026 • 5×5",
+  "gridSize": { "rows": 5, "cols": 5 },
+  "words": [
+    { "number": 1, "row": 0, "col": 0, "direction": "across", "word": "ALUMS" },
+    { "number": 6, "row": 1, "col": 0, "direction": "across", "word": "MONEY" },
+    { "number": 7, "row": 2, "col": 0, "direction": "across", "word": "BRIAN" },
+    { "number": 8, "row": 3, "col": 0, "direction": "across", "word": "IDONT" },
+    { "number": 9, "row": 4, "col": 0, "direction": "across", "word": "TENTH" },
+    { "number": 1, "row": 0, "col": 0, "direction": "down", "word": "AMBIT" },
+    { "number": 2, "row": 0, "col": 1, "direction": "down", "word": "LORDE" },
+    { "number": 3, "row": 0, "col": 2, "direction": "down", "word": "UNION" },
+    { "number": 4, "row": 0, "col": 3, "direction": "down", "word": "MEANT" },
+    { "number": 5, "row": 0, "col": 4, "direction": "down", "word": "SYNTH" }
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "text": "Grads, informally" },
+      { "number": 6, "text": "Tune with famous cash register intro" },
+      { "number": 7, "text": "Johnson or Wilson" },
+      { "number": 8, "text": "\"_____ Want to Miss a Thing\"" },
+      { "number": 9, "text": "Tin anniversary number" }
+    ],
+    "down": [
+      { "number": 1, "text": "\"I __ a ___ flat today\"" },
+      { "number": 2, "text": "\"Ribs\" and \"Team\" singer" },
+      { "number": 3, "text": "Negotiates what scale is" },
+      { "number": 4, "text": "Had in mind" },
+      { "number": 5, "text": "Gary Numan staple" }
+    ]
+  }
+}
