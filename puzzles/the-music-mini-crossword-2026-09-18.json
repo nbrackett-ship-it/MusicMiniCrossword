@@ -1,0 +1,127 @@
+{
+  "id": "the-music-mini-crossword-2026-09-18",
+  "title": "The Music Mini Crossword",
+  "info": "September 18, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "across",
+      "word": "SHIP"
+    },
+    {
+      "number": 5,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "DIDO"
+    },
+    {
+      "number": 6,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "STALL"
+    },
+    {
+      "number": 8,
+      "row": 3,
+      "col": 1,
+      "direction": "across",
+      "word": "CHIC"
+    },
+    {
+      "number": 9,
+      "row": 4,
+      "col": 1,
+      "direction": "across",
+      "word": "HOOD"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "down",
+      "word": "SDS"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "HITCH"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "IDAHO"
+    },
+    {
+      "number": 4,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "POLIO"
+    },
+    {
+      "number": 7,
+      "row": 2,
+      "col": 4,
+      "direction": "down",
+      "word": "LCD"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "\"The Last _____\" (Sting musical)"
+      },
+      {
+        "number": 5,
+        "text": "Supplied \"Stan\" hook"
+      },
+      {
+        "number": 6,
+        "text": "Filibuster, or obstruct"
+      },
+      {
+        "number": 8,
+        "text": "Brought the \"Good Times\""
+      },
+      {
+        "number": 9,
+        "text": "Patterson, of Drive By Truckers"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "'60s radical student group (abbr.)"
+      },
+      {
+        "number": 2,
+        "text": "A way to hike?"
+      },
+      {
+        "number": 3,
+        "text": "B-52's had a private one"
+      },
+      {
+        "number": 4,
+        "text": "It put FDR in a wheelchair"
+      },
+      {
+        "number": 7,
+        "text": "Murphy's Soundsystem"
+      }
+    ]
+  }
+}
