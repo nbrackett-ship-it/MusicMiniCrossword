@@ -1,5 +1,23 @@
 # Music Mini Crossword — Analytics Layer
 
+## Newsletter screenshot publishing
+
+Publish Puzzle captures its image with Playwright on the GitHub runner. It retries
+for up to five minutes until the JSON actually loaded by the page matches the
+submitted puzzle and the blank grid is rendered. A timeout fails the job before
+the screenshot is committed or the newsletter snippet is generated. Preview
+captures omit analytics to avoid recording a player session.
+
+Image filenames include the Actions run ID and attempt, so a refreshed newsletter
+snippet has a new image URL and does not reuse a cached error-page screenshot.
+The Publish Puzzle app dispatches the same workflow as before; check the Actions
+run for completion and copy the verified snippet from its summary.
+
+To run publishing regression tests: `npm ci`, `npx playwright install chromium`,
+then `npm test`. To refresh a deployed puzzle image locally, run
+`SLUG=waterfowl-2026-10-09 node scripts/screenshot-puzzle.cjs`; this verifies the
+live puzzle against the local JSON and writes a new PNG in `images/`.
+
 Adds anonymous, Supabase-backed analytics to the static crossword site. No login required. Tracks solve times, streaks, and percentile rankings.
 
 ---

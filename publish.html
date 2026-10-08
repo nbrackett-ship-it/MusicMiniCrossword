@@ -602,12 +602,12 @@
       const $cd = document.getElementById('countdown');
       function tick() {
         if (secs <= 0) {
-          $cd.textContent = 'HTML snippet should be ready in the Actions run summary.';
+          $cd.textContent = 'Check the Actions run for status and the verified HTML snippet. Publishing may still be in progress.';
           return;
         }
         const m = Math.floor(secs / 60);
         const s = secs % 60;
-        $cd.textContent = `Snippet ready in ~${m}:${String(s).padStart(2,'0')} — check the Actions run summary.`;
+        $cd.textContent = `Publishing — check the Actions run summary. Status reminder in ${m}:${String(s).padStart(2,'0')}.`;
         secs--;
         setTimeout(tick, 1000);
       }

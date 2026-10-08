@@ -27,6 +27,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: write
 
@@ -89,40 +90,45 @@ jobs:
       - name: Push commits
         run: git push
 
-      # ── Step 6: Wait for GitHub Pages to deploy ────────────────────────────
-      - name: Wait for Pages deployment
-        run: |
-          echo "Sleeping 45 seconds for GitHub Pages to deploy..."
-          sleep 45
+      # Check readiness in the same browser that takes the screenshot.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-      # ── Step 7: Screenshot via Screenshotone API ───────────────────────────
-      - name: Screenshot puzzle
+      - name: Install screenshot browser
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Test screenshot readiness
+        run: npm test
+
+      - name: Screenshot verified puzzle
+        id: screenshot
         env:
-          SCREENSHOTONE_KEY: ${{ secrets.SCREENSHOTONE_KEY }}
+          SLUG: ${{ steps.slug.outputs.slug }}
+        run: node scripts/screenshot-puzzle.cjs
+
+      - name: Commit verified screenshot
+        env:
+          IMAGE_NAME: ${{ steps.screenshot.outputs.image_name }}
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
-          URL="https://api.screenshotone.com/take"
-          TARGET="https://crossword.stems.media/?puzzle=${SLUG}&v=1"
-          mkdir -p images
-          HTTP_CODE=$(curl -s -o "images/${SLUG}.png" -w "%{http_code}" \
-            "${URL}?access_key=${SCREENSHOTONE_KEY}&url=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$TARGET")&viewport_width=800&viewport_height=800&full_page=false&format=png&block_ads=true&block_cookie_banners=true&hide_selectors%5B%5D=%23sticky-clue-bar")
-          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
-            echo "::error::Screenshotone API returned HTTP $HTTP_CODE"
-            cat "images/${SLUG}.png"
-            exit 1
-          fi
-          echo "Screenshot saved: images/${SLUG}.png (HTTP $HTTP_CODE)"
-          git add "images/${SLUG}.png"
-          git diff --cached --quiet && echo "Screenshot unchanged, skipping commit" || (git commit -m "Add screenshot: ${SLUG}" && git push)
+          git add "images/${IMAGE_NAME}"
+          git commit -m "Add verified screenshot: ${SLUG}"
+          git push
 
       # ── Step 8: Generate Beehiiv HTML snippet ──────────────────────────────
       - name: Generate Beehiiv snippet
         uses: actions/github-script@v7
         env:
           SLUG: ${{ steps.slug.outputs.slug }}
+          IMAGE_NAME: ${{ steps.screenshot.outputs.image_name }}
         with:
           script: |
             const slug   = process.env.SLUG;
+            const imageName = process.env.IMAGE_NAME;
             const title  = `${{ inputs.title }}`;
             const theme  = `${{ inputs.theme }}`;
             const teaser = `${{ inputs.teaser }}`;
@@ -137,7 +143,7 @@ jobs:
             const repoOwner = context.repo.owner;
             const repoName  = context.repo.repo;
 
-            const html = `<div style="border:1px solid #D8D2C6;background:#FFFDF8;padding:22px 24px;"><p style="font-family:'Courier New',Courier,monospace;font-size:22px;font-weight:700;line-height:1.15;color:#111111;margin:0 0 6px 0;">${title}</p><p style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#777777;margin:0 0 18px 0;">${theme} • ${formattedDate} • 5x5</p><table width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td width="48%" valign="top" style="padding-right:16px;"><img src="https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/images/${slug}.png" width="260" style="width:100%;display:block;border:2px solid #1B1B1B;" alt="Crossword grid"></td><td width="52%" valign="middle" style="padding-left:4px;"><p style="font-family:Inter,Arial,sans-serif;font-size:15px;line-height:1.6;color:#1B1B1B;margin:0 0 20px 0;">${teaser}</p><a href="https://crossword.stems.media/?email={{email}}&puzzle=${slug}" style="display:inline-block;background:#0F2E57;color:#ffffff;font-family:'Courier New',Courier,monospace;font-weight:700;font-size:13px;letter-spacing:.04em;text-decoration:none;padding:11px 18px;">PLAY NOW</a></td></tr></tbody></table></div>`;
+            const html = `<div style="border:1px solid #D8D2C6;background:#FFFDF8;padding:22px 24px;"><p style="font-family:'Courier New',Courier,monospace;font-size:22px;font-weight:700;line-height:1.15;color:#111111;margin:0 0 6px 0;">${title}</p><p style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#777777;margin:0 0 18px 0;">${theme} • ${formattedDate} • 5x5</p><table width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td width="48%" valign="top" style="padding-right:16px;"><img src="https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/images/${imageName}" width="260" style="width:100%;display:block;border:2px solid #1B1B1B;" alt="Crossword grid"></td><td width="52%" valign="middle" style="padding-left:4px;"><p style="font-family:Inter,Arial,sans-serif;font-size:15px;line-height:1.6;color:#1B1B1B;margin:0 0 20px 0;">${teaser}</p><a href="https://crossword.stems.media/?email={{email}}&puzzle=${slug}" style="display:inline-block;background:#0F2E57;color:#ffffff;font-family:'Courier New',Courier,monospace;font-weight:700;font-size:13px;letter-spacing:.04em;text-decoration:none;padding:11px 18px;">PLAY NOW</a></td></tr></tbody></table></div>`;
 
             // Write to output file
             const fs = require('fs');
