@@ -1,0 +1,127 @@
+{
+  "id": "waterfowl-2026-10-09",
+  "title": "Waterfowl",
+  "info": "October 9, 2026 • 5×5",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "across",
+      "word": "ACM"
+    },
+    {
+      "number": 4,
+      "row": 1,
+      "col": 0,
+      "direction": "across",
+      "word": "DRAKE"
+    },
+    {
+      "number": 7,
+      "row": 2,
+      "col": 0,
+      "direction": "across",
+      "word": "DECAL"
+    },
+    {
+      "number": 8,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "SWANS"
+    },
+    {
+      "number": 9,
+      "row": 4,
+      "col": 2,
+      "direction": "across",
+      "word": "UTE"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 0,
+      "direction": "down",
+      "word": "ADDS"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 1,
+      "direction": "down",
+      "word": "CREW"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 2,
+      "direction": "down",
+      "word": "MACAU"
+    },
+    {
+      "number": 5,
+      "row": 1,
+      "col": 3,
+      "direction": "down",
+      "word": "KANT"
+    },
+    {
+      "number": 6,
+      "row": 1,
+      "col": 4,
+      "direction": "down",
+      "word": "ELSE"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "Org whose awards show competes with the CMA's and CMT Music Awards (abbr)."
+      },
+      {
+        "number": 4,
+        "text": "Male duck, or mega MC."
+      },
+      {
+        "number": 7,
+        "text": "Picture or design that can be applied to a surface."
+      },
+      {
+        "number": 8,
+        "text": "Experimental band, or aquatic birds."
+      },
+      {
+        "number": 9,
+        "text": "Australian slang for pickup."
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "Puts two and two together."
+      },
+      {
+        "number": 2,
+        "text": "Band's behind the scenes team."
+      },
+      {
+        "number": 3,
+        "text": "Casino hub near Hong Kong."
+      },
+      {
+        "number": 5,
+        "text": "Philosopher Immanuel."
+      },
+      {
+        "number": 6,
+        "text": "\"Something ___ by the Kinks\""
+      }
+    ]
+  }
+}
