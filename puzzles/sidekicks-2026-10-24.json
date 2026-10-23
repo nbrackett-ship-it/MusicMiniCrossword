@@ -1,0 +1,149 @@
+{
+  "id": "sidekicks-2026-10-24",
+  "title": "Sidekicks",
+  "info": "October 24, 2026 • 6×6",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "words": [
+    {
+      "number": 1,
+      "row": 0,
+      "col": 3,
+      "direction": "across",
+      "word": "BRB"
+    },
+    {
+      "number": 4,
+      "row": 1,
+      "col": 2,
+      "direction": "across",
+      "word": "BREE"
+    },
+    {
+      "number": 5,
+      "row": 2,
+      "col": 1,
+      "direction": "across",
+      "word": "FRANZ"
+    },
+    {
+      "number": 6,
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "word": "ALIVE"
+    },
+    {
+      "number": 7,
+      "row": 4,
+      "col": 0,
+      "direction": "across",
+      "word": "RATE"
+    },
+    {
+      "number": 8,
+      "row": 5,
+      "col": 0,
+      "direction": "across",
+      "word": "TVS"
+    },
+    {
+      "number": 1,
+      "row": 0,
+      "col": 3,
+      "direction": "down",
+      "word": "BRAVE"
+    },
+    {
+      "number": 2,
+      "row": 0,
+      "col": 4,
+      "direction": "down",
+      "word": "RENE"
+    },
+    {
+      "number": 3,
+      "row": 0,
+      "col": 5,
+      "direction": "down",
+      "word": "BEZ"
+    },
+    {
+      "number": 4,
+      "row": 1,
+      "col": 2,
+      "direction": "down",
+      "word": "BRITS"
+    },
+    {
+      "number": 5,
+      "row": 2,
+      "col": 1,
+      "direction": "down",
+      "word": "FLAV"
+    },
+    {
+      "number": 6,
+      "row": 3,
+      "col": 0,
+      "direction": "down",
+      "word": "ART"
+    }
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "text": "I'll return shortly (abbr.)"
+      },
+      {
+        "number": 4,
+        "text": "Woman's name (homonym for type of soft cheese)"
+      },
+      {
+        "number": 5,
+        "text": "First name of Archduke and killer Scottish 2000's band"
+      },
+      {
+        "number": 6,
+        "text": "Debut Pearl Jam single"
+      },
+      {
+        "number": 7,
+        "text": "\"That doesn't ____\" (Not deserving attention)"
+      },
+      {
+        "number": 8,
+        "text": "Multiple tellies"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "text": "2013 Sara Bareilles hit"
+      },
+      {
+        "number": 2,
+        "text": "Descartes and Russo"
+      },
+      {
+        "number": 3,
+        "text": "Happy Mondays maracas guy"
+      },
+      {
+        "number": 4,
+        "text": "Big music night in UK"
+      },
+      {
+        "number": 5,
+        "text": "Chuck D. foil"
+      },
+      {
+        "number": 6,
+        "text": "Paul's sidekick (but don't tell him that)"
+      }
+    ]
+  }
+}
